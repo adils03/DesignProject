@@ -9,6 +9,7 @@ public class deneme : MonoBehaviour
     {
             //burak ünalan
             // Gelebek
+            // laylaylom galiba sana göre sevmeler 
     }
 
     // Update is called once per frame
