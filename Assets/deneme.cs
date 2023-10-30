@@ -8,6 +8,7 @@ public class deneme : MonoBehaviour
     void Start()
     {
             //burak ünalan
+            // Gelebek
     }
 
     // Update is called once per frame
