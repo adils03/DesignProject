@@ -14,6 +14,7 @@ public class deneme : MonoBehaviour
             // Gelebek
             // laylaylom galiba sana göre sevmeler 
             //selamlar burak
+            //Come with Me Now 
     }
 
     // Update is called once per frame
