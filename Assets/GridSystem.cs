@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GridSystem : MonoBehaviour
 {
-    //Selamlar
+    
     // Start is called before the first frame update
     void Start()
     {
