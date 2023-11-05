@@ -19,6 +19,17 @@ public GridSystem(int width,int height,float cellSize,Vector3 originPosition){
 
     gridArray = new int[width,height];
     
+    for(int y=0; y<gridArray.GetLength(1);y++){
+        for(int x=0;x<gridArray.GetLength(0);x++){
+           
+        }
+
+
+    }
+
+
+
+
     for(int x=0; x < gridArray.GetLength(0);x++){
         for(int y=0; y < gridArray.GetLength(1);y++){
             Debug.DrawLine(GetWorldPosition(x,y),GetWorldPosition(x,y+1),Color.white,100f);
