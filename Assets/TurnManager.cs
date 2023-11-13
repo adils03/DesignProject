@@ -1,17 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-//Oyuncuları temsil eden sınıf
-public class Player: MonoBehaviour
-{
-    public void StartTurn()
-    {
-        Debug.Log("Oyuncunun sırası başladı.");
-    }
-}
-
-
 //Oyuncuların sırasını yönetir.Players adında bir liste ve turnQueue adında bir kuyruk içerir.
 public class TurnManager : MonoBehaviour                 
 {
