@@ -16,6 +16,7 @@ public class EconomyManager : MonoBehaviour
     private int totalIncome;// toplam gelir
     private int totalSalaries;// toplam maaş gideri
     private int currentGold = 0;// kasada bulunan altın miktarı
+    private List<Hexagon> ownedHexagons;
 
     void Start()
     {
@@ -75,24 +76,28 @@ public class EconomyManager : MonoBehaviour
         // 1. seviye asker sayısını buradan alabilirsiniz.
         // burda asker sayısı ve maaşları çarparak maliyet hesabı yapılır
         // Örneğin: return 10;
+        return 0;
     }
     int GetLevel2SoldierCount()
     {
         // 2. seviye asker sayısını buradan alabilirsiniz.
          // burda asker sayısı ve maaşları çarparak maliyet hesabı yapılır
         // Örneğin: return 10;
+        return 0;
     }
     int GetLevel3SoldierCount()
     {
         // 3. seviye asker sayısını buradan alabilirsiniz.
          // burda asker sayısı ve maaşları çarparak maliyet hesabı yapılır
         // Örneğin: return 10;
+        return 0;
     }
     int GetLevel4SoldierCount()
     {
         // 4. seviye asker sayısını buradan alabilirsiniz.
          // burda asker sayısı ve maaşları çarparak maliyet hesabı yapılır
         // Örneğin: return 10;
+        return 0;
     }
     int GetTotalSoldierCount()
     {
