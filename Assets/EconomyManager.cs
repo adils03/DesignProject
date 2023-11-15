@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EconomyManager : MonoBehaviour
 {
-    public int totalHexagons = 15; // sahip olunan toprak sayısı 
+    public int ownedHexagons = 15; // sahip olunan toprak sayısı 15 değeri temsili
     
     public int baseIncomePerHexagon = 3;// el başına toprak geliri
    
@@ -27,7 +27,7 @@ public class EconomyManager : MonoBehaviour
 
    void CalculateIncome()//  gelir hesabı
 {
-    totalIncome = totalHexagons * baseIncomePerHexagon;
+    totalIncome = ownedHexagons * baseIncomePerHexagon;
 
     // Toprakların avantajlarına göre geliri güncelle
     foreach (Hexagon hexagon in ownedHexagons)
@@ -55,7 +55,7 @@ public class EconomyManager : MonoBehaviour
         // Her toprak için dezavantajı kontrol et
         // burda hexagon sınıfını tanımlayıp HasDisadvantage metodunu düzenlemeliyiz
         // kısaca hexagon üzerinde dezavantaj durumu var mı(üerinde ağaç varsa gelir getirmez)
-        foreach (Hexagon hexagon in ownedHexagons)
+        foreach(Hexagon hexagon in ownedHexagons)
         {
             if (hexagon.HasDisadvantage()) // Eğer toprakta dezavantaj varsa
             {
@@ -74,25 +74,29 @@ public class EconomyManager : MonoBehaviour
     {
         // 1. seviye asker sayısını buradan alabilirsiniz.
         // burda asker sayısı ve maaşları çarparak maliyet hesabı yapılır
-        // Örneğin: return 10;
+        // Örneğin: 
+        return 10;
     }
     int GetLevel2SoldierCount()
     {
         // 2. seviye asker sayısını buradan alabilirsiniz.
          // burda asker sayısı ve maaşları çarparak maliyet hesabı yapılır
-        // Örneğin: return 10;
+        //Örneğin: 
+        return 10;
     }
     int GetLevel3SoldierCount()
     {
         // 3. seviye asker sayısını buradan alabilirsiniz.
          // burda asker sayısı ve maaşları çarparak maliyet hesabı yapılır
-        // Örneğin: return 10;
+        // Örneğin: 
+        return 10;
     }
     int GetLevel4SoldierCount()
     {
         // 4. seviye asker sayısını buradan alabilirsiniz.
          // burda asker sayısı ve maaşları çarparak maliyet hesabı yapılır
-        // Örneğin: return 10;
+        // Örneğin: 
+        return 10;
     }
     int GetTotalSoldierCount()
     {
