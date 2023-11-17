@@ -18,6 +18,10 @@ public class TurnManager : MonoBehaviour
         }
 
         StartTurn();
+        
+    }
+    private void Update() {
+        
     }
 
     //StartTurn metodu, bir oyuncunun sırasını başlatır. Eğer tüm oyuncuların sırası biterse, kuyruğu yeniden doldurur.
