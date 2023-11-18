@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EconomyManager : MonoBehaviour
 {
-    public int totalHexagons = 15; // sahip olunan toprak sayısı 
+    public int totalHexagons = 4; // sahip olunan toprak sayısı 
     
     public int baseIncomePerHexagon = 3;// el başına toprak geliri
    
@@ -16,7 +16,7 @@ public class EconomyManager : MonoBehaviour
     private int totalIncome;// toplam gelir
     private int totalSalaries;// toplam maaş gideri
     private int currentGold = 0;// kasada bulunan altın miktarı
-    private List<Hexagon> ownedHexagons;
+    private List<Hex> ownedHexagons;
 
     void Start()
     {
@@ -27,18 +27,18 @@ public class EconomyManager : MonoBehaviour
     }
 
    void CalculateIncome()//  gelir hesabı
-{
+   {
     totalIncome = totalHexagons * baseIncomePerHexagon;
 
     // Toprakların avantajlarına göre geliri güncelle
-    foreach (Hexagon hexagon in ownedHexagons)
+    foreach (Hex hexagon in ownedHexagons)
     {
         totalIncome = hexagon.GetAdvantageValue(totalIncome);
         // toprak eğer avantaja sahip ise üzerine farm binası eklenmişse
         // bu GetAdvantageValue metot gelire + 5 gold ekliyor tümsahip olunan topraklar için 
         // bu durum kontrol ediliyor
     }
-}
+    }
 
     void CalculateSalaries()// maaş gider hesabı
     {
@@ -56,13 +56,19 @@ public class EconomyManager : MonoBehaviour
         // Her toprak için dezavantajı kontrol et
         // burda hexagon sınıfını tanımlayıp HasDisadvantage metodunu düzenlemeliyiz
         // kısaca hexagon üzerinde dezavantaj durumu var mı(üerinde ağaç varsa gelir getirmez)
-        foreach (Hexagon hexagon in ownedHexagons)
+        foreach (Hex hexagon in ownedHexagons)
         {
             if (hexagon.HasDisadvantage()) // Eğer toprakta dezavantaj varsa
             {
                 totalIncome -= hexagon.GetDisadvantageValue(); // Dezavantaj değerini gelirden çıkar
             }
         }
+    }
+
+    void updateAllWithTurn()// tur başına oyuncuların toprak sayısı ve ekonomisi ve asker sayısı güncellenir
+    {
+        //totalHexagons = ownedHexagons.Count();
+          
     }
 
     void UpdateGold()// el başı kasadaki altını güncelle
@@ -107,46 +113,6 @@ public class EconomyManager : MonoBehaviour
 
 }
 
-public class Hexagon
-{
-    public bool HasAdvantage { get; set; } // Toprağın avantajı var mı?
-    public bool HasFarmBuilding { get; set; } // Çiftlik binası var mı?
-    public bool HasSoldier { get; set; } // Asker var mı?
-    
-    // Dezavantajları kontrol etmek için bir metot
-    public bool HasDisadvantage()
-    {
-        // Burada toprağın üzerindeki nesnelere göre dezavantajları kontrol edebilirsiniz
-        // Örneğin, ağaç varsa dezavantaj vardır.
-        return false; // Eğer dezavantaj yoksa false döndürün
-    }
-
-    // Asker veya bina olup olmadığını kontrol etmek için bir metot
-    public bool HasSoldierOrBuilding()
-    {
-        return HasSoldier || HasFarmBuilding;
-    }
-
-    // Toprağın avantajını kontrol etmek için bir metot
-    public int GetAdvantageValue(int baseIncome)
-    {
-        if (HasAdvantage)
-        {
-            return baseIncome + 5; // Eğer avantaj varsa geliri artır
-        }
-        else
-        {
-            return baseIncome; // Avantaj yoksa normal geliri döndür
-        }
-    }
-
-    // Dezavantaj durumunda gelir düşüşünü belirlemek için bir metot
-    public int GetDisadvantageValue()
-    {
-        // Eğer dezavantaj varsa, ne kadar gelir kaybı olacağını burada belirleyebilirsiniz.
-        return 0; // Örneğin, ağaç olduğunda gelir kaybı sıfırdır.
-    }
-}
 
 
 
