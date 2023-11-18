@@ -8,6 +8,8 @@ public class TurnManager : MonoBehaviour
 
     private Queue<Player> turnQueue = new Queue<Player>();
 
+    private Player currentPlayer;
+
 
     //Start metodu, oyun başladığında çağrılır ve tüm oyuncuları sırayla kuyruğa ekler.
     void Start()
@@ -20,8 +22,14 @@ public class TurnManager : MonoBehaviour
         StartTurn();
         
     }
+    //Update metodu, oyuncunun sırası başlatır ve sapece tuşuna basıldığında diğer oyuncunun sırasını başlatır.    
     private void Update() {
-        
+
+       if (Input.GetKeyDown(KeyCode.Space) && currentPlayer == null)
+    {
+        StartTurn();
+    }
+
     }
 
     //StartTurn metodu, bir oyuncunun sırasını başlatır. Eğer tüm oyuncuların sırası biterse, kuyruğu yeniden doldurur.
@@ -43,6 +51,6 @@ public class TurnManager : MonoBehaviour
     //EndTurn metodu geçerli oyuncunun sırasını bitirir ve bir sonraki oyuncunun sırasını başlatır.
     public void EndTurn()
     {
-        StartTurn();
+        currentPlayer = null;
     }
 }
