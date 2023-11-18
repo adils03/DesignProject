@@ -10,7 +10,7 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private int width;//Genişlik
     [SerializeField] private int height;//Uzunluk
     [SerializeField] private Vector3 originPosition;//Gridin başlama pozisyonu 
-    [SerializeField] private GameObject hexPrefab;
+    [SerializeField] private GameObject hexPrefab;//heximiz
     private GameObject hex;
     public List<Hex> hexes;//Oluşturulan hexagonları tutar
 
