@@ -47,7 +47,7 @@ public class TurnManager : MonoBehaviour
         currentPlayer = null;
     }
 
-
+    //sirayi bitirir
     public void passTurn()
     {
         if (currentPlayer == null)
