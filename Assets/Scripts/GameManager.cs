@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 
     public List<Player> players = new List<Player>();
     public List<Hex> hexes ;
-    public List<Vector2> playerPositions = new List<Vector2>();
+    public List<Vector2> playerStartingPositions = new List<Vector2>();
     private TurnManager turnManager;
     private EconomyManager economyManager;
     private GridSystem gridSystem;
@@ -40,25 +40,13 @@ public class GameManager : MonoBehaviour
     {
        for (int i = 0; i < players.Count; i++)
        {
-            players[i].ownedHexes.Add(gridSystem.findHex((int)playerPositions[i].x, (int)playerPositions[i].y));
-            players[i].ownedHexes.Add(gridSystem.findStartingHexes(gridSystem.findHex((int)playerPositions[i].x, (int)playerPositions[i].y))[0]);
-            players[i].ownedHexes.Add(gridSystem.findStartingHexes(gridSystem.findHex((int)playerPositions[i].x, (int)playerPositions[i].y))[1]);
-            players[i].ownedHexes.Add(gridSystem.findStartingHexes(gridSystem.findHex((int)playerPositions[i].x, (int)playerPositions[i].y))[2]);
+            gridSystem.findHex((int)playerStartingPositions[i].x, (int)playerStartingPositions[i].y).transform.GetChild(0).gameObject.SetActive(true);
+            players[i].ownedHexes.Add(gridSystem.findHex((int)playerStartingPositions[i].x, (int)playerStartingPositions[i].y));
+            players[i].ownedHexes.Add(gridSystem.findStartingHexes(gridSystem.findHex((int)playerStartingPositions[i].x, (int)playerStartingPositions[i].y))[0]);
+            players[i].ownedHexes.Add(gridSystem.findStartingHexes(gridSystem.findHex((int)playerStartingPositions[i].x, (int)playerStartingPositions[i].y))[1]);
+            players[i].ownedHexes.Add(gridSystem.findStartingHexes(gridSystem.findHex((int)playerStartingPositions[i].x, (int)playerStartingPositions[i].y))[2]);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
