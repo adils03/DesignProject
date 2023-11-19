@@ -19,10 +19,11 @@ public class GridSystem : MonoBehaviour
     private void Awake()
     {
         createGrid();
+        AssignNeighbors();
     }
     void Start()
     {
-        AssignNeighbors();
+        
     }
 
 
@@ -56,7 +57,7 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    private Hex findHex(int x, int y)//İstediğimiz hexagonu bulur
+    public Hex findHex(int x, int y)//İstediğimiz hexagonu bulur
     {
         foreach (Hex hex in hexes)
         {
@@ -130,5 +131,12 @@ public class GridSystem : MonoBehaviour
         }
     }
 
+   public List<Hex> findStartingHexes(Hex _hex){ //Başlangıç için arazileri bulur
+        List<Hex> _hexes = new List<Hex>();
+        _hexes.Add(_hex.neighbors[3]);
+        _hexes.Add(_hex.neighbors[4]);
+        _hexes.Add(_hex.neighbors[5]);
+        return _hexes;
+    }
 
 }

@@ -7,14 +7,15 @@ public class Hex : MonoBehaviour
     public int x;
     public int y;
     public List<Hex> neighbors;//Komşularını tutar
-    private void OnMouseDown()
-    {
-        Debug.Log(x + ":" + y + "tiklandi");
-    }
     public bool HasAdvantage { get; set; } // Toprağın avantajı var mı?
     public bool HasFarmBuilding { get; set; } // Çiftlik binası var mı?
     public bool HasSoldier { get; set; } // Asker var mı?
-    
+
+
+
+
+     
+
     // Dezavantajları kontrol etmek için bir metot
     public bool HasDisadvantage()
     {
@@ -48,7 +49,6 @@ public class Hex : MonoBehaviour
         // Eğer dezavantaj varsa, ne kadar gelir kaybı olacağını burada belirleyebilirsiniz.
         return 0; // Örneğin, ağaç olduğunda gelir kaybı sıfırdır.
     }
-
 
 
 }
