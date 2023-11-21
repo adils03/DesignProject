@@ -13,17 +13,21 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private GameObject hexPrefab;//heximiz
     private GameObject hex;
     public List<Hex> hexes;//Oluşturulan hexagonları tutar
+    int[,] map;
 
 
 
     private void Awake()
     {
+        offsetX = UnityEngine.Random.Range(0, 99999);
+        offsetY = UnityEngine.Random.Range(0, 99999);
+        GenerateMap();
         createGrid();
         AssignNeighbors();
     }
     void Start()
     {
-        
+
     }
 
 
@@ -39,22 +43,29 @@ public class GridSystem : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
+                if (map[x, y] != 0)
+                {
+                    hex = Instantiate(hexPrefab, new Vector3(x, y * hexHeight, 0) - originPosition, quaternion.identity);
+                    hexes.Add(hex.GetComponent<Hex>());
+                    hex.GetComponent<Hex>().x = x;
+                    hex.GetComponent<Hex>().y = anotherY;
+                }
 
-                hex = Instantiate(hexPrefab, new Vector3(x, y * hexHeight, 0) - originPosition, quaternion.identity);
-                hexes.Add(hex.GetComponent<Hex>());
-                hex.GetComponent<Hex>().x = x;
-                hex.GetComponent<Hex>().y = anotherY;
             }
             anotherY++;
             for (int x = 0; x < width; x++)
             {
-                hex = Instantiate(hexPrefab, new Vector3(x + 0.5f, y * hexHeight + hexHeight / 2, 0) - originPosition, quaternion.identity);
-                hexes.Add(hex.GetComponent<Hex>());
-                hex.GetComponent<Hex>().x = x;
-                hex.GetComponent<Hex>().y = anotherY;
+                if (map[x, y] != 0)
+                {
+                    hex = Instantiate(hexPrefab, new Vector3(x + 0.5f, y * hexHeight + hexHeight / 2, 0) - originPosition, quaternion.identity);
+                    hexes.Add(hex.GetComponent<Hex>());
+                    hex.GetComponent<Hex>().x = x;
+                    hex.GetComponent<Hex>().y = anotherY;
+                }
             }
             anotherY++;
         }
+
     }
 
     public Hex findHex(int x, int y)//İstediğimiz hexagonu bulur
@@ -131,7 +142,8 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-   public List<Hex> findStartingHexes(Hex _hex){ //Başlangıç için arazileri bulur
+    public List<Hex> findStartingHexes(Hex _hex)
+    { //Başlangıç için arazileri bulur
         List<Hex> _hexes = new List<Hex>();
         _hexes.Add(_hex.neighbors[3]);
         _hexes.Add(_hex.neighbors[4]);
@@ -139,4 +151,23 @@ public class GridSystem : MonoBehaviour
         return _hexes;
     }
 
+    public float noiseScale = 1f;
+    public float threshold = 0.5f;
+
+    public float offsetX, offsetY;
+
+
+    void GenerateMap()
+    {
+        map = new int[width, height];
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                float perlinNoise = Mathf.PerlinNoise(x * noiseScale + offsetX, y * noiseScale + offsetY);
+                map[x, y] = perlinNoise > threshold ? 1 : 0;
+            }
+        }
+    }
 }

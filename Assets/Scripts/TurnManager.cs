@@ -4,7 +4,7 @@ using UnityEngine;
 //Oyuncuların sırasını yönetir.Players adında bir liste ve turnQueue adında bir kuyruk içerir.
 public class TurnManager : MonoBehaviour
 {
-    public List<Player> players = new List<Player>();
+    public List<Player> players ;
 
     private Queue<Player> turnQueue = new Queue<Player>();
 
