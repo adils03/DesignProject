@@ -1,54 +1,105 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Hex : MonoBehaviour
 {
-    public int x;
-    public int y;
-    public List<Hex> neighbors;//Komşularını tutar
-    public bool HasAdvantage { get; set; } // Toprağın avantajı var mı?
-    public bool HasFarmBuilding { get; set; } // Çiftlik binası var mı?
-    public bool HasSoldier { get; set; } // Asker var mı?
-
-
-
-
-     
-
-    // Dezavantajları kontrol etmek için bir metot
-    public bool HasDisadvantage()
+    public hexType _hexType;
+    public int q, r, s;
+    public List<Hex> neighbors = new List<Hex>();
+    public List<Hex> continent = new List<Hex>();
+    public List<Hex> areaForStep = new List<Hex>();
+    public bool hasVisited = false;
+    public enum hexType
     {
-        // Burada toprağın üzerindeki nesnelere göre dezavantajları kontrol edebilirsiniz
-        // Örneğin, ağaç varsa dezavantaj vardır.
-        return false; // Eğer dezavantaj yoksa false döndürün
+        grass,
+        water
     }
-
-    // Asker veya bina olup olmadığını kontrol etmek için bir metot
-    public bool HasSoldierOrBuilding()
+    private void OnMouseDown()
     {
-        return HasSoldier || HasFarmBuilding;
+        travelContinent(this);
+        travelContinentByStep(this, 2);
     }
-
-    // Toprağın avantajını kontrol etmek için bir metot
-    public int GetAdvantageValue(int baseIncome)
+    void travelContinent(Hex startHex)//Hex'in bulunduğu kıtayı continent listesine eşitler
     {
-        if (HasAdvantage)
+        Stack<Hex> stack = new Stack<Hex>();
+
+        stack.Push(startHex);
+
+        hexType __hexType = startHex._hexType;
+
+        while (stack.Count > 0)
         {
-            return baseIncome + 5; // Eğer avantaj varsa geliri artır
+            Hex currentHex = stack.Pop();
+
+            if (!currentHex.hasVisited && currentHex._hexType == __hexType)
+            {
+                continent.Add(currentHex);
+                currentHex.hasVisited = true;
+
+                foreach (Hex neighbor in currentHex.neighbors)
+                {
+                    if (!neighbor.hasVisited)
+                    {
+                        stack.Push(neighbor);
+                    }
+                }
+            }
         }
-        else
+        foreach (Hex hex in continent)
         {
-            return baseIncome; // Avantaj yoksa normal geliri döndür
+            hex.hasVisited = false;
         }
     }
 
-    // Dezavantaj durumunda gelir düşüşünü belirlemek için bir metot
-    public int GetDisadvantageValue()
+    void travelContinentByStep(Hex startHex, int step) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
     {
-        // Eğer dezavantaj varsa, ne kadar gelir kaybı olacağını burada belirleyebilirsiniz.
-        return 0; // Örneğin, ağaç olduğunda gelir kaybı sıfırdır.
+        step++;
+
+        Queue<Hex> queue = new Queue<Hex>();
+
+        queue.Enqueue(startHex);
+
+        hexType __hexType = startHex._hexType;
+
+        while (queue.Count > 0 && step > 0)
+        {
+            int size = queue.Count;
+
+            for (int i = 0; i < size; i++)
+            {
+                Hex currentHex = queue.Dequeue();
+
+                if (!currentHex.hasVisited && currentHex._hexType == __hexType)
+                {
+                    areaForStep.Add(currentHex);
+                    currentHex.hasVisited = true;
+                    currentHex.transform.localScale = new Vector3(1, 1, 1);
+
+                    foreach (Hex neighbor in currentHex.neighbors)
+                    {
+                        if (!neighbor.hasVisited)
+                        {
+                            queue.Enqueue(neighbor);
+                        }
+                    }
+                }
+            }
+
+            step--;
+        }
+        foreach (Hex hex in areaForStep)
+        {
+            hex.hasVisited = false;
+        }
     }
+
+
+
+
 
 
 }
+

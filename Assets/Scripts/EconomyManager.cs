@@ -28,7 +28,7 @@ public class EconomyManager : MonoBehaviour
     {
         CalculateIncome();
         CalculateSalaries();
-        ApplyDisadvantages();
+        //ApplyDisadvantages();
         UpdateGold();
     }
 
@@ -46,7 +46,7 @@ public class EconomyManager : MonoBehaviour
 
         foreach (Hex hexagon in ownedHexagons)
         {
-            totalIncome = hexagon.GetAdvantageValue(totalIncome);
+            //totalIncome = hexagon.GetAdvantageValue(totalIncome);
         }
     }
 
@@ -64,7 +64,7 @@ public class EconomyManager : MonoBehaviour
         this.totalSalaries = totalSalaries;
     }
 
-    void ApplyDisadvantages()
+    /*void ApplyDisadvantages()
     {
         foreach (Hex hexagon in ownedHexagons)
         {
@@ -73,7 +73,7 @@ public class EconomyManager : MonoBehaviour
                 totalIncome -= hexagon.GetDisadvantageValue();
             }
         }
-    }
+    }*/
 
     void UpdateGold()
     {
