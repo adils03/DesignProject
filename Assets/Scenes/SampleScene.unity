@@ -231,12 +231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5c356bc30b92840bccce9d79c3603c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHexagons: 4
-  baseIncomePerHexagon: 3
-  soldier1Salary: 4
-  soldier2Salary: 10
-  soldier3Salary: 30
-  soldier4Salary: 60
 --- !u!4 &433178577
 Transform:
   m_ObjectHideFlags: 0
@@ -803,13 +797,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b5acd916169214e9a2e307f7162911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 100
-  height: 100
-  originPosition: {x: 9, y: 5, z: 0}
-  hexPrefab: {fileID: 4133545700341867623, guid: 7a92b132c0b172b43b1d229a7dfed48a, type: 3}
-  hexes: []
-  noiseScale: 0.1
-  threshold: 0.4
+  size: 15
+  hexPrefabGrass: {fileID: 4133545700341867623, guid: 7a92b132c0b172b43b1d229a7dfed48a, type: 3}
+  hexPrefabWater: {fileID: 4133545700341867623, guid: 45831ac05379d3f4eae84cc7bf74f2a4, type: 3}
+  continent: []
+  noiseScale: 0.14
+  threshold: 0.35
   offsetX: 0
   offsetY: 0
 --- !u!1660057539 &9223372036854775807
