@@ -1,92 +1,95 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SoldierLevel
-{
-    Level1,
-    Level2,
-    Level3,
-    Level4
-}
-
 public class EconomyManager : MonoBehaviour
 {
-    public int TotalHexagons { get; set; } = 4;
-    public int BaseIncomePerHexagon { get; set; } = 3;
+    public int CurrentGold { get; set; } = 0;
 
     private int totalIncome;
-    private int totalSalaries;
-    private int currentGold = 0;
-    private List<Hex> ownedHexagons = new List<Hex>();
 
-    // Asker maaşlarını depolamak için sözlük
-    private Dictionary<SoldierLevel, int> soldierSalaries = new Dictionary<SoldierLevel, int>();
+    private List<Hex> OwnedHexagons;
+
+    void Awake()
+    {
+        OwnedHexagons = new List<Hex>(); // İlk değer ataması
+       
+    }
 
     void Start()
     {
         CalculateIncome();
         CalculateSalaries();
-        //ApplyDisadvantages();
         UpdateGold();
     }
 
-    void InitializeSoldierSalaries()
-    {
-        soldierSalaries[SoldierLevel.Level1] = 4;
-        soldierSalaries[SoldierLevel.Level2] = 10;
-        soldierSalaries[SoldierLevel.Level3] = 30;
-        soldierSalaries[SoldierLevel.Level4] = 60;
-    }
-
+   
     void CalculateIncome()
-    {
-        totalIncome = TotalHexagons * BaseIncomePerHexagon;
+    {     
 
-        foreach (Hex hexagon in ownedHexagons)
+        foreach (Hex hexagon in OwnedHexagons)
         {
-            //totalIncome = hexagon.GetAdvantageValue(totalIncome);
+            totalIncome += hexagon.Income;
         }
     }
 
-    void CalculateSalaries()
+    void CalculateSalaries()// maaş bilgilerini totalIncomedan yaniii gelirden düştük
     {
-        int totalSalaries = 0;
-
-        foreach (SoldierLevel level in Enum.GetValues(typeof(SoldierLevel)))
+        foreach (Hex hex in OwnedHexagons)
         {
-            int soldierCount = GetSoldierCount(level);
-            int salary = soldierSalaries[level];
-            totalSalaries += soldierCount * salary;
-        }
+            int salarySoldier = 0;
 
-        this.totalSalaries = totalSalaries;
+            if(hex.HexObjectType == ObjectType.SoldierLevel1) { salarySoldier = 5; }
+            else if (hex.HexObjectType == ObjectType.SoldierLevel2) { salarySoldier = 15; }
+            else if (hex.HexObjectType == ObjectType.SoldierLevel3) { salarySoldier = 30; }
+            else if (hex.HexObjectType == ObjectType.SoldierLevel4) { salarySoldier = 50; }
+            else if (hex.HexObjectType == ObjectType.BuildingDefenceLevel1) { salarySoldier = 20; }
+            else if (hex.HexObjectType == ObjectType.BuildingDefenceLevel2) { salarySoldier = 30; }
+
+            totalIncome -= salarySoldier;
+        }
+       
     }
-
-    /*void ApplyDisadvantages()
-    {
-        foreach (Hex hexagon in ownedHexagons)
-        {
-            if (hexagon.HasDisadvantage())
-            {
-                totalIncome -= hexagon.GetDisadvantageValue();
-            }
-        }
-    }*/
 
     void UpdateGold()
     {
-        currentGold += totalIncome - totalSalaries;
-        Debug.Log("Total Gold: " + currentGold);
+        CurrentGold += totalIncome;
+        Debug.Log("Total Gold: " + CurrentGold);
+    }
+    public void UpdateOwnedHexagons(List<Hex> newHexagons)
+    {
+        OwnedHexagons = newHexagons;
+        CalculateIncome();
+        CalculateSalaries();
+        UpdateGold();
+    }
+   
+    public void HexOwnershipChanged(Hex changedHex)
+    {   
+        // spesifik hex sahibi değişti bu metot çağıralabilir
+        List<Hex> updatedHexagons = GetUpdatedHexagons(changedHex);
+
+        // UpdateOwnedHexagons metodunu çağırarak ekonomiyi güncelle
+        UpdateOwnedHexagons(updatedHexagons);
+    }    
+    private List<Hex> GetUpdatedHexagons(Hex changedHex)
+    {
+        // Hex'in sahipliği değiştiğinde çağrılacak yardımcı bir metod
+        List<Hex> updatedHexagons = new List<Hex>(OwnedHexagons);
+
+        // Değişen hex'i listeden kaldır veya ekleyebilirsiniz
+        if (updatedHexagons.Contains(changedHex))
+        {
+            updatedHexagons.Remove(changedHex);
+        }
+        else
+        {
+            updatedHexagons.Add(changedHex);
+        }
+
+        return updatedHexagons;
     }
 
-    int GetSoldierCount(SoldierLevel level)
-    {
-        // Gerçek oyun mantığına göre asker sayısını al
-        // Örneğin: return 10;
-        return 0;
-    }
 }
 
 

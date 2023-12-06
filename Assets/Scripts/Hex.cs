@@ -4,6 +4,20 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public enum ObjectType// hex üzerindeki nesneler 
+{
+    None,   // Hiçbir nesne yok
+    SoldierLevel1,
+    SoldierLevel2,
+    SoldierLevel3,
+    SoldierLevel4,
+    Tree,
+    TreeWeak,
+    BuildingFarm,
+    BuildingDefenceLevel1,
+    BuildingDefenceLevel2,
+}
+
 public class Hex : MonoBehaviour
 {
     public hexType _hexType;
@@ -11,9 +25,12 @@ public class Hex : MonoBehaviour
     public List<Hex> neighbors = new List<Hex>();
     public List<Hex> areaForStep = new List<Hex>();
     public bool hasVisited = false;
-    private int income=1;
+    public int Income=3;// hex başına gelir default 3 
     private string havinPlayer = "None";
-    
+    public Player Owner;// kimin bu hex ,null ise kimsenin
+    public bool HasAnything = false;
+    public ObjectType HexObjectType { get; set; } = ObjectType.None;// hex üzerindeki nesne asker , bina , ağaç
+
     public enum hexType
     {
         grass,
@@ -23,6 +40,20 @@ public class Hex : MonoBehaviour
     {
         travelContinentByStep(this, 2);
     }
+
+    public bool HasDisadvantage()// ağaçlardan biri mevcut ise dezavantaj var 
+    {
+        return this.HexObjectType== ObjectType.Tree || this.HexObjectType== ObjectType.TreeWeak;
+    }
+    public void UpdateAdvantageOrDisadvantageValue()// ağaçlardan biri mevcut ise dezavantaj var 
+    {
+        if (this.HexObjectType == ObjectType.Tree || this.HexObjectType == ObjectType.TreeWeak)
+            Income = 0;
+        else if(this.HexObjectType== ObjectType.BuildingFarm)
+            Income = 10;// bu da farmbinası başına verilen değer      
+    }
+
+
 
     void travelContinentByStep(Hex startHex, int step) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
     {
