@@ -9,9 +9,11 @@ public class Hex : MonoBehaviour
     public hexType _hexType;
     public int q, r, s;
     public List<Hex> neighbors = new List<Hex>();
-    public List<Hex> continent = new List<Hex>();
     public List<Hex> areaForStep = new List<Hex>();
     public bool hasVisited = false;
+    private int income=1;
+    private string havinPlayer = "None";
+    
     public enum hexType
     {
         grass,
@@ -19,39 +21,7 @@ public class Hex : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        travelContinent(this);
         travelContinentByStep(this, 2);
-    }
-    void travelContinent(Hex startHex)//Hex'in bulunduğu kıtayı continent listesine eşitler
-    {
-        Stack<Hex> stack = new Stack<Hex>();
-
-        stack.Push(startHex);
-
-        hexType __hexType = startHex._hexType;
-
-        while (stack.Count > 0)
-        {
-            Hex currentHex = stack.Pop();
-
-            if (!currentHex.hasVisited && currentHex._hexType == __hexType)
-            {
-                continent.Add(currentHex);
-                currentHex.hasVisited = true;
-
-                foreach (Hex neighbor in currentHex.neighbors)
-                {
-                    if (!neighbor.hasVisited)
-                    {
-                        stack.Push(neighbor);
-                    }
-                }
-            }
-        }
-        foreach (Hex hex in continent)
-        {
-            hex.hasVisited = false;
-        }
     }
 
     void travelContinentByStep(Hex startHex, int step) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
@@ -96,8 +66,19 @@ public class Hex : MonoBehaviour
         }
     }
 
+    /*void AssignObjectOnHex(unitType unit){
+        income = (int)unit;
+        _unitType=unit;
+    }
+    void RemoveObjectOnHex(){
+        if(_hexType==hexType.grass) {
+            _unitType=unitType.grass;
+        }else{_unitType=unitType.water;}
+    }*/
 
-
+    void assignPlayer(String name){
+        havinPlayer=name;
+    }
 
 
 

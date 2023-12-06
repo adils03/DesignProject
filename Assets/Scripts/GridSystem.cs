@@ -10,6 +10,7 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private GameObject hexPrefabGrass;
     [SerializeField] private GameObject hexPrefabWater;
     private GameObject _hex;
+    public List<Hex> continent = new List<Hex>();
     private List<Hex> hexes = new List<Hex>();
     public float noiseScale = 1f;
     public float threshold = 0.5f;
@@ -86,12 +87,11 @@ public class GridSystem : MonoBehaviour
                 increase = false;
             }
             originPositionY += 1.5f;
-            Debug.Log(i + "=r");
         }
         InitializeNeighbors();
     }
 
-    public Hex FindHex(int q, int r) //İstediğimiz hexi oluşturur
+    public Hex FindHex(int q, int r) //İstediğimiz hexi bulur
     {
         foreach (Hex hex in hexes)
         {
@@ -127,5 +127,37 @@ public class GridSystem : MonoBehaviour
     int FindDistanceBetweenHexes(Hex a, Hex b) //İki hex arası uzaklığı bulur
     {
         return (Mathf.Abs(a.q - b.q) + Mathf.Abs(a.r - b.r) + Mathf.Abs(a.s - b.s)) / 2;
+    }
+
+    void travelContinent(Hex startHex)//Hex'in bulunduğu kıtayı continent listesine eşitler
+    {
+        Stack<Hex> stack = new Stack<Hex>();
+
+        stack.Push(startHex);
+
+        Hex.hexType __hexType = startHex._hexType;
+
+        while (stack.Count > 0)
+        {
+            Hex currentHex = stack.Pop();
+
+            if (!currentHex.hasVisited && currentHex._hexType == __hexType)
+            {
+                continent.Add(currentHex);
+                currentHex.hasVisited = true;
+
+                foreach (Hex neighbor in currentHex.neighbors)
+                {
+                    if (!neighbor.hasVisited)
+                    {
+                        stack.Push(neighbor);
+                    }
+                }
+            }
+        }
+        foreach (Hex hex in continent)
+        {
+            hex.hasVisited = false;
+        }
     }
 }
