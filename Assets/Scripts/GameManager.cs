@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private TurnManager turnManager;
     private EconomyManager economyManager;
     private GridSystem gridSystem;
-
+    public Hex denemhex;
     private void Awake()
     {
         gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
@@ -24,6 +24,13 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         StartGame();
+        
+    }
+    private void Update() {
+        if (Input.GetKey(KeyCode.T))
+        {
+            denemhex=gridSystem.FindHex(0,0);
+        }
     }
     void StartGame()
     {
@@ -32,23 +39,21 @@ public class GameManager : MonoBehaviour
     void assingPlayers()
     { //Oyuncuları atar
 
-          Hex selected = gridSystem.FindHex(0,0);
-          Debug.Log(selected);
-          List<Hex> devletHexs = new List<Hex>();
+        Hex selected = gridSystem.FindHex(0, 0);
+        Debug.Log(selected);
+        List<Hex> devletHexs = new List<Hex>();
+        devletHexs.Add(selected);
 
-       
-              devletHexs.Add(selected);
-                 
-              foreach(var hex in selected.neighbors)
-              {
-                    if(hex!=null)
-                     devletHexs.Add(hex);
-              }
-              Debug.Log(devletHexs[1]);
-        
+        foreach (var hex in selected.neighbors)
+        {
+            if (hex != null && hex)
+                devletHexs.Add(hex);
+        }
+        Debug.Log(devletHexs[1]);
 
 
-        Player player1 = new Player("adil",devletHexs);
+
+        Player player1 = new Player("adil", devletHexs);
         Player player2 = new Player("ibo");
         Player player3 = new Player("burak");
         players.Add(player1);

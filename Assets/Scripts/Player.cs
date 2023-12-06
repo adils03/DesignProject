@@ -17,6 +17,7 @@ public class Player
     public Player(String name,List<Hex> hexes)// dışardan gelen ilk hexlerle ve oyun boyunca elde edilecek olan hexler için inşa edilecek olan kısım
     {
         ownedHexes = hexes;
+        Debug.Log(name);
         // Hex'lerin sahibini bu oyuncu olarak ayarla
         foreach (var hex in ownedHexes)
         {

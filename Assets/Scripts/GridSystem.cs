@@ -16,7 +16,7 @@ public class GridSystem : MonoBehaviour
     public float threshold = 0.5f;
     public float offsetX, offsetY;
 
-    private void Start()
+    private void Awake()
     {
         CreateGrid(size);
     }
@@ -30,6 +30,7 @@ public class GridSystem : MonoBehaviour
             }
             CreateGrid(size);
         }
+
     }
 
     void CreateGrid(int size) //Haritamızı oluşturur
