@@ -11,7 +11,7 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private GameObject hexPrefabWater;
     private GameObject _hex;
     public List<Hex> continent = new List<Hex>();
-    private List<Hex> hexes = new List<Hex>();
+    public List<Hex> hexes = new List<Hex>();
     public float noiseScale = 1f;
     public float threshold = 0.5f;
     public float offsetX, offsetY;

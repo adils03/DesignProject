@@ -8,7 +8,7 @@ public class Player
     public int PlayerTotalGold = 0;// player altını burdan da örüyoruz kaynak eManager
     public List<Hex> ownedHexes = new List<Hex>(); //sahip olduğu hexler
     public EconomyManager economyManager;
-
+    public Color playerColor = Color.black;
     public Player(String name)// bu ctor diğerleri patlamasın diye geçici duruyor daha karar verilmedi
     {
         playerName=name;
@@ -21,6 +21,8 @@ public class Player
         foreach (var hex in ownedHexes)
         {
             hex.Owner = this;
+            hex.havinPlayer = this.playerName;
+            hex.gameObject.GetComponent<SpriteRenderer>().color = playerColor;
         }
 
 

@@ -26,11 +26,13 @@ public class Hex : MonoBehaviour
     public List<Hex> areaForStep = new List<Hex>();
     public bool hasVisited = false;
     public int Income=3;// hex başına gelir default 3 
-    private string havinPlayer = "None";
+    public string havinPlayer = "None";
     public Player Owner;// kimin bu hex ,null ise kimsenin
     public bool HasAnything = false;
     public ObjectType HexObjectType { get; set; } = ObjectType.None;// hex üzerindeki nesne asker , bina , ağaç
-
+    public bool HexEmpty { get; set; }
+    public bool SetProtected
+     { get; set; }
     public enum hexType
     {
         grass,
@@ -41,10 +43,6 @@ public class Hex : MonoBehaviour
         travelContinentByStep(this, 2);
     }
 
-    public bool HasDisadvantage()// ağaçlardan biri mevcut ise dezavantaj var 
-    {
-        return this.HexObjectType== ObjectType.Tree || this.HexObjectType== ObjectType.TreeWeak;
-    }
     public void UpdateAdvantageOrDisadvantageValue()// ağaçlardan biri mevcut ise dezavantaj var 
     {
         if (this.HexObjectType == ObjectType.Tree || this.HexObjectType == ObjectType.TreeWeak)
@@ -114,4 +112,3 @@ public class Hex : MonoBehaviour
 
 
 }
-
