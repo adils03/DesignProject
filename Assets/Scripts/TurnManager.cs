@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Oyuncuların sırasını yönetir.Players adında bir liste ve turnQueue adında bir kuyruk içerir.
-public class TurnManager : MonoBehaviour
+public class TurnManager
 {
     public List<Player> players ;
 
@@ -11,6 +11,10 @@ public class TurnManager : MonoBehaviour
     private Player currentPlayer;
 
 
+    public TurnManager()
+    {
+            
+    }
     //Start metodu, oyun başladığında çağrılır ve tüm oyuncuları sırayla kuyruğa ekler.
     void Start()
     {
@@ -22,9 +26,6 @@ public class TurnManager : MonoBehaviour
         StartTurn();
 
     }
-
-
-
     //StartTurn metodu, bir oyuncunun sırasını başlatır. Eğer tüm oyuncuların sırası biterse, kuyruğu yeniden doldurur.
     void StartTurn()
     {

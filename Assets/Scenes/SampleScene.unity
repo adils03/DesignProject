@@ -202,50 +202,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300410010}
   m_CullTransparentMesh: 1
---- !u!1 &433178575
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 433178577}
-  - component: {fileID: 433178576}
-  m_Layer: 0
-  m_Name: EconomyManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &433178576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433178575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a5c356bc30b92840bccce9d79c3603c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &433178577
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433178575}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &440795680
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,6 +514,7 @@ MonoBehaviour:
   x: 0
   y: 0
   housePrefab: {fileID: 872491241}
+  soldierPrefab: {fileID: 0}
 --- !u!4 &714405839
 Transform:
   m_ObjectHideFlags: 0
@@ -613,6 +570,7 @@ MonoBehaviour:
   - {x: 22, y: 4}
   - {x: 10, y: 21}
   - {x: 21, y: 21}
+  denemhex: {fileID: 0}
 --- !u!4 &933674181
 Transform:
   m_ObjectHideFlags: 0
@@ -755,7 +713,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1696721933}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
         m_MethodName: passTurn
         m_Mode: 1
@@ -805,50 +763,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1550296952}
   m_CullTransparentMesh: 1
---- !u!1 &1696721932
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1696721934}
-  - component: {fileID: 1696721933}
-  m_Layer: 0
-  m_Name: TurnManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1696721933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696721932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3987fbbd79b1c044681d868670bc86d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1696721934
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696721932}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1969840659
 GameObject:
   m_ObjectHideFlags: 0
@@ -897,6 +811,7 @@ MonoBehaviour:
   hexPrefabGrass: {fileID: 4133545700341867623, guid: 7a92b132c0b172b43b1d229a7dfed48a, type: 3}
   hexPrefabWater: {fileID: 4133545700341867623, guid: 45831ac05379d3f4eae84cc7bf74f2a4, type: 3}
   continent: []
+  hexes: []
   noiseScale: 0.14
   threshold: 0.35
   offsetX: 0
@@ -966,9 +881,7 @@ SceneRoots:
   - {fileID: 1969840661}
   - {fileID: 469701394}
   - {fileID: 440795684}
-  - {fileID: 1696721934}
   - {fileID: 933674181}
-  - {fileID: 433178577}
   - {fileID: 259084424483244899}
   - {fileID: 1507633951}
   - {fileID: 714405839}

@@ -8,15 +8,15 @@ public class GameManager : MonoBehaviour
     public List<Player> players = new List<Player>();
     public List<Hex> hexes;
     public List<Vector2> playerStartingPositions = new List<Vector2>();
-    private TurnManager turnManager;
-    private EconomyManager economyManager;
+    private TurnManager turnManager = new TurnManager();
+    //private EconomyManager economyManager;
     private GridSystem gridSystem;
     public Hex denemhex;
     private void Awake()
     {
         gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
-        turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
-        economyManager = GameObject.Find("EconomyManager").GetComponent<EconomyManager>();
+        //turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
+        //economyManager = GameObject.Find("EconomyManager").GetComponent<EconomyManager>();
         turnManager.players = players;
 
         this.hexes = gridSystem.hexes;

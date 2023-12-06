@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EconomyManager : MonoBehaviour
+public class EconomyManager
 {
     public int CurrentGold { get; set; } = 0;
 
@@ -10,20 +10,10 @@ public class EconomyManager : MonoBehaviour
 
     private List<Hex> OwnedHexagons;
 
-    void Awake()
+    public EconomyManager()
     {
         OwnedHexagons = new List<Hex>(); // İlk değer ataması
-       
     }
-
-    void Start()
-    {
-        CalculateIncome();
-        CalculateSalaries();
-        UpdateGold();
-    }
-
-   
     void CalculateIncome()
     {     
 
@@ -54,7 +44,6 @@ public class EconomyManager : MonoBehaviour
     void UpdateGold()
     {
         CurrentGold += totalIncome;
-        Debug.Log("Total Gold: " + CurrentGold);
     }
     public void UpdateOwnedHexagons(List<Hex> newHexagons)
     {

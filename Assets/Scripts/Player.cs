@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player 
 {
     public string playerName;
-    public int PlayerTotalGold = 0;// player altını burdan da örüyoruz kaynak eManager
+    public int PlayerTotalGold = 0;// player altını burdan da görüyoruz kaynak eManager
     public List<Hex> ownedHexes = new List<Hex>(); //sahip olduğu hexler
     public EconomyManager economyManager;
     public Color playerColor = Color.black;
@@ -17,7 +17,6 @@ public class Player
     public Player(String name,List<Hex> hexes)// dışardan gelen ilk hexlerle ve oyun boyunca elde edilecek olan hexler için inşa edilecek olan kısım
     {
         ownedHexes = hexes;
-        Debug.Log(name);
         // Hex'lerin sahibini bu oyuncu olarak ayarla
         foreach (var hex in ownedHexes)
         {
@@ -36,10 +35,10 @@ public class Player
 
     }
     public void StartTurn()
-    {
-        Debug.Log(playerName + " oyuncunun sirasi basladi.");
+    {    
         economyManager.UpdateOwnedHexagons(ownedHexes);// sahip olduğumuz hexleri ekonomi managerde güncelledik
         PlayerTotalGold = economyManager.CurrentGold;// burdan da tur başına güncelledik kasadaki altını
+        Debug.Log(playerName + " oyuncunun sirasi basladi. ve Altını : "+ PlayerTotalGold);
     }
     public void ChangeHexOwnership(Hex changedHex)
     {

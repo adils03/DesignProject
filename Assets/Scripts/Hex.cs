@@ -25,7 +25,7 @@ public class Hex : MonoBehaviour
     public List<Hex> neighbors = new List<Hex>();
     public List<Hex> areaForStep = new List<Hex>();
     public bool hasVisited = false;
-    public int Income=3;// hex başına gelir default 3 
+    public int Income = 3;// hex başına gelir default 3 
     public string havinPlayer = "None";
     public Player Owner;// kimin bu hex ,null ise kimsenin
     public bool HasAnything = false;
