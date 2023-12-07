@@ -38,7 +38,7 @@ public class Hex : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        travelContinentByStep(this, 6);
+        travelContinentByStep(this, 4);
     }
 
     public void UpdateAdvantageOrDisadvantageValue()// ağaçlardan biri mevcut ise dezavantaj var 
@@ -54,7 +54,7 @@ public class Hex : MonoBehaviour
     void travelContinentByStep(Hex startHex, int step) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
     {
         step++;
-        Player ownedPlayer=Owner;
+        Player ownedPlayer = Owner;
 
         Queue<Hex> queue = new Queue<Hex>();
 
@@ -70,13 +70,13 @@ public class Hex : MonoBehaviour
             {
                 Hex currentHex = queue.Dequeue();
 
-                if (!currentHex.hasVisited && currentHex._hexType == __hexType)
+                if (!currentHex.hasVisited && currentHex._hexType == __hexType && currentHex.Owner == ownedPlayer)
                 {
                     areaForStep.Add(currentHex);
                     currentHex.hasVisited = true;
                     foreach (Hex neighbor in currentHex.neighbors)
                     {
-                        if (!neighbor.hasVisited)
+                        if (!neighbor.hasVisited && neighbor.Owner == ownedPlayer)
                         {
                             queue.Enqueue(neighbor);
                         }
@@ -113,10 +113,26 @@ public class Hex : MonoBehaviour
         {
             areaForStep.Remove(hex);
         }
+        List<Hex> toAdd = new List<Hex>();
+        foreach (Hex hex in areaForStep)
+        {
+            for (int i = 0; i < hex.neighbors.Count; i++)
+            {
+                if (hex.neighbors[i].Owner != ownedPlayer && !areaForStep.Contains(hex.neighbors[i]))
+                {
+                    toAdd.Add(hex.neighbors[i]);
+                }
+            }
+        }
+        foreach (Hex hex in toAdd)
+        {
+            areaForStep.Add(hex);
+        }
+        
         foreach (Hex hex in areaForStep)
         {
             hex.hasVisited = false;
-            //hex.transform.localScale = new Vector3(1, 1, 1);
+           // hex.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 
