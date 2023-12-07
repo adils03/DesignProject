@@ -116,7 +116,7 @@ public class Hex : MonoBehaviour
         foreach (Hex hex in areaForStep)
         {
             hex.hasVisited = false;
-            hex.transform.localScale = new Vector3(1, 1, 1);
+            //hex.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 

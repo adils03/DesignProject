@@ -16,7 +16,6 @@ public class EconomyManager
     }
     void CalculateIncome()
     {     
-
         foreach (Hex hexagon in OwnedHexagons)
         {
             totalIncome += hexagon.Income;
@@ -44,6 +43,7 @@ public class EconomyManager
     void UpdateGold()
     {
         CurrentGold += totalIncome;
+
     }
     public void UpdateOwnedHexagons(List<Hex> newHexagons)
     {
@@ -51,6 +51,7 @@ public class EconomyManager
         CalculateIncome();
         CalculateSalaries();
         UpdateGold();
+        totalIncome = 0;
     }
    
     public void HexOwnershipChanged(Hex changedHex)

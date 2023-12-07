@@ -30,7 +30,7 @@ public class Player
         playerName = name;
         economyManager = new EconomyManager();
 
-        economyManager.UpdateOwnedHexagons(ownedHexes);
+        //economyManager.UpdateOwnedHexagons(ownedHexes);
         PlayerTotalGold = economyManager.CurrentGold;// kasadaki altını  burdan ilkez aldık 
 
 
