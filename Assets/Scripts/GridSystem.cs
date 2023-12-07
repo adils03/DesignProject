@@ -130,7 +130,7 @@ public class GridSystem : MonoBehaviour
         return (Mathf.Abs(a.q - b.q) + Mathf.Abs(a.r - b.r) + Mathf.Abs(a.s - b.s)) / 2;
     }
 
-    void travelContinent(Hex startHex)//Hex'in bulunduğu kıtayı continent listesine eşitler
+    public List<Hex> travelContinent(Hex startHex)//Hex'in bulunduğu kıtayı continent listesine eşitler
     {
         Stack<Hex> stack = new Stack<Hex>();
 
@@ -160,5 +160,6 @@ public class GridSystem : MonoBehaviour
         {
             hex.hasVisited = false;
         }
+        return continent;
     }
 }

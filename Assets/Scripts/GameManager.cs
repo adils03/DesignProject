@@ -44,10 +44,11 @@ public class GameManager : MonoBehaviour
             if (hex != null && hex)
                 devletHexs.Add(hex);
         }//Buraya rastgelelik eklenecek
-
+        devletHexs.Add(gridSystem.FindHex(-2,0));
+        devletHexs.Add(gridSystem.FindHex(-3,0));
         foreach (String names in playerNames)
         {
-            Player newPLayer = new Player(names);
+            Player newPLayer = new Player(names,devletHexs,Color.black);
             players.Add(newPLayer);
         }
     }

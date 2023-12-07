@@ -5,52 +5,60 @@ using UnityEngine;
 
 public class DragCamera : MonoBehaviour
 {
-    private Vector3 _dragOrigin;
-    [SerializeField] private float dragSpeed;
-    [SerializeField] private float xBoundLeft;
-    [SerializeField] private float xBoundRight;
-    [SerializeField] private float yBoundUp;
-    [SerializeField] private float yBoundDown;
-
-    void Update()
+    private Vector3 ResetCamera;
+    private Vector3 Origin;
+    private Vector3 Diference;
+    private bool Drag = false;
+    public float zoomSpeed = 4.0f;
+    public float targetOrtho;
+    public float minOrtho = 1.0f;
+    public float maxOrtho = 20.0f;
+    void Start()
     {
-        Drag();
-        keepBounds();
+        ResetCamera = Camera.main.transform.position;
+        targetOrtho = Camera.main.orthographicSize;
+    }
+    void LateUpdate()
+    {
+        Dragging();
+        
+    }
+    private void Update() {
+        Zoom();   
     }
 
-    void Drag()
-    { //Kamerayı mouse ile kaydırır
-        if (Input.GetMouseButtonDown(0))
+    void Dragging(){
+        if (Input.GetMouseButton(0))
         {
-            _dragOrigin = Input.mousePosition;
-            return;
+            Diference = (Camera.main.ScreenToWorldPoint(Input.mousePosition)) - Camera.main.transform.position;
+            if (Drag == false)
+            {
+                Drag = true;
+                Origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
         }
-
-        if (!Input.GetMouseButton(0)) return;
-
-        Vector3 pos = Camera.main.ScreenToViewportPoint(_dragOrigin - Input.mousePosition);
-        Vector3 move = new Vector3(pos.x * dragSpeed, pos.y * dragSpeed, 0);
-
-        transform.Translate(move, Space.World);
+        else
+        {
+            Drag = false;
+        }
+        if (Drag == true)
+        {
+            Camera.main.transform.position = Origin - Diference;
+        }
+        //RESET CAMERA TO STARTING POSITION WITH RIGHT CLICK
+        if (Input.GetMouseButton(1))
+        {
+            Camera.main.transform.position = ResetCamera;
+        }
     }
+    void Zoom(){
+        
+        float scrollData = Input.GetAxis("Mouse ScrollWheel");
+        if (scrollData != 0.0f)
+            targetOrtho -= scrollData * zoomSpeed;
 
-    void keepBounds()
-    { //Kameranın sınırları aşmasını önler
-        if (transform.position.x < xBoundLeft)
-        {
-            transform.position = new Vector3(xBoundLeft, transform.position.y, transform.position.z);
-        }
-        if (transform.position.x > xBoundRight)
-        {
-            transform.position = new Vector3(xBoundRight, transform.position.y, transform.position.z);
-        }
-        if (transform.position.y < yBoundDown)
-        {
-            transform.position = new Vector3(transform.position.x, yBoundDown, transform.position.z);
-        }
-        if (transform.position.y > yBoundUp)
-        {
-            transform.position = new Vector3(transform.position.x, yBoundUp, transform.position.z);
-        }
+        targetOrtho = Mathf.Clamp(targetOrtho, minOrtho, maxOrtho);
+
+        Camera.main.orthographicSize = targetOrtho; // Kamerayı hemen hedef yakınlaştırma seviyesine ayarlıyoruz.
     }
 }

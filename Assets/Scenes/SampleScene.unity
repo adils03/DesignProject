@@ -477,11 +477,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af92f3e58dba3544eb6e7d948da6e671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragSpeed: 0.05
-  xBoundLeft: -1
-  xBoundRight: 7.5
-  yBoundUp: 11
-  yBoundDown: -1
+  zoomSpeed: 10
+  targetOrtho: 0
+  minOrtho: 1
+  maxOrtho: 10
 --- !u!1 &714405837
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,12 +558,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d45d49b81e2a24ea649c93258344ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNames:
+  - Adil
   hexes: []
-  playerStartingPositions:
-  - {x: 2, y: 2}
-  - {x: 22, y: 4}
-  - {x: 10, y: 21}
-  - {x: 21, y: 21}
 --- !u!4 &933674181
 Transform:
   m_ObjectHideFlags: 0
@@ -663,9 +659,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 3987fbbd79b1c044681d868670bc86d9, type: 3}
-        m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 933674180}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: endTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

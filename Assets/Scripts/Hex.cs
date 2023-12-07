@@ -27,6 +27,7 @@ public class Hex : MonoBehaviour
     public bool hasVisited = false;
     public int Income = 3;// hex başına gelir default 3 
     public Player Owner;// kimin bu hex ,null ise kimsenin
+    public String playerName;
     public ObjectType HexObjectType { get; set; } = ObjectType.None;// hex üzerindeki nesne asker , bina , ağaç
     public bool HexEmpty { get; set; }
     public bool SetProtected { get; set; }
@@ -37,7 +38,7 @@ public class Hex : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        travelContinentByStep(this, 2);
+        travelContinentByStep(this, 6);
     }
 
     public void UpdateAdvantageOrDisadvantageValue()// ağaçlardan biri mevcut ise dezavantaj var 
@@ -53,6 +54,7 @@ public class Hex : MonoBehaviour
     void travelContinentByStep(Hex startHex, int step) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
     {
         step++;
+        Player ownedPlayer=Owner;
 
         Queue<Hex> queue = new Queue<Hex>();
 
@@ -72,8 +74,6 @@ public class Hex : MonoBehaviour
                 {
                     areaForStep.Add(currentHex);
                     currentHex.hasVisited = true;
-                    currentHex.transform.localScale = new Vector3(1, 1, 1);
-
                     foreach (Hex neighbor in currentHex.neighbors)
                     {
                         if (!neighbor.hasVisited)
@@ -86,9 +86,37 @@ public class Hex : MonoBehaviour
 
             step--;
         }
+        List<Hex> toRemove = new List<Hex>();
+
+        foreach (Hex hex in areaForStep)
+        {
+            bool anyOwnerSame = false;
+
+            for (int i = 0; i < hex.neighbors.Count; i++)
+            {
+                if (hex.neighbors[i].Owner == ownedPlayer)
+                {
+                    anyOwnerSame = true;
+                    break;
+                }
+            }
+
+            if (!anyOwnerSame)
+            {
+                toRemove.Add(hex);
+            }
+
+            hex.hasVisited = false;
+        }
+
+        foreach (Hex hex in toRemove)
+        {
+            areaForStep.Remove(hex);
+        }
         foreach (Hex hex in areaForStep)
         {
             hex.hasVisited = false;
+            hex.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 

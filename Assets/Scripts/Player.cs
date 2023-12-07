@@ -21,6 +21,7 @@ public class Player
         // Hex'lerin sahibini bu oyuncu olarak ayarla
         foreach (var hex in ownedHexes)
         {
+            hex.playerName=name;
             hex.Owner = this;
             hex.gameObject.GetComponent<SpriteRenderer>().color = playerColor;
         }
