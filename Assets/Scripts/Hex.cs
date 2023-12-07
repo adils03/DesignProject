@@ -26,13 +26,10 @@ public class Hex : MonoBehaviour
     public List<Hex> areaForStep = new List<Hex>();
     public bool hasVisited = false;
     public int Income = 3;// hex başına gelir default 3 
-    public string havinPlayer = "None";
     public Player Owner;// kimin bu hex ,null ise kimsenin
-    public bool HasAnything = false;
     public ObjectType HexObjectType { get; set; } = ObjectType.None;// hex üzerindeki nesne asker , bina , ağaç
     public bool HexEmpty { get; set; }
-    public bool SetProtected
-     { get; set; }
+    public bool SetProtected { get; set; }
     public enum hexType
     {
         grass,
@@ -47,7 +44,7 @@ public class Hex : MonoBehaviour
     {
         if (this.HexObjectType == ObjectType.Tree || this.HexObjectType == ObjectType.TreeWeak)
             Income = 0;
-        else if(this.HexObjectType== ObjectType.BuildingFarm)
+        else if (this.HexObjectType == ObjectType.BuildingFarm)
             Income = 10;// bu da farmbinası başına verilen değer      
     }
 
@@ -93,20 +90,6 @@ public class Hex : MonoBehaviour
         {
             hex.hasVisited = false;
         }
-    }
-
-    /*void AssignObjectOnHex(unitType unit){
-        income = (int)unit;
-        _unitType=unit;
-    }
-    void RemoveObjectOnHex(){
-        if(_hexType==hexType.grass) {
-            _unitType=unitType.grass;
-        }else{_unitType=unitType.water;}
-    }*/
-
-    void assignPlayer(String name){
-        havinPlayer=name;
     }
 
 

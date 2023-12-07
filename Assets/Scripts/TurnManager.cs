@@ -4,30 +4,26 @@ using UnityEngine;
 //Oyuncuların sırasını yönetir.Players adında bir liste ve turnQueue adında bir kuyruk içerir.
 public class TurnManager
 {
-    public List<Player> players ;
+    public List<Player> players;
 
     private Queue<Player> turnQueue = new Queue<Player>();
 
     private Player currentPlayer;
 
 
-    public TurnManager()
+    public TurnManager(List<Player> players)//Oyuncu listesini alarak turnManager nesnesi oluşturur ve ilk turu başlatır
     {
-            
-    }
-    //Start metodu, oyun başladığında çağrılır ve tüm oyuncuları sırayla kuyruğa ekler.
-    void Start()
-    {
+        this.players = players;
         foreach (Player player in players)
         {
             turnQueue.Enqueue(player);
         }
 
         StartTurn();
-
     }
+    
     //StartTurn metodu, bir oyuncunun sırasını başlatır. Eğer tüm oyuncuların sırası biterse, kuyruğu yeniden doldurur.
-    void StartTurn()
+    public void StartTurn()
     {
         if (turnQueue.Count == 0)
         {
