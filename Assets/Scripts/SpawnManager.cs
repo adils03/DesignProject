@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.ShortcutManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
+
 
 public class SpawnManager : MonoBehaviour
 {
@@ -50,33 +52,83 @@ public class SpawnManager : MonoBehaviour
         }
 
     }
-
-   /* public class Tower : Unite
-{
-    SpawnManager spawnManager;
-    GridSystem gridSystem;
-    public List<Hex> ProtectedHexes = new List<Hex>();
-     private void Awake() {
-        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
-    }
-
-  
-
-    public void DestroyTower()
+    public void SpawnTrees()// en başta rastgele ağaçlar atanacak genelde ikişerli üçerli olacak şekilde
     {
-        foreach (Hex hex in ProtectedHexes)
+        List<Hex> hexes = gridSystem.hexes;
+
+        System.Random rand = new System.Random();//
+
+        for (int i = 0; i < 13; i++)
         {
-            hex.SetProtected = false;
+            int index = rand.Next(hexes.Count);
+            Hex hex = hexes[index];
+            hex.HexObjectType = ObjectType.TreeWeak;
+
+
+            int rndIndex = rand.Next(hex.neighbors.Count);
+            if (hex.neighbors[rndIndex].HexObjectType == ObjectType.None)
+            {
+                hex.neighbors[rndIndex].HexObjectType = ObjectType.TreeWeak;
+            }    
         }
-        ProtectedHexes.Clear();
+   
+
     }
-    
-    private List<Hex> GetNeighboringHexes(int x, int y)
-    { 
-        Hex hex = gridSystem.FindHex(x, y); 
-        return new List<Hex>();
-    }*/
+    public void TreesSpread()
+    {
+        // olan ağaçlar yayılma eğlimi gösterir SpawnTrees()'den sonra çağrılmalı ağaçlar 10 tane türeyecek konumlarını gözden geçirecem
+        List<Hex> hexes = gridSystem.hexes;
+        System.Random rand = new System.Random();//
+        int spreadCounter = 0;
+
+        for (int j = 0; j < hexes.Count &&spreadCounter <10; j++)
+        {
+            if (hexes[j].HexObjectType == ObjectType.TreeWeak)
+            {
+                bool spread = false;
+                for (int a = 0; a< hexes[j].neighbors.Count && !spread; a++)
+                {
+                    if (hexes[j].neighbors[a].HexObjectType == ObjectType.None)
+                    {
+                        hexes[j].neighbors[a].HexObjectType = ObjectType.TreeWeak;
+                        spread = true;
+                        spreadCounter++;
+                    }
+                    
+                }
+            }
+        }   
+
+    }
+
+
+
+    /* public class Tower : Unite
+ {
+     SpawnManager spawnManager;
+     GridSystem gridSystem;
+     public List<Hex> ProtectedHexes = new List<Hex>();
+      private void Awake() {
+         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+         gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
+     }
+
+
+
+     public void DestroyTower()
+     {
+         foreach (Hex hex in ProtectedHexes)
+         {
+             hex.SetProtected = false;
+         }
+         ProtectedHexes.Clear();
+     }
+
+     private List<Hex> GetNeighboringHexes(int x, int y)
+     { 
+         Hex hex = gridSystem.FindHex(x, y); 
+         return new List<Hex>();
+     }*/
 
     /*public void BuildTower(int x, int y)
     {
