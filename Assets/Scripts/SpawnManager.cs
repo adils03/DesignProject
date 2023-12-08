@@ -11,7 +11,8 @@ public class SpawnManager : MonoBehaviour
     public int x,y;
     GridSystem gridSystem;
     public GameObject housePrefab;
-      public GameObject soldierPrefab;
+    public GameObject TreeWeakPrefab;
+    public GameObject soldierPrefab;
     private void Awake() {
         gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
     }
@@ -69,6 +70,8 @@ public class SpawnManager : MonoBehaviour
             if (hex.neighbors[rndIndex].HexObjectType == ObjectType.None)
             {
                 hex.neighbors[rndIndex].HexObjectType = ObjectType.TreeWeak;
+                GameObject treeWeak;
+                treeWeak = Instantiate(TreeWeakPrefab, new Vector3(hex.neighbors[rndIndex].transform.position.x, hex.neighbors[rndIndex].transform.position.y), Quaternion.identity);
             }    
         }
    
@@ -91,6 +94,9 @@ public class SpawnManager : MonoBehaviour
                     if (hexes[j].neighbors[a].HexObjectType == ObjectType.None)
                     {
                         hexes[j].neighbors[a].HexObjectType = ObjectType.TreeWeak;
+                        GameObject treeWeak;
+                        treeWeak = Instantiate(TreeWeakPrefab, new Vector3(hexes[j].neighbors[a].transform.position.x, hexes[j].neighbors[a].transform.position.y), Quaternion.identity);
+
                         spread = true;
                         spreadCounter++;
                     }
