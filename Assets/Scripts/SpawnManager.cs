@@ -68,7 +68,7 @@ public class SpawnManager : MonoBehaviour
                 }
             }
 
-            List<Hex> ownedHexes = Player.ownedHexes;
+            //List<Hex> ownedHexes = Player.ownedHexes;
             //Hex.hexType hexType = Hex.hexType.grass;
             List<Hex> BuildHouse = new List<Hex>();
 
