@@ -480,7 +480,7 @@ MonoBehaviour:
   zoomSpeed: 10
   targetOrtho: 0
   minOrtho: 1
-  maxOrtho: 10
+  maxOrtho: 25
 --- !u!1 &714405837
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,6 +560,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNames:
   - Adil
+  - Burak
+  - "\u0130bo"
   hexes: []
 --- !u!4 &933674181
 Transform:
@@ -760,8 +762,8 @@ MonoBehaviour:
   hexes: []
   noiseScale: 0.14
   threshold: 0.35
-  offsetX: 0
-  offsetY: 0
+  offsetX: 46519
+  offsetY: 42625
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GridSystem : MonoBehaviour
 {
-    [SerializeField] private int size;
+    [SerializeField] public int size;
     [SerializeField] private GameObject hexPrefabGrass;
     [SerializeField] private GameObject hexPrefabWater;
     private GameObject _hex;
@@ -103,6 +103,17 @@ public class GridSystem : MonoBehaviour
         }
         return null;
     }
+
+    public Hex GetRandomHex()
+    {
+        if (hexes.Count == 0)
+        {
+            return null; 
+        }
+
+        int randomIndex = UnityEngine.Random.Range(0, hexes.Count);
+        return hexes[randomIndex];
+    }
     void InitializeNeighbors() //Komşuları atar
     {
         foreach (Hex hex in hexes)
@@ -125,7 +136,7 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    int FindDistanceBetweenHexes(Hex a, Hex b) //İki hex arası uzaklığı bulur
+    public static int FindDistanceBetweenHexes(Hex a, Hex b) //İki hex arası uzaklığı bulur
     {
         return (Mathf.Abs(a.q - b.q) + Mathf.Abs(a.r - b.r) + Mathf.Abs(a.s - b.s)) / 2;
     }

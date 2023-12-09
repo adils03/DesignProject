@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
         assingPlayers();
         turnManager = new TurnManager(players);
     }
-    public void endTurn()
+    public void endTurn() //Buton ataması için konulmuştur.
     {
         turnManager.StartTurn();
     }
@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
         }//Buraya rastgelelik eklenecek
         devletHexs.Add(gridSystem.FindHex(-2,0));
         devletHexs.Add(gridSystem.FindHex(-3,0));
+
         foreach (String names in playerNames)
         {
             Player newPLayer = new Player(names,devletHexs,Color.black);

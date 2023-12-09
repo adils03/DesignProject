@@ -31,6 +31,7 @@ public class Hex : MonoBehaviour
     public ObjectType HexObjectType { get; set; } = ObjectType.None;// hex üzerindeki nesne asker , bina , ağaç
     public bool HexEmpty { get; set; }
     public bool SetProtected { get; set; }
+    public Color color { get; set; }
     public enum hexType
     {
         grass,
@@ -51,7 +52,7 @@ public class Hex : MonoBehaviour
 
 
 
-    void travelContinentByStep(Hex startHex, int step) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
+    public void travelContinentByStep(Hex startHex, int step) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
     {
         step++;
         Player ownedPlayer = Owner;
@@ -136,6 +137,6 @@ public class Hex : MonoBehaviour
         }
     }
 
-
+    
 
 }
