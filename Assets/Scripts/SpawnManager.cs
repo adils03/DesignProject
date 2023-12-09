@@ -11,38 +11,15 @@ public class SpawnManager : MonoBehaviour
 {
     public int x,y;
     GridSystem gridSystem;
-    Hex hex;
     public GameObject housePrefab;
-<<<<<<< HEAD
-    public GameObject soldierPrefab;
-    public List<Hex> continent = new List<Hex>();
-    public Color playerColor;
-    
-    
-=======
     public GameObject TreeWeakPrefab;
     public GameObject soldierPrefab;
->>>>>>> b8447f28c54782f991277806dc6527341664747a
+    public List<Hex> continent = new List<Hex>();
     private void Awake() {
         gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
         
 
     }
-<<<<<<< HEAD
-    private void Update() {
-    if (Input.GetKeyDown(KeyCode.Space)) 
-    {
-        int size = gridSystem.size;
-        SpawnHouse(size);
-    }
-      
-    }
-    public void SpawnHouse(int size)
-    {
-        List<Hex> grassHexes = gridSystem.hexes.Where(hex => hex._hexType == Hex.hexType.grass).ToList();
-        List<Hex> spawnedHouses = new List<Hex>();
-        int numberOfHouses = 4; 
-=======
      private void Update() 
      {
         if(Input.GetKey(KeyCode.T))
@@ -50,9 +27,11 @@ public class SpawnManager : MonoBehaviour
           
         }
      }
-    public void SpawnBuilding(int x,int y){
->>>>>>> b8447f28c54782f991277806dc6527341664747a
-
+    public void SpawnHouse(int size)// burak
+    {
+        List<Hex> grassHexes = gridSystem.hexes.Where(hex => hex._hexType == Hex.hexType.grass).ToList();
+        List<Hex> spawnedHouses = new List<Hex>();
+        int numberOfHouses = 4;
         for (int i = 0; i < numberOfHouses; i++)
         {
             if (grassHexes.Count > 0)
@@ -69,93 +48,84 @@ public class SpawnManager : MonoBehaviour
                 spawnedHouses.Add(randomHex);
             }
         }
-
     }// oyuncuların başlangış noktalarını atan metod
 
     public void spawnDevletis(List<Hex> houseHexes)
     {
-<<<<<<< HEAD
-    
+
         foreach (Hex startHex in houseHexes)
         {
-        if (startHex == null || startHex.HexEmpty) 
-        {
-            continue;
-        }
-
-        foreach (Hex center in houseHexes)
-        {
-            if (GridSystem.FindDistanceBetweenHexes(startHex, center) < 10)
-            {   
+            if (startHex == null || startHex.HexEmpty)
+            {
                 continue;
             }
-        }
 
-        List<Hex> ownedHexes = Player.ownedHexes;
-        Hex.hexType hexType = Hex.hexType.grass;
-        List<Hex> BuildHouse = new List<Hex>();
-
-        List<Hex> devletHexes = travelContinentSpawn(startHex, 7); 
-
-
-        if (devletHexes.Count == 7)
-        {
-            foreach (Hex hex in devletHexes)
+            foreach (Hex center in houseHexes)
             {
-                BuildHouse.Add(hex);
-                hex.gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+                if (GridSystem.FindDistanceBetweenHexes(startHex, center) < 10)
+                {
+                    continue;
+                }
             }
-            
-            BuildHouse.Add(startHex);
-            startHex.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-        }
-        
-        
+
+            List<Hex> ownedHexes = Player.ownedHexes;
+            //Hex.hexType hexType = Hex.hexType.grass;
+            List<Hex> BuildHouse = new List<Hex>();
+
+            List<Hex> devletHexes = travelContinentSpawn(startHex, 7);
+
+
+            if (devletHexes.Count == 7)
+            {
+                foreach (Hex hex in devletHexes)
+                {
+                    BuildHouse.Add(hex);
+                    hex.gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+                }
+
+                BuildHouse.Add(startHex);
+                startHex.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+            }
+
+
         }
     }
-  
-    public List<Hex> travelContinentSpawn(Hex startHex, int count) 
+    public List<Hex> travelContinentSpawn(Hex startHex, int count)
     {
-    Stack<Hex> stack = new Stack<Hex>();
+        Stack<Hex> stack = new Stack<Hex>();
 
-    stack.Push(startHex);
+        stack.Push(startHex);
 
-    Hex.hexType __hexType = startHex._hexType;
+        Hex.hexType hexType = startHex._hexType;
 
-    while (stack.Count > 0 && continent.Count < count)
-    {
-        Hex currentHex = stack.Pop();
-
-        if (!currentHex.hasVisited && currentHex._hexType == __hexType)
+        while (stack.Count > 0 && continent.Count < count)
         {
-            continent.Add(currentHex);
-            currentHex.hasVisited = true;
+            Hex currentHex = stack.Pop();
 
-            if (continent.Count == count)
+            if (!currentHex.hasVisited && currentHex._hexType == hexType)
             {
-                break; 
-            }
+                continent.Add(currentHex);
+                currentHex.hasVisited = true;
 
-            foreach (Hex neighbor in currentHex.neighbors)
-            {
-                if (!neighbor.hasVisited)
+                if (continent.Count == count)
                 {
-                    stack.Push(neighbor);
+                    break;
+                }
+
+                foreach (Hex neighbor in currentHex.neighbors)
+                {
+                    if (!neighbor.hasVisited)
+                    {
+                        stack.Push(neighbor);
+                    }
                 }
             }
         }
-    }
-    foreach (Hex hex in continent)
-    {
-        hex.hasVisited = false;
-    }
-    return continent;
-}
-=======
-        SpawnBuilding(x, y);
-        Hex hex = gridSystem.FindHex(x, y);
-        Vector3 position = gameObject.transform.position;
-        Debug.Log("Evin X koordinatı: " + position.x + ", Y koordinatı: " + position.y);
+        foreach (Hex hex in continent)
+        {
+            hex.hasVisited = false;
+        }
+        return continent;
     }
 
     public void SpawnSoldier(int x, int y)
@@ -262,7 +232,6 @@ public class SpawnManager : MonoBehaviour
     }
 
 
->>>>>>> b8447f28c54782f991277806dc6527341664747a
 
     /* public class Tower : Unite
  {
@@ -309,6 +278,18 @@ public class SpawnManager : MonoBehaviour
             Debug.Log("Komşu Hex'in X koordinatı: " + neighbourPosition.x + ", Y koordinatı: " + neighbourPosition.y);
         }
         
-    }*/
+    }
+    void Update()
+    {
+        if(Input.GetKey(KeyCode.X))
+        {
+            BuildTower(0,0);
+        }
+        if(Input.GetKey(KeyCode.C))
+        {
+            BuildHouse(3,2);
+        }
+    }
+*/
 
 }
