@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class GridSystem : MonoBehaviour
@@ -125,7 +127,7 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    int FindDistanceBetweenHexes(Hex a, Hex b) //İki hex arası uzaklığı bulur
+    public int FindDistanceBetweenHexes(Hex a, Hex b) //İki hex arası uzaklığı bulur
     {
         return (Mathf.Abs(a.q - b.q) + Mathf.Abs(a.r - b.r) + Mathf.Abs(a.s - b.s)) / 2;
     }
@@ -161,5 +163,62 @@ public class GridSystem : MonoBehaviour
             hex.hasVisited = false;
         }
         return continent;
+    }
+
+    public List<Hex> AStar(Hex start, Hex goal,List<Hex> validHexes)
+    {
+        List<Hex> openList = new List<Hex>();
+        List<Hex> closedList = new List<Hex>();
+        openList.Add(start);
+
+        while (openList.Count > 0)
+        {
+            Hex current = openList.OrderBy(hex => hex.estimatedCost).First();
+            if (current == goal)
+            {
+                List<Hex> path = new List<Hex>();
+                while (current != null)
+                {
+                    path.Add(current);
+                    current = current.parent;
+                }
+                path.Reverse();
+                return path;
+            }
+            openList.Remove(current);
+            closedList.Add(current);
+
+            List<Hex> adjacentNodes = current.neighbors;
+            foreach (Hex neighbor in adjacentNodes)
+            {
+                if (closedList.Contains(neighbor) || !validHexes.Contains(neighbor))
+                {
+                    continue;
+                }
+                if (!openList.Contains(neighbor))
+                {
+                    neighbor.parent = current;
+                    neighbor.cost = current.cost + 1;
+                    neighbor.estimatedCost = neighbor.cost + FindDistanceBetweenHexes(neighbor, goal);
+                    openList.Add(neighbor);
+                }
+                else
+                {
+                    int newCost = current.cost + 1;
+
+                    if (newCost < neighbor.cost)
+                    {
+                        neighbor.parent = current;
+                        neighbor.cost = newCost;
+                        neighbor.estimatedCost = neighbor.cost + FindDistanceBetweenHexes(neighbor, goal);
+                    }
+
+
+
+                }
+            }
+
+        }
+        return null;
     }
 }

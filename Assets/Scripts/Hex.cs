@@ -20,6 +20,9 @@ public enum ObjectType// hex üzerindeki nesneler
 
 public class Hex : MonoBehaviour
 {
+    public Hex parent;
+    public int cost;
+    public int estimatedCost;
     public hexType _hexType;
     public int q, r, s;
     public List<Hex> neighbors = new List<Hex>();
@@ -36,10 +39,6 @@ public class Hex : MonoBehaviour
         grass,
         water
     }
-    private void OnMouseDown()
-    {
-        travelContinentByStep(this, 4);
-    }
 
     public void UpdateAdvantageOrDisadvantageValue()// ağaçlardan biri mevcut ise dezavantaj var 
     {
@@ -51,11 +50,13 @@ public class Hex : MonoBehaviour
 
 
 
-    void travelContinentByStep(Hex startHex, int step) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
+    public List<Hex> travelContinentByStep(int step) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
     {
         step++;
+        int stepAmount = step;
+        areaForStep.Clear();
         Player ownedPlayer = Owner;
-
+        Hex startHex = this;
         Queue<Hex> queue = new Queue<Hex>();
 
         queue.Enqueue(startHex);
@@ -105,8 +106,6 @@ public class Hex : MonoBehaviour
             {
                 toRemove.Add(hex);
             }
-
-            hex.hasVisited = false;
         }
 
         foreach (Hex hex in toRemove)
@@ -116,26 +115,33 @@ public class Hex : MonoBehaviour
         List<Hex> toAdd = new List<Hex>();
         foreach (Hex hex in areaForStep)
         {
-            for (int i = 0; i < hex.neighbors.Count; i++)
-            {
-                if (hex.neighbors[i].Owner != ownedPlayer && !areaForStep.Contains(hex.neighbors[i]))
+            GridSystem gridSystemInstance = GameObject.Find("GridSystem").GetComponent<GridSystem>();
+            if (gridSystemInstance.AStar(startHex,hex,areaForStep).Count<stepAmount)
+                for (int i = 0; i < hex.neighbors.Count; i++)
                 {
-                    toAdd.Add(hex.neighbors[i]);
+                    if (hex.neighbors[i].Owner != ownedPlayer && !areaForStep.Contains(hex.neighbors[i]) && hex.neighbors[i]._hexType != hexType.water)
+                    {
+                        toAdd.Add(hex.neighbors[i]);
+                    }
                 }
-            }
         }
         foreach (Hex hex in toAdd)
         {
             areaForStep.Add(hex);
         }
-        
+
         foreach (Hex hex in areaForStep)
         {
             hex.hasVisited = false;
-           // hex.transform.localScale = new Vector3(1, 1, 1);
+            //hex.transform.localScale = new Vector3(1, 1, 1);
         }
+        return areaForStep;
     }
 
+    public void activateIndicator(bool request)
+    {
+        gameObject.transform.GetChild(0).gameObject.SetActive(request);
+    }
 
-
+    
 }

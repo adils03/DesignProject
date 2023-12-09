@@ -16,7 +16,7 @@ public class SpawnManager : MonoBehaviour
      private void Update() {
         if(Input.GetKey(KeyCode.T))
         {
-            SpawnSoldier(1,1);
+            SpawnSoldier(0,0);
         }
     }
     public void SpawnBuilding(int x,int y){
