@@ -25,11 +25,6 @@ public class SpawnManager : MonoBehaviour
         if(Input.GetKey(KeyCode.T))
         {
             SpawnSoldier(0,0);
-<<<<<<< HEAD
-        }else if(Input.GetKeyDown(KeyCode.P)){
-            SpawnHouse(3);
-=======
->>>>>>> 97ba8417ce5e6fe040811df2e9bed501e899d8d4
         }
      }
     public List<Hex> SpawnLandOfPlayers(int size,List<Player> players)//Devletleri atar gösterir
@@ -79,13 +74,13 @@ public class SpawnManager : MonoBehaviour
             int a = 1;
             while (land.Count<7)
             {
-                if (land.Count == 7)
-                    continue;
+               
                 foreach (var item in land[a].neighbors)
                 {
-                    land.Add(item);
                     if (land.Count == 7)
                         continue;
+                    land.Add(item);
+                    
                 }
                 a++;
             }
