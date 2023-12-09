@@ -112,7 +112,7 @@ public class SpawnManager : MonoBehaviour
         // ağaçyerleştrimek için;
     }
 
-    public void TreesSpread()
+    public void TreesSpread()// ağaç yayılması tüm haritayı kapsamaz bir yerde durur.
     {
         // olan ağaçlar yayılma eğlimi gösterir SpawnTrees()'den sonra çağrılmalı ağaçlar 10 tane türeyecek
         List<Hex> hexes = gridSystem.hexes;
@@ -121,6 +121,8 @@ public class SpawnManager : MonoBehaviour
         int spreadLimit = 15;// yayılma tetiklenince artacak ağaç sayısı
       
         List<Hex> hexesWithTree = new List<Hex>();
+        
+
         foreach (var hex in hexes)
         {
             if (hex.HexObjectType == ObjectType.TreeWeak)
@@ -128,7 +130,7 @@ public class SpawnManager : MonoBehaviour
                 hexesWithTree.Add(hex);
             }       
         }
-        bool canSpread = hexes.Count *5/10 > hexesWithTree.Count;// yayılma duruyor eğer çok fazla ağaç varsa
+        bool canSpread = hexes.Count *6/10 > hexesWithTree.Count;// yayılma duruyor eğer çok fazla ağaç varsa
 
         while (spreadCounter<spreadLimit&&canSpread)
         {
@@ -148,6 +150,7 @@ public class SpawnManager : MonoBehaviour
             }          
 
         }
+        
 
     }
 
