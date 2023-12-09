@@ -16,6 +16,7 @@ public enum ObjectType// hex üzerindeki nesneler
     BuildingFarm,
     BuildingDefenceLevel1,
     BuildingDefenceLevel2,
+    TownHall
 }
 
 public class Hex : MonoBehaviour
@@ -48,8 +49,6 @@ public class Hex : MonoBehaviour
         else if (this.HexObjectType == ObjectType.BuildingFarm)
             Income = 10;// bu da farmbinası başına verilen değer      
     }
-
-
 
     public List<Hex> travelContinentByStep(int step) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
     {
@@ -116,8 +115,7 @@ public class Hex : MonoBehaviour
         List<Hex> toAdd = new List<Hex>();
         foreach (Hex hex in areaForStep)
         {
-            GridSystem gridSystemInstance = GameObject.Find("GridSystem").GetComponent<GridSystem>();
-            if (gridSystemInstance.AStar(startHex, hex, areaForStep).Count < stepAmount)
+            if (GridSystem.AStar(startHex, hex, areaForStep).Count < stepAmount)
                 for (int i = 0; i < hex.neighbors.Count; i++)
                 {
                     if (hex.neighbors[i].Owner != ownedPlayer && !areaForStep.Contains(hex.neighbors[i]) && hex.neighbors[i]._hexType != hexType.water)
@@ -125,6 +123,12 @@ public class Hex : MonoBehaviour
                         toAdd.Add(hex.neighbors[i]);
                     }
                 }
+        }
+        foreach (Hex hex in areaForStep)
+        {
+            hex.cost = 0;
+            hex.estimatedCost = 0;
+            hex.parent = null;
         }
         foreach (Hex hex in toAdd)
         {

@@ -513,9 +513,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  housePrefab: {fileID: 4625775723015354401, guid: 9b917def5d8f2084495e96ffd45266c3, type: 3}
+  housePrefab: {fileID: 6309078802363555709, guid: 113437592663c1c408b39d240663c6c0, type: 3}
   TreeWeakPrefab: {fileID: 4625775723015354401, guid: 9b917def5d8f2084495e96ffd45266c3, type: 3}
   soldierPrefab: {fileID: 6173238419933503443, guid: ac32adf1fa37eac439d235e6f05f0fe3, type: 3}
+  continent: []
 --- !u!4 &714405839
 Transform:
   m_ObjectHideFlags: 0
@@ -543,6 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40178a5bb296094d9af3b3913a0afb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soldier: {fileID: 0}
 --- !u!1 &933674179
 GameObject:
   m_ObjectHideFlags: 0

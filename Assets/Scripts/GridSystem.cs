@@ -176,7 +176,7 @@ public class GridSystem : MonoBehaviour
         return continent;
     }
 
-    public List<Hex> AStar(Hex start, Hex goal,List<Hex> validHexes)
+    public static List<Hex> AStar(Hex start, Hex goal,List<Hex> validHexes)
     {
         List<Hex> openList = new List<Hex>();
         List<Hex> closedList = new List<Hex>();
