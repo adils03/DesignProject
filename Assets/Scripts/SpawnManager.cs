@@ -50,7 +50,7 @@ public class SpawnManager : MonoBehaviour
         }
     }// oyuncuların başlangış noktalarını atan metod
 
-    public void spawnDevletis(List<Hex> houseHexes)
+    public void spawnDevletis(List<Hex> houseHexes,Player player)
     {
 
         foreach (Hex startHex in houseHexes)
@@ -68,7 +68,7 @@ public class SpawnManager : MonoBehaviour
                 }
             }
 
-            List<Hex> ownedHexes = Player.ownedHexes;
+            List<Hex> ownedHexes = player.ownedHexes;
             //Hex.hexType hexType = Hex.hexType.grass;
             List<Hex> BuildHouse = new List<Hex>();
 

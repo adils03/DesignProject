@@ -6,9 +6,9 @@ public class Player
 {
     public string playerName;
     public int PlayerTotalGold = 0;// player altını burdan da görüyoruz kaynak eManager
-    public static List<Hex> ownedHexes = new List<Hex>(); //sahip olduğu hexler
+    public  List<Hex> ownedHexes = new List<Hex>(); //sahip olduğu hexler
     public EconomyManager economyManager;
-    public static Color playerColor;
+    public  Color playerColor;
     
     public Player(String name)// bu ctor diğerleri patlamasın diye geçici duruyor daha karar verilmedi
     {

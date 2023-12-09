@@ -10,9 +10,10 @@ public class Soldier : MonoBehaviour
     public Player owner;
     public GameManager gameManager;
     public String playerName;
-    private void Start() {
-        gameManager=GameObject.Find("GameManager").GetComponent<GameManager>();
-        owner=gameManager.players[0];
-        playerName=owner.playerName;
+    private void Start()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        owner = gameManager.players[0];
+        playerName = owner.playerName;
     }
 }

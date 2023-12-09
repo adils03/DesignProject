@@ -70,9 +70,9 @@ public class RayCaster : MonoBehaviour
         {
             canWalk = false;
             foreach (Hex hex in walkableArea)
-                {
-                    hex.activateIndicator(false);
-                }
+            {
+                hex.activateIndicator(false);
+            }
         }
     }
 }
