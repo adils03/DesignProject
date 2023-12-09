@@ -34,6 +34,7 @@ public class Hex : MonoBehaviour
     public ObjectType HexObjectType { get; set; } = ObjectType.None;// hex üzerindeki nesne asker , bina , ağaç
     public bool HexEmpty { get; set; }
     public bool SetProtected { get; set; }
+    public Color color { get; set; }
     public enum hexType
     {
         grass,
@@ -116,7 +117,7 @@ public class Hex : MonoBehaviour
         foreach (Hex hex in areaForStep)
         {
             GridSystem gridSystemInstance = GameObject.Find("GridSystem").GetComponent<GridSystem>();
-            if (gridSystemInstance.AStar(startHex,hex,areaForStep).Count<stepAmount)
+            if (gridSystemInstance.AStar(startHex, hex, areaForStep).Count < stepAmount)
                 for (int i = 0; i < hex.neighbors.Count; i++)
                 {
                     if (hex.neighbors[i].Owner != ownedPlayer && !areaForStep.Contains(hex.neighbors[i]) && hex.neighbors[i]._hexType != hexType.water)
@@ -143,5 +144,5 @@ public class Hex : MonoBehaviour
         gameObject.transform.GetChild(0).gameObject.SetActive(request);
     }
 
-    
+
 }

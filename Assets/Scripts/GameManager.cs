@@ -11,9 +11,11 @@ public class GameManager : MonoBehaviour
     private TurnManager turnManager;
     private EconomyManager economyManager;
     private GridSystem gridSystem;
+    private SpawnManager spawnManager;
     private void Awake()
     {
         gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
+        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         this.hexes = gridSystem.hexes;
     }
     private void Start()
@@ -29,12 +31,15 @@ public class GameManager : MonoBehaviour
         assingPlayers();
         turnManager = new TurnManager(players);
     }
-    public void endTurn()
+    public void endTurn() //Buton ataması için konulmuştur.
     {
         turnManager.StartTurn();
+        spawnManager.TreesSpread();// ağaç yayılma test
     }
     void assingPlayers()
     { //Oyuncuları unity ekranından istediğimiz sayıda ve isimde atamamızı sağlar
+
+        spawnManager.SpawnTrees();// burda test ediyorum evet biraz çorba
 
         Hex selected = gridSystem.FindHex(0, 0);
         List<Hex> devletHexs = new List<Hex>();
@@ -46,6 +51,7 @@ public class GameManager : MonoBehaviour
         }//Buraya rastgelelik eklenecek
         devletHexs.Add(gridSystem.FindHex(-2,0));
         devletHexs.Add(gridSystem.FindHex(-3,0));
+
         foreach (String names in playerNames)
         {
             Player newPLayer = new Player(names,devletHexs,Color.black);

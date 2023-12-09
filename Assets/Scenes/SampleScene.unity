@@ -514,6 +514,7 @@ MonoBehaviour:
   x: 0
   y: 0
   housePrefab: {fileID: 4625775723015354401, guid: 9b917def5d8f2084495e96ffd45266c3, type: 3}
+  TreeWeakPrefab: {fileID: 4625775723015354401, guid: 9b917def5d8f2084495e96ffd45266c3, type: 3}
   soldierPrefab: {fileID: 6173238419933503443, guid: ac32adf1fa37eac439d235e6f05f0fe3, type: 3}
 --- !u!4 &714405839
 Transform:
@@ -573,6 +574,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNames:
   - Adil
+  - Burak
+  - "\u0130bo"
   hexes: []
 --- !u!4 &933674181
 Transform:
@@ -773,8 +776,8 @@ MonoBehaviour:
   hexes: []
   noiseScale: 0.14
   threshold: 0.35
-  offsetX: 0
-  offsetY: 0
+  offsetX: 46519
+  offsetY: 42625
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
