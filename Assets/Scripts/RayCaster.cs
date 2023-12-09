@@ -31,7 +31,6 @@ public class RayCaster : MonoBehaviour
         {
             if (hit.collider.gameObject.tag == "Soldier" && !canWalk)
             {
-                Debug.Log("if e girildi");
                 soldier = hit.collider.gameObject;
                 canWalk = true;
                 soldier.GetComponent<Soldier>().onHex.HexObjectType = ObjectType.None;
@@ -43,7 +42,6 @@ public class RayCaster : MonoBehaviour
             }
             else if (hit.collider.gameObject.tag == "Hex" && walkableArea.Contains(hit.collider.gameObject.GetComponent<Hex>()) && canWalk)
             {
-                Debug.Log("else if e girildi");
                 hit.collider.gameObject.GetComponent<Hex>().HexObjectType = soldier.GetComponent<Soldier>().soldierLevel;
                 hit.collider.gameObject.GetComponent<Hex>().Owner = soldier.GetComponent<Soldier>().owner;
                 hit.collider.gameObject.GetComponent<Hex>().Owner.ownedHexes.Add(hit.collider.gameObject.GetComponent<Hex>());
@@ -69,10 +67,6 @@ public class RayCaster : MonoBehaviour
         else
         {
             canWalk = false;
-            foreach (Hex hex in walkableArea)
-            {
-                hex.activateIndicator(false);
-            }
         }
     }
 }

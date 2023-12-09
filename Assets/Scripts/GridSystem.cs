@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -176,14 +177,14 @@ public class GridSystem : MonoBehaviour
         return continent;
     }
 
-    public List<Hex> AStar(Hex start, Hex goal,List<Hex> validHexes)
+    public static List<Hex> AStar(Hex start, Hex goal,List<Hex> validHexes)
     {
         List<Hex> openList = new List<Hex>();
         List<Hex> closedList = new List<Hex>();
         openList.Add(start);
-
         while (openList.Count > 0)
         {
+            Console.WriteLine("While'ın başı");
             Hex current = openList.OrderBy(hex => hex.estimatedCost).First();
             if (current == goal)
             {
@@ -202,6 +203,7 @@ public class GridSystem : MonoBehaviour
             List<Hex> adjacentNodes = current.neighbors;
             foreach (Hex neighbor in adjacentNodes)
             {
+                Console.WriteLine("FE başı");
                 if (closedList.Contains(neighbor) || !validHexes.Contains(neighbor))
                 {
                     continue;
@@ -228,7 +230,10 @@ public class GridSystem : MonoBehaviour
 
                 }
             }
-
+        }
+        foreach(Hex hex in validHexes){
+            hex.cost=0;
+            hex.estimatedCost=0;
         }
         return null;
     }

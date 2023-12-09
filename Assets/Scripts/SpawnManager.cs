@@ -24,7 +24,9 @@ public class SpawnManager : MonoBehaviour
      {
         if(Input.GetKey(KeyCode.T))
         {
-            SpawnSoldier(1,1);
+            SpawnSoldier(0,0);
+        }else if(Input.GetKeyDown(KeyCode.P)){
+            SpawnHouse(3);
         }
      }
     public void SpawnHouse(int size)// burak
