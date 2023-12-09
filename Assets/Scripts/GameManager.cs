@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     public void endTurn()
     {
         turnManager.StartTurn();
-        spawnManager.TreesSpread();
+        spawnManager.TreesSpread();// ağaç yayılma test
     }
     void assingPlayers()
     { //Oyuncuları unity ekranından istediğimiz sayıda ve isimde atamamızı sağlar
