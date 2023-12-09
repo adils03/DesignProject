@@ -40,19 +40,33 @@ public class RayCaster : MonoBehaviour
                     hex.activateIndicator(true);
                 }
             }
-            else if (hit.collider.gameObject.tag == "Hex" && walkableArea.Contains(hit.collider.gameObject.GetComponent<Hex>()) && canWalk)
+            else if (hit.collider.gameObject.tag == "Hex" && canWalk)
             {
-                hit.collider.gameObject.GetComponent<Hex>().HexObjectType = soldier.GetComponent<Soldier>().soldierLevel;
-                hit.collider.gameObject.GetComponent<Hex>().Owner = soldier.GetComponent<Soldier>().owner;
-                hit.collider.gameObject.GetComponent<Hex>().Owner.ownedHexes.Add(hit.collider.gameObject.GetComponent<Hex>());
-                hit.collider.gameObject.GetComponent<Hex>().playerName = soldier.GetComponent<Soldier>().playerName;
-                hit.collider.gameObject.GetComponent<SpriteRenderer>().color = soldier.GetComponent<Soldier>().owner.playerColor;
-                soldier.GetComponent<Soldier>().onHex = hit.collider.gameObject.GetComponent<Hex>();
-                soldier.transform.position = hit.collider.transform.position;
-                canWalk = false;
-                foreach (Hex hex in walkableArea)
+                if (walkableArea != null && walkableArea.Contains(hit.collider.gameObject.GetComponent<Hex>()))
                 {
-                    hex.activateIndicator(false);
+                    hit.collider.gameObject.GetComponent<Hex>().HexObjectType = soldier.GetComponent<Soldier>().soldierLevel;
+                    hit.collider.gameObject.GetComponent<Hex>().Owner = soldier.GetComponent<Soldier>().owner;
+                    hit.collider.gameObject.GetComponent<Hex>().Owner.ownedHexes.Add(hit.collider.gameObject.GetComponent<Hex>());
+                    hit.collider.gameObject.GetComponent<Hex>().playerName = soldier.GetComponent<Soldier>().playerName;
+                    hit.collider.gameObject.GetComponent<SpriteRenderer>().color = soldier.GetComponent<Soldier>().owner.playerColor;
+                    soldier.GetComponent<Soldier>().onHex = hit.collider.gameObject.GetComponent<Hex>();
+                    soldier.transform.position = hit.collider.transform.position;
+                    canWalk = false;
+                    foreach (Hex hex in walkableArea)
+                    {
+                        hex.activateIndicator(false);
+                    }
+                }
+                else
+                {
+                    canWalk = false;
+                    if (walkableArea != null)
+                    {
+                        foreach (Hex hex in walkableArea)
+                        {
+                            hex.activateIndicator(false);
+                        }
+                    }
                 }
             }
             else
