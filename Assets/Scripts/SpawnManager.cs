@@ -106,7 +106,7 @@ public class SpawnManager : MonoBehaviour
         }
 
     }
-    private void InstantiateTree(Hex hex)// local method bow
+    private void InstantiateTree(Hex hex)//ağaçları haritaya ekler
     {
         GameObject treeWeak = Instantiate(TreeWeakPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
         // ağaçyerleştrimek için;
@@ -119,7 +119,7 @@ public class SpawnManager : MonoBehaviour
         System.Random rand = new System.Random();//
         int spreadCounter = 0;
         int spreadLimit = 15;// yayılma tetiklenince artacak ağaç sayısı
-
+      
         List<Hex> hexesWithTree = new List<Hex>();
         foreach (var hex in hexes)
         {
@@ -128,8 +128,9 @@ public class SpawnManager : MonoBehaviour
                 hexesWithTree.Add(hex);
             }       
         }
+        bool canSpread = hexes.Count *5/10 > hexesWithTree.Count;// yayılma duruyor eğer çok fazla ağaç varsa
 
-        while (spreadCounter<spreadLimit)
+        while (spreadCounter<spreadLimit&&canSpread)
         {
             int index = rand.Next(hexesWithTree.Count);// türeme rastgele bi yerden başlicak
             bool spread = false;// yayılma için bayrak
