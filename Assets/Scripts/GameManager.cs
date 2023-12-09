@@ -28,8 +28,17 @@ public class GameManager : MonoBehaviour
     }
     void StartGame()
     {
-        assingPlayers();
+        players.Clear();
+        players.Add(new Player("Burak"));
+        players.Add(new Player("Halil"));
+        players.Add(new Player("Emin"));
+
+
+
+        //assingPlayers();
         turnManager = new TurnManager(players);
+        spawnManager.SpawnLandOfPlayers(gridSystem.size,players);
+        spawnManager.SpawnTrees();
     }
     public void endTurn() //Buton ataması için konulmuştur.
     {

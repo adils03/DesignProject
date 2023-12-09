@@ -14,6 +14,7 @@ public class Player
     {
         playerName = name;
         economyManager = new EconomyManager();
+
     }
     public Player(String name, List<Hex> hexes,Color color)// dışardan gelen ilk hexlerle ve oyun boyunca elde edilecek olan hexler için inşa edilecek olan kısım
     {
@@ -33,8 +34,23 @@ public class Player
 
         //economyManager.UpdateOwnedHexagons(ownedHexes);
         PlayerTotalGold = economyManager.CurrentGold;// kasadaki altını  burdan ilkez aldık 
+    }
+    public void PlayerUpdate(List<Hex> hexes, Color color)
+    {
+        playerColor = color;
+        ownedHexes = hexes;
+        // Hex'lerin sahibini bu oyuncu olarak ayarla
+        foreach (var hex in ownedHexes)
+        {
+           
+            hex.Owner = this;
+            hex.playerName = playerName;
+            hex.gameObject.GetComponent<SpriteRenderer>().color = playerColor;
+        }
+        economyManager = new EconomyManager();
 
-
+        //economyManager.UpdateOwnedHexagons(ownedHexes);
+        PlayerTotalGold = economyManager.CurrentGold;// kasadaki altını  burdan ilkez aldık 
     }
     public void StartTurn()
     {
