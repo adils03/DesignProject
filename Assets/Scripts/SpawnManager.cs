@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.ShortcutManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -120,16 +121,8 @@ public class SpawnManager : MonoBehaviour
         int spreadCounter = 0;
         int spreadLimit = 15;// yayılma tetiklenince artacak ağaç sayısı
       
-        List<Hex> hexesWithTree = new List<Hex>();
-        
+        List<Hex> hexesWithTree = hexes.Where(h => h.HexObjectType == ObjectType.TreeWeak).ToList();
 
-        foreach (var hex in hexes)
-        {
-            if (hex.HexObjectType == ObjectType.TreeWeak)
-            {
-                hexesWithTree.Add(hex);
-            }       
-        }
         bool canSpread = hexes.Count *6/10 > hexesWithTree.Count;// yayılma duruyor eğer çok fazla ağaç varsa
 
         while (spreadCounter<spreadLimit&&canSpread)
