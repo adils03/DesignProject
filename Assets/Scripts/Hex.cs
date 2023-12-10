@@ -116,19 +116,20 @@ public class Hex : MonoBehaviour
         foreach (Hex hex in areaForStep)
         {
             if (GridSystem.AStar(startHex, hex, areaForStep).Count < stepAmount)
-            if (GridSystem.AStar(startHex, hex, areaForStep).Count < stepAmount)
-                for (int i = 0; i < hex.neighbors.Count; i++)
-                {
-                    if (hex.neighbors[i].Owner != ownedPlayer && !areaForStep.Contains(hex.neighbors[i]) && hex.neighbors[i]._hexType != hexType.water)
+                if (GridSystem.AStar(startHex, hex, areaForStep).Count < stepAmount)
+                    for (int i = 0; i < hex.neighbors.Count; i++)
                     {
-                        toAdd.Add(hex.neighbors[i]);
+                        if (hex.neighbors[i].Owner != ownedPlayer && !areaForStep.Contains(hex.neighbors[i]) && hex.neighbors[i]._hexType != hexType.water)
+                        {
+                            toAdd.Add(hex.neighbors[i]);
+                        }
                     }
-                }
         }
-        foreach(Hex hex in areaForStep){
-            hex.cost=0;
-            hex.estimatedCost=0;
-            hex.parent=null;
+        foreach (Hex hex in areaForStep)
+        {
+            hex.cost = 0;
+            hex.estimatedCost = 0;
+            hex.parent = null;
         }
         foreach (Hex hex in toAdd)
         {
