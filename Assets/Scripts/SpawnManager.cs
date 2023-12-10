@@ -22,10 +22,6 @@ public class SpawnManager : MonoBehaviour
     }
      private void Update() 
      {
-        if(Input.GetKey(KeyCode.T))
-        {
-            SpawnSoldier(0,0);
-        }
      }
     public List<Hex> SpawnLandOfPlayers(int size,List<Player> players)//Devletleri atar gösterir
     {
@@ -87,7 +83,7 @@ public class SpawnManager : MonoBehaviour
             
                
             player.PlayerUpdate(land,colors.Pop());
-           
+            SpawnSoldier(land[2]);//denemelik
         }
 
         return spawnedHouses;
@@ -136,10 +132,9 @@ public class SpawnManager : MonoBehaviour
     }
     
 
-    public void SpawnSoldier(int x, int y)
+   public void SpawnSoldier(Hex uygunHex)
     {
-        Hex uygunHex = gridSystem.FindHex(x, y);
-        
+
         if (uygunHex != null && !uygunHex.HexEmpty)
         {
             GameObject soldier;
@@ -148,6 +143,8 @@ public class SpawnManager : MonoBehaviour
             uygunHex.HexObjectType = ObjectType.SoldierLevel1;
 
             soldier.GetComponent<Soldier>().onHex = uygunHex;
+            soldier.GetComponent<Soldier>().owner = uygunHex.Owner;
+            soldier.GetComponent<Soldier>().playerName = uygunHex.playerName;
         }
 
     }

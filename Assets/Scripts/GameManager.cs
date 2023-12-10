@@ -43,7 +43,10 @@ public class GameManager : MonoBehaviour
     public void endTurn() //Buton ataması için konulmuştur.
     {
         turnManager.StartTurn();
-        spawnManager.TreesSpread();// ağaç yayılma test
+        if(turnManager.players.Count==0){
+            spawnManager.TreesSpread();
+        }
+        // ağaç yayılma test
     }
     void assingPlayers()
     { //Oyuncuları unity ekranından istediğimiz sayıda ve isimde atamamızı sağlar

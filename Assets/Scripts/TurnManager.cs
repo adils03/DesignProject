@@ -6,7 +6,7 @@ public class TurnManager
 {
     public List<Player> players;
 
-    private Queue<Player> turnQueue = new Queue<Player>();
+    public Queue<Player> turnQueue = new Queue<Player>();
 
     private Player currentPlayer;
 
