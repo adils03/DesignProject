@@ -31,10 +31,9 @@ public class RayCaster : MonoBehaviour
         {
             
             if (hit.collider.gameObject.tag == "Soldier" && !canWalk)
-            {Debug.Log("if e girildi");
+            {
                 soldier = hit.collider.gameObject;
                 canWalk = true;
-                soldier.GetComponent<Soldier>().onHex.HexObjectType = ObjectType.None;
                 walkableArea = soldier.GetComponent<Soldier>().onHex.travelContinentByStep(4);
                 foreach (Hex hex in walkableArea)
                 {
@@ -45,6 +44,14 @@ public class RayCaster : MonoBehaviour
             {
                 if (walkableArea != null && walkableArea.Contains(hit.collider.gameObject.GetComponent<Hex>()))
                 {
+                    if(hit.collider.gameObject.GetComponent<Hex>().HexObjectType==ObjectType.Tree||hit.collider.gameObject.GetComponent<Hex>().HexObjectType==ObjectType.TreeWeak){
+                        hit.collider.gameObject.GetComponent<Hex>().destroyObjectOnHex();
+                        soldier.GetComponent<Soldier>().owner.PlayerTotalGold+=4;
+                        Debug.Log(soldier.GetComponent<Soldier>().owner.PlayerTotalGold);
+                    }
+                    soldier.GetComponent<Soldier>().onHex.HexObjectType = ObjectType.None;
+                    soldier.GetComponent<Soldier>().onHex.ObjectOnHex=null;
+                    hit.collider.gameObject.GetComponent<Hex>().ObjectOnHex=soldier;
                     hit.collider.gameObject.GetComponent<Hex>().HexObjectType = soldier.GetComponent<Soldier>().soldierLevel;
                     hit.collider.gameObject.GetComponent<Hex>().Owner = soldier.GetComponent<Soldier>().owner;
                     hit.collider.gameObject.GetComponent<Hex>().Owner.ownedHexes.Add(hit.collider.gameObject.GetComponent<Hex>());
@@ -53,6 +60,7 @@ public class RayCaster : MonoBehaviour
                     soldier.GetComponent<Soldier>().onHex = hit.collider.gameObject.GetComponent<Hex>();
                     soldier.transform.position = hit.collider.transform.position;
                     canWalk = false;
+                    hit.collider.gameObject.GetComponent<Hex>().UpdateAdvantageOrDisadvantageValue();
                     foreach (Hex hex in walkableArea)
                     {
                         hex.activateIndicator(false);

@@ -31,15 +31,20 @@ public class Hex : MonoBehaviour
     public bool hasVisited = false;
     public int Income = 3;// hex başına gelir default 3 
     public Player Owner;// kimin bu hex ,null ise kimsenin
+    public GameObject ObjectOnHex=null;
     public String playerName;
     public ObjectType HexObjectType { get; set; } = ObjectType.None;// hex üzerindeki nesne asker , bina , ağaç
+    public String ObjectTypeName;
     public bool HexEmpty { get; set; }
-    public bool SetProtected { get; set; }
+    public int SetProtected = 0;
     public Color color { get; set; }
     public enum hexType
     {
         grass,
         water
+    }
+    private void Update() {
+        ObjectTypeName=HexObjectType.ToString();
     }
 
     public void UpdateAdvantageOrDisadvantageValue()// ağaçlardan biri mevcut ise dezavantaj var 
@@ -47,7 +52,13 @@ public class Hex : MonoBehaviour
         if (this.HexObjectType == ObjectType.Tree || this.HexObjectType == ObjectType.TreeWeak)
             Income = 0;
         else if (this.HexObjectType == ObjectType.BuildingFarm)
-            Income = 10;// bu da farmbinası başına verilen değer      
+            Income = 10;// bu da farmbinası başına verilen değer   
+        else if(this.HexObjectType == ObjectType.SoldierLevel1||
+        this.HexObjectType == ObjectType.SoldierLevel2||
+        this.HexObjectType == ObjectType.SoldierLevel3||
+        this.HexObjectType == ObjectType.SoldierLevel4||
+        this.HexObjectType == ObjectType.TownHall)
+            Income=3;   
     }
 
     public List<Hex> travelContinentByStep(int step) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
@@ -149,5 +160,11 @@ public class Hex : MonoBehaviour
         gameObject.transform.GetChild(0).gameObject.SetActive(request);
     }
 
+    public void destroyObjectOnHex(){
+        if(ObjectOnHex!=null){
+            Destroy(ObjectOnHex);
+        }
+        ObjectOnHex=null;
+    }
 
 }

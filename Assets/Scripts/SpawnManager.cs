@@ -14,6 +14,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject housePrefab;
     public GameObject TreeWeakPrefab;
     public GameObject soldierPrefab;
+    public GameObject towerPrefab;
     public List<Hex> continent = new List<Hex>();
     private void Awake() {
         gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
@@ -147,7 +148,7 @@ public class SpawnManager : MonoBehaviour
             soldier = Instantiate(soldierPrefab, new Vector3(uygunHex.transform.position.x,uygunHex.transform.position.y), Quaternion.identity);
             uygunHex.HexEmpty = true;
             uygunHex.HexObjectType = ObjectType.SoldierLevel1;
-
+            uygunHex.ObjectOnHex = soldier;
             soldier.GetComponent<Soldier>().onHex = uygunHex;
             soldier.GetComponent<Soldier>().owner = uygunHex.Owner;
             soldier.GetComponent<Soldier>().playerName = uygunHex.playerName;
@@ -210,9 +211,14 @@ public class SpawnManager : MonoBehaviour
     private void InstantiateTree(Hex hex)//ağaçları haritaya ekler
     {
         GameObject treeWeak = Instantiate(TreeWeakPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
+        hex.ObjectOnHex=treeWeak;
         // ağaçyerleştrimek için;
     }
-
+    private void InstantiateTower(Hex hex)
+    {
+        GameObject tower = Instantiate(towerPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
+    }
+    
     public void TreesSpread()// ağaç yayılması tüm haritayı kapsamaz bir yerde durur.
     {
         // olan ağaçlar yayılma eğlimi gösterir SpawnTrees()'den sonra çağrılmalı ağaçlar 10 tane türeyecek
@@ -246,6 +252,35 @@ public class SpawnManager : MonoBehaviour
         }
         
 
+    }
+    public void BuildTower(Hex hex, int x)//Towerımız burada oluşturuluyor.
+    {
+        List<Hex> neighboringHexes = hex.neighbors;
+        if (x == 1)
+        {
+            hex.HexObjectType = ObjectType.BuildingDefenceLevel1;
+            InstantiateTower(hex);
+        }
+        else if (x == 2)
+        {
+            hex.HexObjectType = ObjectType.BuildingDefenceLevel2;
+            InstantiateTower(hex);
+        }
+
+        foreach (Hex neighbour in neighboringHexes)
+        {
+            neighbour.SetProtected = x;
+        }
+    }
+
+    public void DestroyTower()//Towerımız burada yok ediliyor.
+    {
+        List<Hex> ProtectedHexes = new List<Hex>();
+        foreach (Hex hex in ProtectedHexes)
+        {
+            hex.SetProtected = 0;
+        }
+        ProtectedHexes.Clear();
     }
 
 
