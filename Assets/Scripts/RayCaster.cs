@@ -29,8 +29,9 @@ public class RayCaster : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(soldierRAy, Vector2.zero);
         if (hit.collider != null)
         {
+            
             if (hit.collider.gameObject.tag == "Soldier" && !canWalk)
-            {
+            {Debug.Log("if e girildi");
                 soldier = hit.collider.gameObject;
                 canWalk = true;
                 soldier.GetComponent<Soldier>().onHex.HexObjectType = ObjectType.None;
@@ -72,10 +73,6 @@ public class RayCaster : MonoBehaviour
             else
             {
                 canWalk = false;
-                foreach (Hex hex in walkableArea)
-                {
-                    hex.activateIndicator(false);
-                }
             }
         }
         else

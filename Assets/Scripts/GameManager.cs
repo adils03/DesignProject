@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     public void endTurn() //Buton ataması için konulmuştur.
     {
         turnManager.StartTurn();
-        if(turnManager.players.Count==0){
+        if(turnManager.turnQueue.Count==0){
             spawnManager.TreesSpread();
         }
         // ağaç yayılma test

@@ -42,7 +42,7 @@ public class SpawnManager : MonoBehaviour
                 //Instantiate(housePrefab, randomHex.transform.position, Quaternion.identity);
 
 
-                grassHexes.RemoveAll(hex => GridSystem.FindDistanceBetweenHexes(hex, randomHex) < 10);
+                grassHexes.RemoveAll(hex => GridSystem.FindDistanceBetweenHexes(hex, randomHex) < 10 && hex != randomHex);
                 spawnedHouses.Add(randomHex);
             }
         }
@@ -62,23 +62,29 @@ public class SpawnManager : MonoBehaviour
             hex.HexObjectType = ObjectType.TownHall;
             List<Hex> land = new List<Hex> ();
             land.Add(hex);
-            foreach (var item in hex.neighbors)
+            foreach (Hex item in hex.neighbors)
             {
-                land.Add(item);
+                if(item._hexType==Hex.hexType.grass){
+                        land.Add(item);
+                    }
             }
 
             int a = 1;
             while (land.Count<7)
             {
                
-                foreach (var item in land[a].neighbors)
+                foreach (Hex item in land[a].neighbors)
                 {
                     if (land.Count == 7)
                         continue;
-                    land.Add(item);
+                    if(item._hexType==Hex.hexType.grass && !land.Contains(item)){
+                        land.Add(item);
+                    }
+                    
+                    
                     
                 }
-                a++;
+            a++;
             }
             
                
