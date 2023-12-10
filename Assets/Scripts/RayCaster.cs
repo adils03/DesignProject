@@ -7,10 +7,11 @@ public class RayCaster : MonoBehaviour
     bool canWalk = false;
     public GameObject soldier;
     List<Hex> walkableArea;
+    public GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
-
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -29,16 +30,20 @@ public class RayCaster : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(soldierRAy, Vector2.zero);
         if (hit.collider != null)
         {
-            
             if (hit.collider.gameObject.tag == "Soldier" && !canWalk)
             {
                 soldier = hit.collider.gameObject;
-                canWalk = true;
-                walkableArea = soldier.GetComponent<Soldier>().onHex.travelContinentByStep(4);
-                foreach (Hex hex in walkableArea)
+                if(gameManager.GetTurnPlayer() == soldier.GetComponent<Soldier>().owner && !soldier.GetComponent<Soldier>().hasMoved)
                 {
-                    hex.activateIndicator(true);
+                    canWalk = true;
+                    walkableArea = soldier.GetComponent<Soldier>().onHex.travelContinentByStep(4);
+                    foreach (Hex hex in walkableArea)
+                    {
+                        hex.activateIndicator(true);
+                    }
                 }
+                
+                
             }
             else if (hit.collider.gameObject.tag == "Hex" && canWalk)
             {
@@ -60,6 +65,7 @@ public class RayCaster : MonoBehaviour
                     soldier.GetComponent<Soldier>().onHex = hit.collider.gameObject.GetComponent<Hex>();
                     soldier.transform.position = hit.collider.transform.position;
                     canWalk = false;
+                    soldier.GetComponent<Soldier>().hasMoved = true;
                     hit.collider.gameObject.GetComponent<Hex>().UpdateAdvantageOrDisadvantageValue();
                     foreach (Hex hex in walkableArea)
                     {

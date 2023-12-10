@@ -516,6 +516,7 @@ MonoBehaviour:
   housePrefab: {fileID: 6309078802363555709, guid: 113437592663c1c408b39d240663c6c0, type: 3}
   TreeWeakPrefab: {fileID: 4625775723015354401, guid: 9b917def5d8f2084495e96ffd45266c3, type: 3}
   soldierPrefab: {fileID: 6173238419933503443, guid: ac32adf1fa37eac439d235e6f05f0fe3, type: 3}
+  towerPrefab: {fileID: 6957722672896499896, guid: 7563c90a186df6c47953aa88ec6e595a, type: 3}
   continent: []
 --- !u!4 &714405839
 Transform:

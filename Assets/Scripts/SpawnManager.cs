@@ -91,6 +91,7 @@ public class SpawnManager : MonoBehaviour
                
             player.PlayerUpdate(land,colors.Pop());
             SpawnSoldier(land[2]);//denemelik
+            BuildTower(land[3],1);
         }
 
         return spawnedHouses;

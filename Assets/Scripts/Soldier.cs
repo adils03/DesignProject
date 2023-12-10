@@ -9,4 +9,10 @@ public class Soldier : MonoBehaviour
     public Hex onHex;
     public Player owner;
     public String playerName;
+    public bool hasMoved = false;
+    void Start()
+    {
+        owner.soldiers.Add(this);
+    }
 }
+

@@ -19,7 +19,6 @@ public class TurnManager
             turnQueue.Enqueue(player);
         }
 
-        //StartTurn();
     }
     
     //StartTurn metodu, bir oyuncunun sırasını başlatır. Eğer tüm oyuncuların sırası biterse, kuyruğu yeniden doldurur.
