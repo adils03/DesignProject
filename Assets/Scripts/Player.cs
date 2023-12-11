@@ -57,7 +57,7 @@ public class Player
     {
         economyManager.UpdateOwnedHexagons(ownedHexes);// sahip olduğumuz hexleri ekonomi managerde güncelledik
         PlayerTotalGold = economyManager.CurrentGold;// burdan da tur başına güncelledik kasadaki altını
-        Debug.Log(playerName + " oyuncunun sirasi basladi. ve Altını : " + PlayerTotalGold);
+        Debug.Log(playerName + " oyuncunun sirasi bitti ve Altını : " + PlayerTotalGold);
     }
     public void ChangeHexOwnership(Hex changedHex)
     {

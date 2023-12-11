@@ -26,10 +26,10 @@ public class SoldierMovement : MonoBehaviour
     void Walk()
     {
         Vector2 soldierRay = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(soldierRay, Vector2.zero);
-        if (hit.collider != null)
+        RaycastHit2D soldierHit = Physics2D.Raycast(soldierRay, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Soldier"));
+        if (soldierHit.collider != null)
         {
-            GameObject hitObject = hit.collider.gameObject;
+            GameObject hitObject = soldierHit.collider.gameObject;
             if (hitObject.tag == "Soldier")
             {
                 Debug.Log("soldier'a tıklandı");
@@ -42,6 +42,23 @@ public class SoldierMovement : MonoBehaviour
             else
             {
                 ResetWalk();
+            }
+        }
+        else
+        {
+            // Hexagon'a tıklanıp tıklanmadığını kontrol et
+            RaycastHit2D hexHit = Physics2D.Raycast(soldierRay, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Hex"));
+            if (hexHit.collider != null)
+            {
+                GameObject hitObject = hexHit.collider.gameObject;
+                if (hitObject.tag == "Hex")
+                {
+                    HandleHexHit(hitObject);
+                }
+                else
+                {
+                    ResetWalk();
+                }
             }
         }
     }
@@ -96,6 +113,7 @@ public class SoldierMovement : MonoBehaviour
         {
             _hex.activateIndicator(false);
         }
+        walkableArea = null;
     }
 
 
@@ -107,6 +125,7 @@ public class SoldierMovement : MonoBehaviour
             {
                 hex.activateIndicator(false);
             }
+            walkableArea=null;
         }
     }
 

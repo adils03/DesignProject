@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2626779378939980067}
   - component: {fileID: 6647126496394872955}
-  m_Layer: 2
+  m_Layer: 6
   m_Name: indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 7386536230275638395}
   - component: {fileID: 3828596806765889979}
   - component: {fileID: 6033080481001938898}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: GrassHex
   m_TagString: Hex
   m_Icon: {fileID: 0}
