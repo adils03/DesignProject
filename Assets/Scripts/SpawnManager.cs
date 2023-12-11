@@ -240,7 +240,7 @@ public class SpawnManager : MonoBehaviour
         bool canSpread = true;
 
    
-        else if (hexesWithOutTreeCount < 40)
+        if (hexesWithOutTreeCount < 40)
         {
             spreadLimit = 0;
             canSpread = false;
