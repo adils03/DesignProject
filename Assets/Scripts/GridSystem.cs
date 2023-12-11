@@ -21,7 +21,6 @@ public class GridSystem : MonoBehaviour
 
     private void Awake()
     {
-        threshold = 0.17f;// burda direkt veriom 
         CreateGrid(size);
         
     }
