@@ -25,73 +25,92 @@ public class RayCaster : MonoBehaviour
     }
 
     void cast()
+{
+    Vector2 soldierRay = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    RaycastHit2D hit = Physics2D.Raycast(soldierRay, Vector2.zero);
+    if (hit.collider != null)
     {
-        Vector2 soldierRAy = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(soldierRAy, Vector2.zero);
-        if (hit.collider != null)
+        GameObject hitObject = hit.collider.gameObject;
+        if (hitObject.tag == "Soldier" && !canWalk)
         {
-            if (hit.collider.gameObject.tag == "Soldier" && !canWalk)
-            {
-                soldier = hit.collider.gameObject;
-                if(gameManager.GetTurnPlayer() == soldier.GetComponent<Soldier>().owner && !soldier.GetComponent<Soldier>().hasMoved)
-                {
-                    canWalk = true;
-                    walkableArea = soldier.GetComponent<Soldier>().onHex.travelContinentByStep(4);
-                    foreach (Hex hex in walkableArea)
-                    {
-                        hex.activateIndicator(true);
-                    }
-                }
-                
-                
-            }
-            else if (hit.collider.gameObject.tag == "Hex" && canWalk)
-            {
-                if (walkableArea != null && walkableArea.Contains(hit.collider.gameObject.GetComponent<Hex>()))
-                {
-                    if(hit.collider.gameObject.GetComponent<Hex>().HexObjectType==ObjectType.Tree||hit.collider.gameObject.GetComponent<Hex>().HexObjectType==ObjectType.TreeWeak){
-                        hit.collider.gameObject.GetComponent<Hex>().destroyObjectOnHex();
-                        soldier.GetComponent<Soldier>().owner.PlayerTotalGold+=4;
-                        Debug.Log(soldier.GetComponent<Soldier>().owner.PlayerTotalGold);
-                    }
-                    soldier.GetComponent<Soldier>().onHex.HexObjectType = ObjectType.None;
-                    soldier.GetComponent<Soldier>().onHex.ObjectOnHex=null;
-                    hit.collider.gameObject.GetComponent<Hex>().ObjectOnHex=soldier;
-                    hit.collider.gameObject.GetComponent<Hex>().HexObjectType = soldier.GetComponent<Soldier>().soldierLevel;
-                    hit.collider.gameObject.GetComponent<Hex>().Owner = soldier.GetComponent<Soldier>().owner;
-                    hit.collider.gameObject.GetComponent<Hex>().Owner.ownedHexes.Add(hit.collider.gameObject.GetComponent<Hex>());
-                    hit.collider.gameObject.GetComponent<Hex>().playerName = soldier.GetComponent<Soldier>().playerName;
-                    hit.collider.gameObject.GetComponent<SpriteRenderer>().color = soldier.GetComponent<Soldier>().owner.playerColor;
-                    soldier.GetComponent<Soldier>().onHex = hit.collider.gameObject.GetComponent<Hex>();
-                    soldier.transform.position = hit.collider.transform.position;
-                    canWalk = false;
-                    soldier.GetComponent<Soldier>().hasMoved = true;
-                    hit.collider.gameObject.GetComponent<Hex>().UpdateAdvantageOrDisadvantageValue();
-                    foreach (Hex hex in walkableArea)
-                    {
-                        hex.activateIndicator(false);
-                    }
-                }
-                else
-                {
-                    canWalk = false;
-                    if (walkableArea != null)
-                    {
-                        foreach (Hex hex in walkableArea)
-                        {
-                            hex.activateIndicator(false);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                canWalk = false;
-            }
+            HandleSoldierHit(hitObject);
+        }
+        else if (hitObject.tag == "Hex" && canWalk)
+        {
+            HandleHexHit(hitObject);
         }
         else
         {
-            canWalk = false;
+            ResetWalk();
         }
     }
+}
+
+void HandleSoldierHit(GameObject soldierHit)
+{
+    soldier = soldierHit;
+    if(gameManager.GetTurnPlayer() == soldier.GetComponent<Soldier>().owner && !soldier.GetComponent<Soldier>().hasMoved)
+    {
+        canWalk = true;
+        walkableArea = soldier.GetComponent<Soldier>().onHex.travelContinentByStep(4);
+        foreach (Hex hex in walkableArea)
+        {
+            hex.activateIndicator(true);
+        }
+    }
+}
+
+void HandleHexHit(GameObject hexHit)
+{
+    Hex hexComponent = hexHit.GetComponent<Hex>();
+    if (walkableArea != null && walkableArea.Contains(hexComponent))
+    {
+        ProcessValidHex(hexComponent);
+    }
+    else
+    {
+        ResetWalk();
+    }
+}
+
+void ProcessValidHex(Hex hex)
+{
+    if(hex.HexObjectType == ObjectType.Tree || hex.HexObjectType == ObjectType.TreeWeak)
+    {
+        hex.destroyObjectOnHex();
+        soldier.GetComponent<Soldier>().owner.PlayerTotalGold += 4;
+        Debug.Log(soldier.GetComponent<Soldier>().owner.PlayerTotalGold);
+    }
+    soldier.GetComponent<Soldier>().onHex.HexObjectType = ObjectType.None;
+    soldier.GetComponent<Soldier>().onHex.ObjectOnHex = null;
+    hex.ObjectOnHex = soldier;
+    hex.HexObjectType = soldier.GetComponent<Soldier>().soldierLevel;
+    hex.Owner = soldier.GetComponent<Soldier>().owner;
+    hex.Owner.ownedHexes.Add(hex);
+    hex.playerName = soldier.GetComponent<Soldier>().playerName;
+    hex.GetComponent<SpriteRenderer>().color = soldier.GetComponent<Soldier>().owner.playerColor;
+    soldier.GetComponent<Soldier>().onHex = hex;
+    soldier.transform.position = hex.transform.position;
+    canWalk = false;
+    soldier.GetComponent<Soldier>().hasMoved = true;
+    hex.UpdateAdvantageOrDisadvantageValue();
+    foreach (Hex _hex in walkableArea)
+    {
+        _hex.activateIndicator(false);
+    }
+}
+
+
+void ResetWalk()
+{
+    canWalk = false;
+    if (walkableArea != null)
+    {
+        foreach (Hex hex in walkableArea)
+        {
+            hex.activateIndicator(false);
+        }
+    }
+}
+
 }

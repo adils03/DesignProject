@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     private EconomyManager economyManager;
     private GridSystem gridSystem;
     private SpawnManager spawnManager;
+    [SerializeField]private Text text;
 
     public int Burak = 0;
     public int Halil = 0;
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
 
 
         turnManager = new TurnManager(players);
+        text.text="Turn: " + players[0].playerName;
         spawnManager.SpawnLandOfPlayers(gridSystem.size,players);
         spawnManager.SpawnTrees();
     }
@@ -58,9 +61,11 @@ public class GameManager : MonoBehaviour
             }
         }
         turnManager.StartTurn();
-        foreach (Player p in players)
+        if(turnManager.turnQueue.Count==0)
         {
-            Debug.Log(p.playerName + "'in toprak sayısı : " + p.ownedHexes.Count);
+            text.text="Turn: " + players[0].playerName;
+        }else{
+            text.text="Turn: " + turnManager.turnQueue.Peek().playerName;
         }
         if (turnManager.turnQueue.Count == 0) 
         {

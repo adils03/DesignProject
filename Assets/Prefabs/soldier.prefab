@@ -101,6 +101,7 @@ MonoBehaviour:
   soldierLevel: 1
   onHex: {fileID: 0}
   playerName: 
+  hasMoved: 0
 --- !u!58 &7316362676339015885
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -130,9 +131,9 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Radius: 0.85
