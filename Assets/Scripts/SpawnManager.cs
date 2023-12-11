@@ -239,11 +239,8 @@ public class SpawnManager : MonoBehaviour
         int hexesWithOutTreeCount = hexes.Where(h => h.HexObjectType == ObjectType.None && h._hexType == Hex.hexType.grass).ToList().Count();
         bool canSpread = true;
 
-        if (hexesWithOutTreeCount < 30)
-        {
-            spreadLimit = 8;
-        }
-        else if (hexesWithOutTreeCount < 14)
+   
+        else if (hexesWithOutTreeCount < 40)
         {
             spreadLimit = 0;
             canSpread = false;
