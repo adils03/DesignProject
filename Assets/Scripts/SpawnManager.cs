@@ -9,22 +9,23 @@ using UnityEngine.UIElements;
 
 public class SpawnManager : MonoBehaviour
 {
-    public int x,y;
+    public int x, y;
     GridSystem gridSystem;
     public GameObject housePrefab;
     public GameObject TreeWeakPrefab;
     public GameObject soldierPrefab;
     public GameObject towerPrefab;
     public List<Hex> continent = new List<Hex>();
-    private void Awake() {
+    private void Awake()
+    {
         gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
-        
+
 
     }
-     private void Update() 
-     {
-     }
-    public List<Hex> SpawnLandOfPlayers(int size,List<Player> players)//Devletleri atar gösterir
+    private void Update()
+    {
+    }
+    public List<Hex> SpawnLandOfPlayers(int size, List<Player> players)//Devletleri atar gösterir
     {
         List<Hex> grassHexes = gridSystem.hexes.Where(hex => hex._hexType == Hex.hexType.grass).ToList();
         List<Hex> spawnedHouses = new List<Hex>();
@@ -39,7 +40,7 @@ public class SpawnManager : MonoBehaviour
                 {
                     randomHex = grassHexes[UnityEngine.Random.Range(0, grassHexes.Count)];
                 }
-                while (spawnedHouses.Any(house => GridSystem.FindDistanceBetweenHexes(house, randomHex) < 2&& randomHex.neighbors.Count<6));
+                while (spawnedHouses.Any(house => GridSystem.FindDistanceBetweenHexes(house, randomHex) < 2 && randomHex.neighbors.Count < 6));
                 //Instantiate(housePrefab, randomHex.transform.position, Quaternion.identity);
 
 
@@ -54,45 +55,47 @@ public class SpawnManager : MonoBehaviour
         colors.Push(Color.blue);
         colors.Push(Color.magenta);
         //devletleri ata
-        for (int j = 0;j<players.Count;j++)
+        for (int j = 0; j < players.Count; j++)
         {
             Player player = players[j];
             Hex hex = spawnedHouses[j];
 
             InstantiateHouseOfLands(hex);
             hex.HexObjectType = ObjectType.TownHall;
-            List<Hex> land = new List<Hex> ();
+            List<Hex> land = new List<Hex>();
             land.Add(hex);
             foreach (Hex item in hex.neighbors)
             {
-                if(item._hexType==Hex.hexType.grass){
-                        land.Add(item);
-                    }
+                if (item._hexType == Hex.hexType.grass)
+                {
+                    land.Add(item);
+                }
             }
 
             int a = 1;
-            while (land.Count<7)
+            while (land.Count < 7)
             {
-               
+
                 foreach (Hex item in land[a].neighbors)
                 {
                     if (land.Count == 7)
                         continue;
-                    if(item._hexType==Hex.hexType.grass && !land.Contains(item)){
+                    if (item._hexType == Hex.hexType.grass && !land.Contains(item))
+                    {
                         land.Add(item);
                     }
-                    
-                    
-                    
+
+
+
                 }
-            a++;
+                a++;
             }
-            
-               
-            player.PlayerUpdate(land,colors.Pop());
+
+
+            player.PlayerUpdate(land, colors.Pop());
             SpawnSoldier(land[2]);//denemelik
             SpawnSoldier(land[4]);//denemelik
-            BuildTower(land[3],1);
+            BuildTower(land[3], 1);
         }
 
         return spawnedHouses;
@@ -139,15 +142,15 @@ public class SpawnManager : MonoBehaviour
         }
         return continent;
     }
-    
 
-   public void SpawnSoldier(Hex uygunHex)
+
+    public void SpawnSoldier(Hex uygunHex)
     {
 
         if (uygunHex != null && !uygunHex.HexEmpty)
         {
             GameObject soldier;
-            soldier = Instantiate(soldierPrefab, new Vector3(uygunHex.transform.position.x,uygunHex.transform.position.y), Quaternion.identity);
+            soldier = Instantiate(soldierPrefab, new Vector3(uygunHex.transform.position.x, uygunHex.transform.position.y), Quaternion.identity);
             uygunHex.HexEmpty = true;
             uygunHex.HexObjectType = ObjectType.SoldierLevel1;
             uygunHex.ObjectOnHex = soldier;
@@ -168,21 +171,21 @@ public class SpawnManager : MonoBehaviour
 
         foreach (var hex in hexes)// olası eski ağaç konumlarını temizler
         {
-            if(hex.HexObjectType==ObjectType.TreeWeak)
+            if (hex.HexObjectType == ObjectType.TreeWeak)
             {
                 hex.HexObjectType = ObjectType.None;
             }
         }
 
-        while (treeCounter<maxTreeCount)// ağaçların konumlarını atar treeWeak yapar HexObjectType'ını
+        while (treeCounter < maxTreeCount)// ağaçların konumlarını atar treeWeak yapar HexObjectType'ını
         {
             int index = rand.Next(hexes.Count);
-          
+
             Hex hex = hexes[index];
             int neighborIndex = rand.Next(hex.neighbors.Count);
             int neighbor2Index = rand.Next(hex.neighbors.Count);
 
-            if (hex._hexType == Hex.hexType.grass&&hex.HexObjectType == ObjectType.None)
+            if (hex._hexType == Hex.hexType.grass && hex.HexObjectType == ObjectType.None)
             {
                 hex.HexObjectType = ObjectType.TreeWeak;
                 hex.UpdateAdvantageOrDisadvantageValue();
@@ -199,7 +202,7 @@ public class SpawnManager : MonoBehaviour
                 treeCounter++;
             }
             Hex neighbor2Hex = hex.neighbors[neighbor2Index];
-            if (neighbor2Hex.HexObjectType == ObjectType.None && neighbor2Hex._hexType == Hex.hexType.grass&&treeCounter%2==0)//rastgele 3.ağaç
+            if (neighbor2Hex.HexObjectType == ObjectType.None && neighbor2Hex._hexType == Hex.hexType.grass && treeCounter % 2 == 0)//rastgele 3.ağaç
             {
                 neighbor2Hex.HexObjectType = ObjectType.TreeWeak;
                 neighbor2Hex.UpdateAdvantageOrDisadvantageValue();
@@ -213,14 +216,14 @@ public class SpawnManager : MonoBehaviour
     private void InstantiateTree(Hex hex)//ağaçları haritaya ekler
     {
         GameObject treeWeak = Instantiate(TreeWeakPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
-        hex.ObjectOnHex=treeWeak;
+        hex.ObjectOnHex = treeWeak;
         // ağaçyerleştrimek için;
     }
     private void InstantiateTower(Hex hex)
     {
         GameObject tower = Instantiate(towerPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
     }
-    
+
     public void TreesSpread()// ağaç yayılması tüm haritayı kapsamaz bir yerde durur.
     {
         // olan ağaçlar yayılma eğlimi gösterir SpawnTrees()'den sonra çağrılmalı ağaçlar 10 tane türeyecek
@@ -228,35 +231,35 @@ public class SpawnManager : MonoBehaviour
         System.Random rand = new System.Random();//
         int spreadCounter = 0;
         int spreadLimit = 15;// yayılma tetiklenince artacak ağaç sayısı
-      
+
         List<Hex> hexesWithTree = hexes.Where(h => h.HexObjectType == ObjectType.TreeWeak).ToList();
 
-       
 
-        int hexesWithOutTreeCount = hexes.Where(h => h.HexObjectType == ObjectType.None&& h._hexType == Hex.hexType.grass).ToList().Count();
+
+        int hexesWithOutTreeCount = hexes.Where(h => h.HexObjectType == ObjectType.None && h._hexType == Hex.hexType.grass).ToList().Count();
         bool canSpread = true;
 
-        if (hexesWithOutTreeCount<30)
+        if (hexesWithOutTreeCount < 30)
         {
             spreadLimit = 8;
         }
-        else if(hexesWithOutTreeCount < 14)
+        else if (hexesWithOutTreeCount < 14)
         {
             spreadLimit = 0;
             canSpread = false;
         }
 
-            
 
-        while (spreadCounter<spreadLimit&&canSpread)
+
+        while (spreadCounter < spreadLimit && canSpread)
         {
             int index = rand.Next(hexesWithTree.Count);// türeme rastgele bi yerden başlicak
             bool spread = false;// yayılma için bayrak
             Hex hex = hexesWithTree[index];
-            for (int i = 0; i < hex.neighbors.Count&&!spread; i++)
+            for (int i = 0; i < hex.neighbors.Count && !spread; i++)
             {
                 Hex neighbor = hex.neighbors[i];
-                if (neighbor.HexObjectType== ObjectType.None && neighbor._hexType == Hex.hexType.grass)
+                if (neighbor.HexObjectType == ObjectType.None && neighbor._hexType == Hex.hexType.grass)
                 {
                     neighbor.HexObjectType = ObjectType.TreeWeak;
                     neighbor.UpdateAdvantageOrDisadvantageValue();
@@ -264,10 +267,10 @@ public class SpawnManager : MonoBehaviour
                     spread = true;
                     spreadCounter++;
                 }
-            }          
+            }
 
         }
-        
+
 
     }
     public void BuildTower(Hex hex, int x)//Towerımız burada oluşturuluyor.
@@ -299,3 +302,4 @@ public class SpawnManager : MonoBehaviour
         }
         ProtectedHexes.Clear();
     }
+}
