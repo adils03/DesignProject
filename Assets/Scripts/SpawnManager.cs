@@ -231,7 +231,21 @@ public class SpawnManager : MonoBehaviour
       
         List<Hex> hexesWithTree = hexes.Where(h => h.HexObjectType == ObjectType.TreeWeak).ToList();
 
-        bool canSpread = hexes.Count *6/10 > hexesWithTree.Count;// yayılma duruyor eğer çok fazla ağaç varsa
+       
+
+        int hexesWithOutTreeCount = hexes.Where(h => h.HexObjectType == ObjectType.None&& h._hexType == Hex.hexType.grass).ToList().Count();
+        bool canSpread = true;
+
+        if (hexesWithOutTreeCount<20)
+        {
+            spreadLimit = 5;
+        }
+        else if(hexesWithOutTreeCount < 10)
+        {
+            canSpread = false;
+        }
+
+            
 
         while (spreadCounter<spreadLimit&&canSpread)
         {
