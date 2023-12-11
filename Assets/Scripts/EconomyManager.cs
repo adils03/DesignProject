@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EconomyManager
 {
-    public int CurrentGold { get; set; } = 0;
+    public int CurrentGold { get; set; } = 10;// oyun biraz daha canlı başlar
 
     private int totalIncome;
 
@@ -32,7 +32,7 @@ public class EconomyManager
             else if (hex.HexObjectType == ObjectType.SoldierLevel2) { salarySoldier = 15; }
             else if (hex.HexObjectType == ObjectType.SoldierLevel3) { salarySoldier = 30; }
             else if (hex.HexObjectType == ObjectType.SoldierLevel4) { salarySoldier = 50; }
-            else if (hex.HexObjectType == ObjectType.BuildingDefenceLevel1) { salarySoldier = 20; }
+            else if (hex.HexObjectType == ObjectType.BuildingDefenceLevel1) { salarySoldier = 10; }// 20den 10'a çektim
             else if (hex.HexObjectType == ObjectType.BuildingDefenceLevel2) { salarySoldier = 30; }
 
             totalIncome -= salarySoldier;
