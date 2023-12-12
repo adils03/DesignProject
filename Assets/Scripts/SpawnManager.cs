@@ -17,6 +17,9 @@ public class SpawnManager : MonoBehaviour
     public GameObject towerPrefab;
     public List<Hex> continent = new List<Hex>();
     public GameObject FarmPrefab;
+    public GameObject soldierPrefab2;
+    public GameObject soldierPrefab3;
+    public GameObject soldierPrefab4;
     private void Awake()
     {
         gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
@@ -149,15 +152,15 @@ public class SpawnManager : MonoBehaviour
         {
             SpawnDefenceBuilding(uygunHex, s);
         }
-        else if(s == ObjectType.SoldierLevel1)
+        else if(s == ObjectType.SoldierLevel1|| s == ObjectType.SoldierLevel2 || s == ObjectType.SoldierLevel3 || s == ObjectType.SoldierLevel4)
         {
-             SpawnSoldier(uygunHex,s);
+            SpawnSoldier(uygunHex, s);
         }
         else if(s == ObjectType.BuildingFarm)
         {
-            //SpawnDefenceBuilding(uygunHex);
-        }
-       
+            SpawnFarmBuildng(uygunHex);
+            uygunHex.UpdateAdvantageOrDisadvantageValue();
+        }      
     }
     public void SpawnDefenceBuilding(Hex uygunHex, ObjectType s)
     {
@@ -174,12 +177,12 @@ public class SpawnManager : MonoBehaviour
     }
     public void SpawnFarmBuildng(Hex uygunHex)
     {
-        //InstantiateFarmBuilding(uygunHex);
+        InstantiateFarmBuilding(uygunHex);
         uygunHex.UpdateAdvantageOrDisadvantageValue();
     }
 
-
-    public void SpawnSoldier(Hex uygunHex,ObjectType s)
+    public GameObject[] soldierPrefabs;
+    public void SpawnSoldier(Hex uygunHex,ObjectType s)// tüm soldierlar için yapılmalı
     {
 
         if (uygunHex != null && uygunHex.HexObjectType == ObjectType.None||uygunHex.HexObjectType==ObjectType.TreeWeak)
@@ -191,19 +194,9 @@ public class SpawnManager : MonoBehaviour
                 uygunHex.destroyObjectOnHex();
                 uygunHex.Owner.PlayerTotalGold += 4;
             }
-
-            GameObject soldier;
-            soldier = Instantiate(soldierPrefab, new Vector3(uygunHex.transform.position.x, uygunHex.transform.position.y), Quaternion.identity);
-            uygunHex.HexEmpty = true;
-            uygunHex.HexObjectType = s;
-            uygunHex.ObjectOnHex = soldier;
-            uygunHex.Owner.soldiers.Add(soldier.GetComponent<Soldier>());
-            soldier.GetComponent<Soldier>().onHex = uygunHex;
-            soldier.GetComponent<Soldier>().owner = uygunHex.Owner;
-            soldier.GetComponent<Soldier>().playerName = uygunHex.playerName;
-
-            
-
+              
+            InstantiateSoldier(uygunHex,s);
+          
         }
 
     }
@@ -272,7 +265,31 @@ public class SpawnManager : MonoBehaviour
     }
     private void InstantiateFarmBuilding(Hex hex)
     {
-        //GameObject tower = Instantiate(towerPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
+        GameObject farm = Instantiate(FarmPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
+        hex.HexObjectType = ObjectType.BuildingFarm;
+    }
+    private void InstantiateSoldier(Hex hex,ObjectType s)// soldier type a göre soldier atar yaratır
+    {
+
+        GameObject gameObject = soldierPrefab;
+        if(s == ObjectType.SoldierLevel1) { gameObject = soldierPrefab; }      
+        else if (s == ObjectType.SoldierLevel2) { gameObject = soldierPrefab2; }
+        else if (s == ObjectType.SoldierLevel3) { gameObject = soldierPrefab3; }
+        else if (s == ObjectType.SoldierLevel4) { gameObject = soldierPrefab4; }
+        
+        GameObject soldier = Instantiate(gameObject, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
+        Debug.Log("soldier Yaratıldı");
+        Debug.Log("Gelen Hex"+hex.playerName);
+        soldier.GetComponent<Soldier>().onHex = hex;
+        Debug.Log("Hex atandı");
+        soldier.GetComponent<Soldier>().owner = hex.Owner;
+        soldier.GetComponent<Soldier>().playerName = hex.playerName;
+        hex.ObjectOnHex = soldier;
+        hex.Owner.soldiers.Add(soldier.GetComponent<Soldier>());
+        hex.HexObjectType = s;
+        hex.HexEmpty = true;
+        hex.HexObjectType = s;
+
     }
 
     public void TreesSpread()// ağaç yayılması tüm haritayı kapsamaz bir yerde durur.
