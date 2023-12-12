@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -47,7 +48,10 @@ public class Hex : MonoBehaviour
     }
     private void Update()
     {
-        ObjectTypeName = HexObjectType.ToString();
+        /*if (!GridSystem.travelContinent(this).Any(hex => hex.HexObjectType == ObjectType.TownHall)) {
+            //GridSystem.travelContinent(this) bu listenin herşeyinin boşalması lazım
+       }*/
+
     }
 
     public void UpdateAdvantageOrDisadvantageValue()// ağaçlardan biri mevcut ise dezavantaj var 

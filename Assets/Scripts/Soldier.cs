@@ -10,5 +10,8 @@ public class Soldier : MonoBehaviour
     public Player owner;
     public String playerName;
     public bool hasMoved = false;
+    private void OnDestroy() {
+        owner.soldiers.Remove(this);
+    }
 }
 

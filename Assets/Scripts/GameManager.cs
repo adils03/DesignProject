@@ -54,15 +54,20 @@ public class GameManager : MonoBehaviour
     }
     public void endTurn() //Buton ataması için konulmuştur.
     {
+        turnManager.StartTurn();
         foreach(Player player in players)
         {
             foreach (Soldier soldier in player.soldiers)
             {
                 soldier.hasMoved = false;
-                
+                if(GetTurnPlayer()!=player){
+                    soldier.GetComponent<CircleCollider2D>().enabled=false;
+                }
+                else{
+                    soldier.GetComponent<CircleCollider2D>().enabled=true;
+                }
             }
         }
-        turnManager.StartTurn();
         text.text="Turn: " + GetTurnPlayer().playerName;
         Debug.Log(players[0].playerName);
         if (turnManager.turnQueue.Count == 0) 

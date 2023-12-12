@@ -95,7 +95,8 @@ public class SoldierMovement : MonoBehaviour
         {
             hex.destroyObjectOnHex();
             soldierSc.owner.PlayerTotalGold += 4;
-            Debug.Log(soldierSc.owner.PlayerTotalGold);
+        }else if(hex.ObjectOnHex!=null){
+            hex.destroyObjectOnHex();
         }
         //soldierSc.onHex.protector = ObjectType.None;
         soldierSc.onHex.protectorOwner = null;
