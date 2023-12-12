@@ -7,13 +7,13 @@ using UnityEngine;
 public enum ObjectType// hex üzerindeki nesneler 
 {
     None,   // Hiçbir nesne yok
+    Tree,
+    TreeWeak,
+    BuildingFarm,
     SoldierLevel1,
     SoldierLevel2,
     SoldierLevel3,
     SoldierLevel4,
-    Tree,
-    TreeWeak,
-    BuildingFarm,
     BuildingDefenceLevel1,
     BuildingDefenceLevel2,
     TownHall
@@ -34,8 +34,8 @@ public class Hex : MonoBehaviour
     public GameObject ObjectOnHex = null;
     public String playerName;
     public ObjectType HexObjectType { get; set; } = ObjectType.None;// hex üzerindeki nesne asker , bina , ağaç
-    public ObjectType protector = ObjectType.None;
-    public Player protectorOwner=null;
+    //public ObjectType protector = ObjectType.None;
+    public Player protectorOwner = null;
     public String ObjectTypeName;
     public bool HexEmpty { get; set; }
     public int SetProtected = 0;
@@ -151,13 +151,16 @@ public class Hex : MonoBehaviour
         }
         foreach (Hex hex in areaForStep)//Askerlerin yürüyemeceği toprakları çıkarır
         {
-            if ((int)hex.HexObjectType >= (int)soldier.soldierLevel && (int)soldier.soldierLevel != 4 && hex.Owner != soldier.owner)
+            foreach (Hex hex1 in hex.neighbors)
             {
-                Debug.Log("aaaaaaaa");
-                toRemove.Add(hex);
+                if (hex1.HexObjectType >= soldier.soldierLevel && (int)soldier.soldierLevel != 7 && hex1.Owner != soldier.owner && hex1.Owner == hex.Owner)
+                {
+                    toRemove.Add(hex);
+                }
             }
-            if ((int)soldier.soldierLevel < 3 && hex.SetProtected > 0 && soldier.owner!=protectorOwner)//Protector owner atamaları
+            if ((int)hex.HexObjectType >= (int)soldier.soldierLevel && (int)soldier.soldierLevel != 7 && hex.Owner != soldier.owner)
             {
+                Debug.Log(hex.HexObjectType);
                 toRemove.Add(hex);
             }
 
