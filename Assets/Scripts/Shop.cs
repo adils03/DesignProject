@@ -17,10 +17,6 @@ public class Shop : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
     }
-    private void Update()
-    {
-        Debug.Log("isWaitngFor: "+isWaitingForInput);
-    }
     public void buySoldier()// level 1 asker
     {
         Debug.Log("Buysoldier girdi");
@@ -29,7 +25,7 @@ public class Shop : MonoBehaviour
         placeAbleArea = currentPlayer.ownedHexes;
         PlaceAbleAreaSet(true);
 
-        if(currentPlayer.PlayerTotalGold>=-100)// ücretten az ise vermem kardeþim asker masker þimdilik -100dedim
+        if(currentPlayer.PlayerTotalGold>=-100)// ï¿½cretten az ise vermem kardeï¿½im asker masker ï¿½imdilik -100dedim
             StartCoroutine(WaitForHexSelection(ObjectType.SoldierLevel1));// selectedHex gelcek
         else
             PlaceAbleAreaReset();
@@ -55,9 +51,12 @@ public class Shop : MonoBehaviour
                     {
                         //spawnManager.SpawnSoldier(selectedHex,spawnObje);
                         spawnManager.SpawnObje(selectedHex,spawnObje);
-                        isWaitingForInput = false; // Ýstenilen durum gerçekleþtiðinde döngüyü sonlandýr
+                        isWaitingForInput = false; // ï¿½stenilen durum gerï¿½ekleï¿½tiï¿½inde dï¿½ngï¿½yï¿½ sonlandï¿½r
                         PlaceAbleAreaReset();
-                        selectedHex.Owner.PlayerTotalGold -= 10;// ücret kesildi
+                        selectedHex.Owner.PlayerTotalGold -= 10;// ï¿½cret kesildi
+                    }
+                    else{
+                        PlaceAbleAreaReset();
                     }
                 }
             }

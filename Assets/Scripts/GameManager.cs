@@ -46,7 +46,9 @@ public class GameManager : MonoBehaviour
 
 
         turnManager = new TurnManager(players);
+        Debug.Log(players[0].playerName);
         text.text="Turn: " + players[0].playerName;
+        Debug.Log(players[0].playerName);
         spawnManager.SpawnLandOfPlayers(gridSystem.size,players);
         spawnManager.SpawnTrees();
     }
