@@ -95,21 +95,22 @@ public class SoldierMovement : MonoBehaviour
         {
             hex.destroyObjectOnHex();
             soldierSc.owner.PlayerTotalGold += 4;
-            Debug.Log(soldierSc.owner.PlayerTotalGold);
+        }else if(hex.ObjectOnHex!=null){
+            hex.destroyObjectOnHex();
         }
-        soldierSc.onHex.protector = ObjectType.None;
+        //soldierSc.onHex.protector = ObjectType.None;
         soldierSc.onHex.protectorOwner = null;
         foreach (Hex hex1 in soldierSc.onHex.neighbors)
         {
-            hex1.protector = ObjectType.None;
+           // hex1.protector = ObjectType.None;
             hex1.protectorOwner = null;
         }  
         foreach (Hex hex1 in hex.neighbors)
         {
-            hex1.protector = soldierSc.soldierLevel;
+           // hex1.protector = soldierSc.soldierLevel;
             hex1.protectorOwner = soldierSc.owner;
         } 
-        hex.protector = soldierSc.soldierLevel;
+       // hex.protector = soldierSc.soldierLevel;
         hex.protectorOwner = soldierSc.owner;
         soldierSc.onHex.HexObjectType = ObjectType.None;
         soldierSc.onHex.ObjectOnHex = null;

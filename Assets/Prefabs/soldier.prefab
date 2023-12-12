@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4823122e98017498b1679305300b49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soldierLevel: 1
+  soldierLevel: 4
   onHex: {fileID: 0}
   playerName: 
   hasMoved: 0

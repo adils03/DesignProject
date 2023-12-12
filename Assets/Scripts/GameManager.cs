@@ -46,29 +46,30 @@ public class GameManager : MonoBehaviour
 
 
         turnManager = new TurnManager(players);
-        Debug.Log(players[0].playerName);
-        text.text="Turn: " + players[0].playerName;
-        Debug.Log(players[0].playerName);
+        
+        
         spawnManager.SpawnLandOfPlayers(gridSystem.size,players);
         spawnManager.SpawnTrees();
+        text.text="Turn: " + turnManager.players[0].playerName;
     }
     public void endTurn() //Buton ataması için konulmuştur.
     {
+        turnManager.StartTurn();
         foreach(Player player in players)
         {
             foreach (Soldier soldier in player.soldiers)
             {
                 soldier.hasMoved = false;
-                
+                if(GetTurnPlayer()!=player){
+                    soldier.GetComponent<CircleCollider2D>().enabled=false;
+                }
+                else{
+                    soldier.GetComponent<CircleCollider2D>().enabled=true;
+                }
             }
         }
-        turnManager.StartTurn();
-        if(turnManager.turnQueue.Count==0)
-        {
-            text.text="Turn: " + players[0].playerName;
-        }else{
-            text.text="Turn: " + turnManager.turnQueue.Peek().playerName;
-        }
+        text.text="Turn: " + GetTurnPlayer().playerName;
+        Debug.Log(players[0].playerName);
         if (turnManager.turnQueue.Count == 0) 
         {
             spawnManager.TreesSpread();

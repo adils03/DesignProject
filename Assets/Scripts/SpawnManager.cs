@@ -194,9 +194,25 @@ public class SpawnManager : MonoBehaviour
                 uygunHex.destroyObjectOnHex();
                 uygunHex.Owner.PlayerTotalGold += 4;
             }
+<<<<<<< HEAD
               
             InstantiateSoldier(uygunHex,s);
           
+=======
+
+            GameObject soldier;
+            soldier = Instantiate(soldierPrefab, new Vector3(uygunHex.transform.position.x, uygunHex.transform.position.y), Quaternion.identity);
+            uygunHex.HexEmpty = true;
+            uygunHex.HexObjectType = soldier.GetComponent<Soldier>().soldierLevel;
+            uygunHex.ObjectOnHex = soldier;
+            uygunHex.Owner.soldiers.Add(soldier.GetComponent<Soldier>());
+            soldier.GetComponent<Soldier>().onHex = uygunHex;
+            soldier.GetComponent<Soldier>().owner = uygunHex.Owner;
+            soldier.GetComponent<Soldier>().playerName = uygunHex.playerName;
+
+            
+
+>>>>>>> a798c792bb8678400c9648c4e90dda4fa0cb6e5c
         }
 
     }

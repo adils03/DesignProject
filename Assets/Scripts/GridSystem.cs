@@ -13,7 +13,6 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private GameObject hexPrefabGrass;
     [SerializeField] private GameObject hexPrefabWater;
     private GameObject _hex;
-    public List<Hex> continent = new List<Hex>();
     public List<Hex> hexes = new List<Hex>();
     public float noiseScale = 1f;
     public float threshold = 0.5f;
@@ -145,9 +144,10 @@ public class GridSystem : MonoBehaviour
         return (Mathf.Abs(a.q - b.q) + Mathf.Abs(a.r - b.r) + Mathf.Abs(a.s - b.s)) / 2;
     }
 
-    public List<Hex> travelContinent(Hex startHex)//Hex'in bulunduğu kıtayı continent listesine eşitler
+    public static List<Hex> travelContinent(Hex startHex)//Hex'in bulunduğu kıtayı continent listesine eşitler
     {
         Stack<Hex> stack = new Stack<Hex>();
+        List<Hex> continent = new List<Hex>();
 
         stack.Push(startHex);
 
