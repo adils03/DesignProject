@@ -12,7 +12,7 @@ public class Soldier : MonoBehaviour
     public bool hasMoved = false;
     void Start()
     {
-        owner.soldiers.Add(this);
+        Debug.Log((int)soldierLevel);
     }
 }
 
