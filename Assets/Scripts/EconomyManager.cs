@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class EconomyManager
 {
-    public int CurrentGold { get; set; } = 10;// oyun biraz daha canlı başlar
 
-    private int totalIncome;
+    public int totalIncome;
 
     private List<Hex> OwnedHexagons;
 
@@ -42,7 +41,7 @@ public class EconomyManager
 
     void UpdateGold()
     {
-        CurrentGold += totalIncome;
+       
 
     }
     public void UpdateOwnedHexagons(List<Hex> newHexagons)
@@ -50,8 +49,7 @@ public class EconomyManager
         OwnedHexagons = newHexagons;
         CalculateIncome();
         CalculateSalaries();
-        UpdateGold();
-        totalIncome = 0;
+           
     }
    
     public void HexOwnershipChanged(Hex changedHex)

@@ -93,8 +93,8 @@ public class SpawnManager : MonoBehaviour
 
 
             player.PlayerUpdate(land, colors.Pop());
-            SpawnSoldier(land[2]);//denemelik
-            SpawnSoldier(land[4]);//denemelik
+            SpawnSoldier(land[2],ObjectType.SoldierLevel1);//denemelik
+            SpawnSoldier(land[4],ObjectType.SoldierLevel1);//denemelik
             BuildTower(land[3], 1);
         }
 
@@ -144,19 +144,46 @@ public class SpawnManager : MonoBehaviour
     }
 
 
-    public void SpawnSoldier(Hex uygunHex)
+
+    public void SpawnObje(Hex uygunHex,ObjectType s)//genel spawn
+    {
+        if(s== ObjectType.BuildingDefenceLevel1)
+        {
+
+        }
+
+        if(s == ObjectType.SoldierLevel1)
+        {
+            SpawnSoldier(uygunHex,s);
+        }
+       
+    }
+
+    public void SpawnSoldier(Hex uygunHex,ObjectType s)
     {
 
-        if (uygunHex != null && !uygunHex.HexEmpty)
+        if (uygunHex != null && uygunHex.HexObjectType == ObjectType.None||uygunHex.HexObjectType==ObjectType.TreeWeak)
         {
+            Debug.Log("spawnSoldierA girdi ife");
+
+            if(uygunHex.HexObjectType== ObjectType.TreeWeak)
+            {
+                uygunHex.destroyObjectOnHex();
+                uygunHex.Owner.PlayerTotalGold += 4;
+            }
+
             GameObject soldier;
             soldier = Instantiate(soldierPrefab, new Vector3(uygunHex.transform.position.x, uygunHex.transform.position.y), Quaternion.identity);
             uygunHex.HexEmpty = true;
-            uygunHex.HexObjectType = ObjectType.SoldierLevel1;
+            uygunHex.HexObjectType = s;
             uygunHex.ObjectOnHex = soldier;
+            uygunHex.Owner.soldiers.Add(soldier.GetComponent<Soldier>());
             soldier.GetComponent<Soldier>().onHex = uygunHex;
             soldier.GetComponent<Soldier>().owner = uygunHex.Owner;
             soldier.GetComponent<Soldier>().playerName = uygunHex.playerName;
+
+            
+
         }
 
     }
