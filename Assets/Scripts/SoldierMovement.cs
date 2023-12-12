@@ -32,7 +32,6 @@ public class SoldierMovement : MonoBehaviour
             GameObject hitObject = soldierHit.collider.gameObject;
             if (hitObject.tag == "Soldier")
             {
-                Debug.Log("soldier'a tıklandı");
                 HandleSoldierHit(hitObject);
             }
             else if (hitObject.tag == "Hex")
@@ -68,7 +67,7 @@ public class SoldierMovement : MonoBehaviour
         soldier = soldierHit;
         if (gameManager.GetTurnPlayer() == soldier.GetComponent<Soldier>().owner && !soldier.GetComponent<Soldier>().hasMoved)
         {
-            walkableArea = soldier.GetComponent<Soldier>().onHex.travelContinentByStep(4);
+            walkableArea = soldier.GetComponent<Soldier>().onHex.travelContinentByStepForSoldier(4,soldier.GetComponent<Soldier>());
             foreach (Hex hex in walkableArea)
             {
                 hex.activateIndicator(true);
@@ -91,23 +90,38 @@ public class SoldierMovement : MonoBehaviour
 
     void ProcessValidHex(Hex hex)
     {
+        Soldier soldierSc=soldier.GetComponent<Soldier>();
         if (hex.HexObjectType == ObjectType.Tree || hex.HexObjectType == ObjectType.TreeWeak)
         {
             hex.destroyObjectOnHex();
-            soldier.GetComponent<Soldier>().owner.PlayerTotalGold += 4;
-            Debug.Log(soldier.GetComponent<Soldier>().owner.PlayerTotalGold);
+            soldierSc.owner.PlayerTotalGold += 4;
+            Debug.Log(soldierSc.owner.PlayerTotalGold);
         }
-        soldier.GetComponent<Soldier>().onHex.HexObjectType = ObjectType.None;
-        soldier.GetComponent<Soldier>().onHex.ObjectOnHex = null;
+        soldierSc.onHex.protector = ObjectType.None;
+        soldierSc.onHex.protectorOwner = null;
+        foreach (Hex hex1 in soldierSc.onHex.neighbors)
+        {
+            hex1.protector = ObjectType.None;
+            hex1.protectorOwner = null;
+        }  
+        foreach (Hex hex1 in hex.neighbors)
+        {
+            hex1.protector = soldierSc.soldierLevel;
+            hex1.protectorOwner = soldierSc.owner;
+        } 
+        hex.protector = soldierSc.soldierLevel;
+        hex.protectorOwner = soldierSc.owner;
+        soldierSc.onHex.HexObjectType = ObjectType.None;
+        soldierSc.onHex.ObjectOnHex = null;
         hex.ObjectOnHex = soldier;
-        hex.HexObjectType = soldier.GetComponent<Soldier>().soldierLevel;
-        hex.Owner = soldier.GetComponent<Soldier>().owner;
+        hex.HexObjectType = soldierSc.soldierLevel;
+        hex.Owner = soldierSc.owner;
         hex.Owner.ownedHexes.Add(hex);
-        hex.playerName = soldier.GetComponent<Soldier>().playerName;
-        hex.GetComponent<SpriteRenderer>().color = soldier.GetComponent<Soldier>().owner.playerColor;
-        soldier.GetComponent<Soldier>().onHex = hex;
+        hex.playerName = soldierSc.playerName;
+        hex.GetComponent<SpriteRenderer>().color = soldierSc.owner.playerColor;
+        soldierSc.onHex = hex;
         soldier.transform.position = hex.transform.position;
-        soldier.GetComponent<Soldier>().hasMoved = true;
+        soldierSc.hasMoved = true;
         hex.UpdateAdvantageOrDisadvantageValue();
         foreach (Hex _hex in walkableArea)
         {

@@ -10,6 +10,9 @@ public class Soldier : MonoBehaviour
     public Player owner;
     public String playerName;
     public bool hasMoved = false;
-   
+    void Start()
+    {
+        Debug.Log((int)soldierLevel);
+    }
 }
 

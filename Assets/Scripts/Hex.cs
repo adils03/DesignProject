@@ -31,9 +31,11 @@ public class Hex : MonoBehaviour
     public bool hasVisited = false;
     public int Income = 3;// hex başına gelir default 3 
     public Player Owner;// kimin bu hex ,null ise kimsenin
-    public GameObject ObjectOnHex=null;
+    public GameObject ObjectOnHex = null;
     public String playerName;
     public ObjectType HexObjectType { get; set; } = ObjectType.None;// hex üzerindeki nesne asker , bina , ağaç
+    public ObjectType protector = ObjectType.None;
+    public Player protectorOwner=null;
     public String ObjectTypeName;
     public bool HexEmpty { get; set; }
     public int SetProtected = 0;
@@ -43,8 +45,9 @@ public class Hex : MonoBehaviour
         grass,
         water
     }
-    private void Update() {
-        ObjectTypeName=HexObjectType.ToString();
+    private void Update()
+    {
+        ObjectTypeName = HexObjectType.ToString();
     }
 
     public void UpdateAdvantageOrDisadvantageValue()// ağaçlardan biri mevcut ise dezavantaj var 
@@ -53,15 +56,15 @@ public class Hex : MonoBehaviour
             Income = 0;
         else if (this.HexObjectType == ObjectType.BuildingFarm)
             Income = 10;// bu da farmbinası başına verilen değer   
-        else if(this.HexObjectType == ObjectType.SoldierLevel1||
-        this.HexObjectType == ObjectType.SoldierLevel2||
-        this.HexObjectType == ObjectType.SoldierLevel3||
-        this.HexObjectType == ObjectType.SoldierLevel4||
+        else if (this.HexObjectType == ObjectType.SoldierLevel1 ||
+        this.HexObjectType == ObjectType.SoldierLevel2 ||
+        this.HexObjectType == ObjectType.SoldierLevel3 ||
+        this.HexObjectType == ObjectType.SoldierLevel4 ||
         this.HexObjectType == ObjectType.TownHall)
-            Income=3;   
+            Income = 3;
     }
 
-    public List<Hex> travelContinentByStep(int step) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
+    public List<Hex> travelContinentByStepForSoldier(int step, Soldier soldier) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
     {
         step++;
         int stepAmount = step;
@@ -74,7 +77,7 @@ public class Hex : MonoBehaviour
 
         hexType __hexType = startHex._hexType;
 
-        while (queue.Count > 0 && step > 0)
+        while (queue.Count > 0 && step > 0) //Hexin etrafını adım sayısına göre alır
         {
             int size = queue.Count;
 
@@ -100,7 +103,7 @@ public class Hex : MonoBehaviour
         }
         List<Hex> toRemove = new List<Hex>();
 
-        foreach (Hex hex in areaForStep)
+        foreach (Hex hex in areaForStep) //Farklı bir owner varsa o toprakları çıkarır
         {
             bool anyOwnerSame = false;
 
@@ -124,7 +127,7 @@ public class Hex : MonoBehaviour
             areaForStep.Remove(hex);
         }
         List<Hex> toAdd = new List<Hex>();
-        foreach (Hex hex in areaForStep)
+        foreach (Hex hex in areaForStep) //Toprak dışına 1 adım ilerleyebilmemiz için toprak ekler
         {
             if (GridSystem.AStar(startHex, hex, areaForStep).Count < stepAmount)
                 if (GridSystem.AStar(startHex, hex, areaForStep).Count < stepAmount)
@@ -146,6 +149,23 @@ public class Hex : MonoBehaviour
         {
             areaForStep.Add(hex);
         }
+        foreach (Hex hex in areaForStep)//Askerlerin yürüyemeceği toprakları çıkarır
+        {
+            if ((int)hex.HexObjectType >= (int)soldier.soldierLevel && (int)soldier.soldierLevel != 4 && hex.Owner != soldier.owner)
+            {
+                Debug.Log("aaaaaaaa");
+                toRemove.Add(hex);
+            }
+            if ((int)soldier.soldierLevel < 3 && hex.SetProtected > 0 && soldier.owner!=protectorOwner)//Protector owner atamaları
+            {
+                toRemove.Add(hex);
+            }
+
+        }
+        foreach (Hex hex in toRemove)
+        {
+            areaForStep.Remove(hex);
+        }
 
         foreach (Hex hex in areaForStep)
         {
@@ -155,16 +175,18 @@ public class Hex : MonoBehaviour
         return areaForStep;
     }
 
-    public void activateIndicator(bool request)
+    public void activateIndicator(bool request) //Hexlerin indicatorunu active/deactive eder
     {
         gameObject.transform.GetChild(0).gameObject.SetActive(request);
     }
 
-    public void destroyObjectOnHex(){
-        if(ObjectOnHex!=null){
+    public void destroyObjectOnHex()
+    { //Hexin üstündeki objeyi yok eder
+        if (ObjectOnHex != null)
+        {
             Destroy(ObjectOnHex);
         }
-        ObjectOnHex=null;
+        ObjectOnHex = null;
     }
 
 }
