@@ -38,7 +38,7 @@ public class Shop : MonoBehaviour
 
 
     }
-    private IEnumerator WaitForHexSelection(ObjectType spawnObje)// soldierType
+    private IEnumerator WaitForHexSelection(ObjectType spawnObje)// anyType
     {
         while (isWaitingForInput)
         {
@@ -53,7 +53,8 @@ public class Shop : MonoBehaviour
 
                     if (placeAbleArea.Contains(selectedHex))
                     {
-                        spawnManager.SpawnSoldier(selectedHex,spawnObje);
+                        //spawnManager.SpawnSoldier(selectedHex,spawnObje);
+                        spawnManager.SpawnObje(selectedHex,spawnObje);
                         isWaitingForInput = false; // Ýstenilen durum gerçekleþtiðinde döngüyü sonlandýr
                         PlaceAbleAreaReset();
                         selectedHex.Owner.PlayerTotalGold -= 10;// ücret kesildi

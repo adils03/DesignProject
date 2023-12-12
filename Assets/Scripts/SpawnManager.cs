@@ -16,6 +16,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject soldierPrefab;
     public GameObject towerPrefab;
     public List<Hex> continent = new List<Hex>();
+    public GameObject FarmPrefab;
     private void Awake()
     {
         gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
@@ -147,17 +148,39 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnObje(Hex uygunHex,ObjectType s)//genel spawn
     {
-        if(s== ObjectType.BuildingDefenceLevel1)
+        if(s == ObjectType.BuildingDefenceLevel1 || s == ObjectType.BuildingDefenceLevel2)
         {
-
+            SpawnDefenceBuilding(uygunHex, s);
         }
-
-        if(s == ObjectType.SoldierLevel1)
+        else if(s == ObjectType.SoldierLevel1)
         {
-            SpawnSoldier(uygunHex,s);
+             SpawnSoldier(uygunHex,s);
+        }
+        else if(s == ObjectType.BuildingFarm)
+        {
+            //SpawnDefenceBuilding(uygunHex);
         }
        
     }
+    public void SpawnDefenceBuilding(Hex uygunHex, ObjectType s)
+    {
+        if(s == ObjectType.BuildingDefenceLevel1)
+        {
+            BuildTower(uygunHex,1);
+          
+
+        }else if(s == ObjectType.BuildingDefenceLevel2)
+        {
+            BuildTower(uygunHex, 2);
+      
+        }
+    }
+    public void SpawnFarmBuildng(Hex uygunHex)
+    {
+        //InstantiateFarmBuilding(uygunHex);
+        uygunHex.UpdateAdvantageOrDisadvantageValue();
+    }
+
 
     public void SpawnSoldier(Hex uygunHex,ObjectType s)
     {
@@ -249,6 +272,10 @@ public class SpawnManager : MonoBehaviour
     private void InstantiateTower(Hex hex)
     {
         GameObject tower = Instantiate(towerPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
+    }
+    private void InstantiateFarmBuilding(Hex hex)
+    {
+        //GameObject tower = Instantiate(towerPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
     }
 
     public void TreesSpread()// ağaç yayılması tüm haritayı kapsamaz bir yerde durur.
