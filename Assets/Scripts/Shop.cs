@@ -4,30 +4,90 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-   public GameManager gameManager;
-   public EconomyManager economyManager;
-   public Player player;
-   
+    public GameManager gameManager;
+    public SpawnManager spawnManager;
+    private Hex selectedHex;
+    private bool isWaitingForInput = true;
+
+
+
+    List<Hex> placeAbleArea = new List<Hex>();
     private void Awake() 
     {
-       gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
     }
-    
-    public void buySoldier(ObjectType soldierType)
+    private void Update()
     {
-        Player turnPlayer = gameManager.GetTurnPlayer();
-        if(turnPlayer != null)
-        {
-            Soldier newSoldier = new Soldier(); 
-            newSoldier.soldierLevel = soldierType;
-            newSoldier.owner = turnPlayer; 
-            turnPlayer.soldiers.Add(newSoldier);
-        }
+        Debug.Log("isWaitngFor: "+isWaitingForInput);
+    }
+    public void buySoldier()// level 1 asker
+    {
+        Debug.Log("Buysoldier girdi");
+        Player currentPlayer = gameManager.GetTurnPlayer();
         
-        economyManager = new EconomyManager();
-        player.PlayerTotalGold = economyManager.CurrentGold;
+        placeAbleArea = currentPlayer.ownedHexes;
+        PlaceAbleAreaSet(true);
+
+        if(currentPlayer.PlayerTotalGold>=-100)// ücretten az ise vermem kardeþim asker masker þimdilik -100dedim
+            StartCoroutine(WaitForHexSelection(ObjectType.SoldierLevel1));// selectedHex gelcek
+        else
+            PlaceAbleAreaReset();
+
+        return;
+
 
     }
+    private IEnumerator WaitForHexSelection(ObjectType spawnObje)// soldierType
+    {
+        while (isWaitingForInput)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector2 soldierRay = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D hexHit = Physics2D.Raycast(soldierRay, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Hex"));
+
+                if (hexHit.collider != null)
+                {
+                    selectedHex = hexHit.collider.gameObject.GetComponent<Hex>();
+
+                    if (placeAbleArea.Contains(selectedHex))
+                    {
+                        spawnManager.SpawnSoldier(selectedHex,spawnObje);
+                        isWaitingForInput = false; // Ýstenilen durum gerçekleþtiðinde döngüyü sonlandýr
+                        PlaceAbleAreaReset();
+                        selectedHex.Owner.PlayerTotalGold -= 10;// ücret kesildi
+                    }
+                }
+            }
+
+            yield return null;
+        }
+        isWaitingForInput = true;
+       
+    }
+    void PlaceAbleAreaSet(bool a)
+    {
+        if (placeAbleArea != null)
+        {
+            foreach (Hex hex in placeAbleArea)
+            {
+                hex.activateIndicator(a);
+            }
+        }
+    }
+    void PlaceAbleAreaReset()
+    {
+        if (placeAbleArea != null)
+        {
+            foreach (Hex hex in placeAbleArea)
+            {
+                hex.activateIndicator(false);
+            }
+            placeAbleArea = null;
+        }
+    }
+
 
     public void buyTower()
     {

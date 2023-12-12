@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player
 {
     public string playerName;
-    public int PlayerTotalGold = 0;// player altını burdan da görüyoruz kaynak eManager
+    public int PlayerTotalGold = 10;// player altını burdan da görüyoruz kaynak eManager
     public List<Hex> ownedHexes = new List<Hex>(); //sahip olduğu hexler
     public List<Soldier> soldiers = new List<Soldier>();
     public EconomyManager economyManager;
@@ -34,7 +34,7 @@ public class Player
         economyManager = new EconomyManager();
 
         //economyManager.UpdateOwnedHexagons(ownedHexes);
-        PlayerTotalGold = economyManager.CurrentGold;// kasadaki altını  burdan ilkez aldık 
+        UpdateTotalGold();// kasadaki altını  burdan ilkez aldık 
     }
     public void PlayerUpdate(List<Hex> hexes, Color color)
     {
@@ -51,12 +51,17 @@ public class Player
         economyManager = new EconomyManager();
 
         //economyManager.UpdateOwnedHexagons(ownedHexes);
-        PlayerTotalGold = economyManager.CurrentGold;// kasadaki altını  burdan ilkez aldık 
+        UpdateTotalGold();// kasadaki altını  burdan ilkez aldık 
+    }
+    void UpdateTotalGold()
+    {
+        PlayerTotalGold += economyManager.totalIncome;
+        economyManager.totalIncome = 0;
     }
     public void StartTurn()
     {
         economyManager.UpdateOwnedHexagons(ownedHexes);// sahip olduğumuz hexleri ekonomi managerde güncelledik
-        PlayerTotalGold = economyManager.CurrentGold;// burdan da tur başına güncelledik kasadaki altını
+        UpdateTotalGold();// burdan da tur başına güncelledik kasadaki altını
         Debug.Log(playerName + " oyuncunun sirasi bitti ve Altını : " + PlayerTotalGold);
     }
     public void ChangeHexOwnership(Hex changedHex)
