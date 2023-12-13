@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 74a4eaffb888d254f8fe779510c9ac04, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4823122e98017498b1679305300b49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soldierLevel: 2
+  soldierLevel: 5
   onHex: {fileID: 0}
   playerName: 
   hasMoved: 0

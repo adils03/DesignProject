@@ -74,12 +74,8 @@ public class Shop : MonoBehaviour
                 {
                     selectedHex = hexHit.collider.gameObject.GetComponent<Hex>();
 
-<<<<<<< HEAD
 
-                    if (selectedHex!= null&&placeAbleArea.Contains(selectedHex))
-=======
-                    if (placeAbleArea.Contains(selectedHex)&&placeAbleArea!=null)
->>>>>>> a798c792bb8678400c9648c4e90dda4fa0cb6e5c
+                    if (placeAbleArea.Contains(selectedHex))
                     {
                         //spawnManager.SpawnSoldier(selectedHex,spawnObje);
                         spawnManager.SpawnObje(selectedHex,spawnObje);
