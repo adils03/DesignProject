@@ -287,7 +287,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 440795685}
+      - m_Target: {fileID: 1060431827}
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
         m_MethodName: buyFarm
         m_Mode: 1
@@ -428,7 +428,6 @@ GameObject:
   - component: {fileID: 440795683}
   - component: {fileID: 440795682}
   - component: {fileID: 440795681}
-  - component: {fileID: 440795685}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -525,20 +524,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &440795685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 440795680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e74c6cd27bb9f9c4195f81451b053a24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  spawnManager: {fileID: 0}
 --- !u!1 &469701391
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,17 +810,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31a7c2193299bfd41a947a0dab521d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
   housePrefab: {fileID: 6309078802363555709, guid: 113437592663c1c408b39d240663c6c0, type: 3}
   TreeWeakPrefab: {fileID: 4625775723015354401, guid: 9b917def5d8f2084495e96ffd45266c3, type: 3}
-  soldierPrefab: {fileID: 6173238419933503443, guid: ac32adf1fa37eac439d235e6f05f0fe3, type: 3}
   towerPrefab: {fileID: 6957722672896499896, guid: 7563c90a186df6c47953aa88ec6e595a, type: 3}
-  continent: []
   FarmPrefab: {fileID: 7145665063082651233, guid: 6449ce493a5170c4fb6eb46d4caa8153, type: 3}
-  soldierPrefab2: {fileID: 430641335414856365, guid: 7be96b1314803bb4bbf622c192cb9e97, type: 3}
-  soldierPrefab3: {fileID: 3409835762688113576, guid: b1b95a9fa8c80b946ba89ea05c98f0a9, type: 3}
-  soldierPrefab4: {fileID: 3761222386660182053, guid: f5a8755a3bcf917499c078fd2b874f94, type: 3}
+  soldierPrefab: {fileID: 6173238419933503443, guid: ac32adf1fa37eac439d235e6f05f0fe3, type: 3}
+  soldierPrefab2: {fileID: 6173238419933503443, guid: 87c826568e053654f8099d924d1eda76, type: 3}
+  soldierPrefab3: {fileID: 6173238419933503443, guid: 2f84e9b8eaf75c245ab6144e48ed1aa6, type: 3}
+  soldierPrefab4: {fileID: 6173238419933503443, guid: 0c7f637e37778d7449c7cd7f4e84a314, type: 3}
   soldierPrefabs: []
 --- !u!4 &714405839
 Transform:
@@ -1030,7 +1012,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 440795685}
+      - m_Target: {fileID: 1060431827}
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
         m_MethodName: buySoldier4
         m_Mode: 1
@@ -1197,6 +1179,9 @@ MonoBehaviour:
   Burak: 0
   Halil: 0
   Emin: 0
+  burakhex: []
+  halilhex: []
+  eminhex: []
 --- !u!4 &933674181
 Transform:
   m_ObjectHideFlags: 0
@@ -1204,6 +1189,50 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933674179}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1060431826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1060431828}
+  - component: {fileID: 1060431827}
+  m_Layer: 0
+  m_Name: Shop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1060431827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060431826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e74c6cd27bb9f9c4195f81451b053a24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1060431828
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060431826}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -1295,7 +1324,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 440795685}
+      - m_Target: {fileID: 1060431827}
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
         m_MethodName: buySoldier2
         m_Mode: 1
@@ -1428,25 +1457,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 440795685}
+      - m_Target: {fileID: 1060431827}
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
         m_MethodName: buySoldier
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11500000, guid: e74c6cd27bb9f9c4195f81451b053a24, type: 3}
-        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1868,7 +1885,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 440795685}
+      - m_Target: {fileID: 1060431827}
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
         m_MethodName: buySoldier3
         m_Mode: 1
@@ -1963,14 +1980,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 15
-  hexPrefabGrass: {fileID: 4133545700341867623, guid: 7a92b132c0b172b43b1d229a7dfed48a, type: 3}
-  hexPrefabWater: {fileID: 4133545700341867623, guid: 45831ac05379d3f4eae84cc7bf74f2a4, type: 3}
-  continent: []
-  hexes: []
   noiseScale: 0.15
   threshold: 0.22
-  offsetX: 46519
-  offsetY: 42625
+  hexPrefabGrass: {fileID: 4133545700341867623, guid: 7a92b132c0b172b43b1d229a7dfed48a, type: 3}
+  hexPrefabWater: {fileID: 4133545700341867623, guid: 45831ac05379d3f4eae84cc7bf74f2a4, type: 3}
+  hexes: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1981,3 +1995,4 @@ SceneRoots:
   - {fileID: 440795684}
   - {fileID: 933674181}
   - {fileID: 714405839}
+  - {fileID: 1060431828}
