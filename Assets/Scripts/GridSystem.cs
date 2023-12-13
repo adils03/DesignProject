@@ -9,14 +9,16 @@ using UnityEngine;
 
 public class GridSystem : MonoBehaviour
 {
+    [Header("Grid parameters")]
     [SerializeField] public int size;
+    [SerializeField] private float noiseScale = 1f;
+    [SerializeField] private float threshold = 0.5f;
+    private float offsetX, offsetY;
     [SerializeField] private GameObject hexPrefabGrass;
     [SerializeField] private GameObject hexPrefabWater;
     private GameObject _hex;
     public List<Hex> hexes = new List<Hex>();
-    public float noiseScale = 1f;
-    public float threshold = 0.5f;
-    public float offsetX, offsetY;
+    
 
     private void Awake()
     {

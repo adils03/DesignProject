@@ -9,17 +9,17 @@ using UnityEngine.UIElements;
 
 public class SpawnManager : MonoBehaviour
 {
-    public int x, y;
     GridSystem gridSystem;
-    public GameObject housePrefab;
-    public GameObject TreeWeakPrefab;
-    public GameObject soldierPrefab;
-    public GameObject towerPrefab;
-    public List<Hex> continent = new List<Hex>();
-    public GameObject FarmPrefab;
-    public GameObject soldierPrefab2;
-    public GameObject soldierPrefab3;
-    public GameObject soldierPrefab4;
+    private List<Hex> continent = new List<Hex>();
+    [Header("Prefabs")]
+    [SerializeField]private GameObject housePrefab;
+    [SerializeField]private GameObject TreeWeakPrefab;
+    [SerializeField]private GameObject towerPrefab;
+    [SerializeField]private GameObject FarmPrefab;
+    [SerializeField]private GameObject soldierPrefab;
+    [SerializeField]private GameObject soldierPrefab2;
+    [SerializeField]private GameObject soldierPrefab3;
+    [SerializeField]private GameObject soldierPrefab4;
     private void Awake()
     {
         gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
@@ -352,11 +352,6 @@ public class SpawnManager : MonoBehaviour
         {
             hex.HexObjectType = ObjectType.BuildingDefenceLevel2;
             InstantiateTower(hex);
-        }
-
-        foreach (Hex neighbour in neighboringHexes)
-        {
-            neighbour.SetProtected = x;
         }
     }
 }

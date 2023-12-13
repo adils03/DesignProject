@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    public GameManager gameManager;
-    public SpawnManager spawnManager;
+    private GameManager gameManager;
+    private SpawnManager spawnManager;
     private Hex selectedHex;
     private bool isWaitingForInput = true;
 

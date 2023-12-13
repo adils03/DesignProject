@@ -9,7 +9,7 @@ public class Soldier : MonoBehaviour
     public Hex onHex;
     public Player owner;
     public String playerName;
-    public bool hasMoved = false;
+    public bool hasMoved = false;//Asker tur içinde yürüdü mü
     private void OnDestroy() {
         owner.soldiers.Remove(this);
     }

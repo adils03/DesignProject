@@ -7,13 +7,10 @@ public class SoldierMovement : MonoBehaviour
     public GameObject soldier;
     List<Hex> walkableArea;
     public GameManager gameManager;
-    // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -62,7 +59,7 @@ public class SoldierMovement : MonoBehaviour
         }
     }
 
-    void HandleSoldierHit(GameObject soldierHit)
+    void HandleSoldierHit(GameObject soldierHit)//Askere tıklamak için
     {
         soldier = soldierHit;
         if (gameManager.GetTurnPlayer() == soldier.GetComponent<Soldier>().owner && !soldier.GetComponent<Soldier>().hasMoved)
@@ -75,7 +72,7 @@ public class SoldierMovement : MonoBehaviour
         }
     }
 
-    void HandleHexHit(GameObject hexHit)
+    void HandleHexHit(GameObject hexHit)//Hexe tıklamak için
     {
         Hex hexComponent = hexHit.GetComponent<Hex>();
         if (walkableArea != null && walkableArea.Contains(hexComponent))
@@ -88,7 +85,7 @@ public class SoldierMovement : MonoBehaviour
         }
     }
 
-    void ProcessValidHex(Hex hex)
+    void ProcessValidHex(Hex hex) //Askerin yürüdüğü toprağın parametrelerini ayarlar 
     {
         Soldier soldierSc=soldier.GetComponent<Soldier>();
         if (hex.HexObjectType == ObjectType.Tree || hex.HexObjectType == ObjectType.TreeWeak)
@@ -98,24 +95,13 @@ public class SoldierMovement : MonoBehaviour
         }else if(hex.ObjectOnHex!=null){
             hex.destroyObjectOnHex();
         }
-        //soldierSc.onHex.protector = ObjectType.None;
-        soldierSc.onHex.protectorOwner = null;
-        foreach (Hex hex1 in soldierSc.onHex.neighbors)
-        {
-           // hex1.protector = ObjectType.None;
-            hex1.protectorOwner = null;
-        }  
-        foreach (Hex hex1 in hex.neighbors)
-        {
-           // hex1.protector = soldierSc.soldierLevel;
-            hex1.protectorOwner = soldierSc.owner;
-        } 
-       // hex.protector = soldierSc.soldierLevel;
-        hex.protectorOwner = soldierSc.owner;
         soldierSc.onHex.HexObjectType = ObjectType.None;
         soldierSc.onHex.ObjectOnHex = null;
         hex.ObjectOnHex = soldier;
         hex.HexObjectType = soldierSc.soldierLevel;
+        if(hex.Owner!=null&&soldierSc.owner!=hex.Owner){
+            hex.Owner.ownedHexes.Remove(hex);
+        }
         hex.Owner = soldierSc.owner;
         hex.Owner.ownedHexes.Add(hex);
         hex.playerName = soldierSc.playerName;

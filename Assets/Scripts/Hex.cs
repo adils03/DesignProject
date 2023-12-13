@@ -13,11 +13,12 @@ public enum ObjectType// hex üzerindeki nesneler
     BuildingFarm,
     SoldierLevel1,
     SoldierLevel2,
-    SoldierLevel3,
-    SoldierLevel4,
     BuildingDefenceLevel1,
+    SoldierLevel3,
     BuildingDefenceLevel2,
-    TownHall
+    TownHall,
+    SoldierLevel4
+    
 }
 
 public class Hex : MonoBehaviour
@@ -35,12 +36,7 @@ public class Hex : MonoBehaviour
     public GameObject ObjectOnHex = null;
     public String playerName;
     public ObjectType HexObjectType { get; set; } = ObjectType.None;// hex üzerindeki nesne asker , bina , ağaç
-    //public ObjectType protector = ObjectType.None;
-    public Player protectorOwner = null;
     public String ObjectTypeName;
-    public bool HexEmpty { get; set; }
-    public int SetProtected = 0;
-    public Color color { get; set; }
     public enum hexType
     {
         grass,
@@ -49,7 +45,7 @@ public class Hex : MonoBehaviour
     private void Update()
     {
         /*if (!GridSystem.travelContinent(this).Any(hex => hex.HexObjectType == ObjectType.TownHall)) {
-            //GridSystem.travelContinent(this) bu listenin herşeyinin boşalması lazım
+            //GridSystem.travelContinent(this) townhall'ı olmayan toprakların yok olması için 
        }*/
 
     }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -7701558700891957454}
   - component: {fileID: 7316362676339015885}
   m_Layer: 3
-  m_Name: soldier
+  m_Name: soldier 4
   m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6173238419933503443}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.31145063, y: -2.6657896, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 52e42a5b7e788b74da2af9a3430266c1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8ea81cd547cf78d45a40b6138b753349, type: 3}
   m_Color: {r: 0.9716981, g: 0.9203631, b: 0.9203631, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4823122e98017498b1679305300b49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soldierLevel: 4
+  soldierLevel: 7
   onHex: {fileID: 0}
   playerName: 
   hasMoved: 0
@@ -136,4 +136,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.85
+  m_Radius: 1
