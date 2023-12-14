@@ -51,20 +51,52 @@ public class Shop : MonoBehaviour
         Debug.Log("Buysoldier girdi");
         Player currentPlayer = gameManager.GetTurnPlayer();
 
-        placeAbleArea = currentPlayer.ownedHexes;
-        PlaceAbleAreaSet(true);
+       
+        
 
+        if (s==ObjectType.SoldierLevel1|| s == ObjectType.SoldierLevel2 || s == ObjectType.SoldierLevel3 || s == ObjectType.SoldierLevel4)
+        {
+
+            placeAbleArea = new List<Hex>();
+            foreach (var item in currentPlayer.ownedHexes)
+            {
+                placeAbleArea.Add(item);
+                foreach (var foreignerHex in item.neighbors)
+                {
+                    if(!currentPlayer.ownedHexes.Contains(foreignerHex) && foreignerHex._hexType == Hex.hexType.grass)
+                    {
+                        
+                        placeAbleArea.Add((Hex)foreignerHex);
+                        foreignerHex.isThatNewOne = true;
+
+                    }
+                }
+            }
+
+
+        }
+        else
+            placeAbleArea = currentPlayer.ownedHexes;
+
+        PlaceAbleAreaSet(true);
         if (currentPlayer.PlayerTotalGold >= -100)//costtan fazla parası var mı yok mu
             StartCoroutine(WaitForHexSelection(s, cost));// selectedHex gelcek ve ücret
-        else
-            PlaceAbleAreaReset();
+      
 
     }
  
     private IEnumerator WaitForHexSelection(ObjectType spawnObje,int a)// anyType
     {
+        Player currentPlayer = gameManager.GetTurnPlayer();
         while (isWaitingForInput)
         {
+            if (currentPlayer != gameManager.GetTurnPlayer())
+            {
+                PlaceAbleAreaReset();
+                isWaitingForInput = true;
+                yield return null;
+            }
+
             if (Input.GetMouseButtonDown(0))
             {
                 Vector2 soldierRay = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -74,10 +106,22 @@ public class Shop : MonoBehaviour
                 {
                     selectedHex = hexHit.collider.gameObject.GetComponent<Hex>();
 
-
+                    if (selectedHex == null) { Debug.Log("SelectedHex null"); }
+                    if (placeAbleArea == null) { Debug.Log("placeAbleArea null"); }
                     if (placeAbleArea.Contains(selectedHex))
                     {
                         //spawnManager.SpawnSoldier(selectedHex,spawnObje);
+                        if(selectedHex.isThatNewOne)
+                        {
+                            if(selectedHex.Owner!=null)// düşman toprağına asker yerleştirme işlemi;
+                            {
+
+                            }
+
+                            selectedHex.Owner = currentPlayer;
+                        }
+                         
+
                         spawnManager.SpawnObje(selectedHex,spawnObje);
                         isWaitingForInput = false; // �stenilen durum ger�ekle�ti�inde d�ng�y� sonland�r
                         PlaceAbleAreaReset();
@@ -88,7 +132,7 @@ public class Shop : MonoBehaviour
                     }
                 }
             }
-
+           
             yield return null;
         }
         isWaitingForInput = true;
@@ -112,7 +156,7 @@ public class Shop : MonoBehaviour
             {
                 hex.activateIndicator(false);
             }
-            placeAbleArea = null;
+            
         }
     }
 

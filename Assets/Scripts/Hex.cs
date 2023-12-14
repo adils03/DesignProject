@@ -37,6 +37,7 @@ public class Hex : MonoBehaviour
     public String playerName;
     public ObjectType HexObjectType { get; set; } = ObjectType.None;// hex üzerindeki nesne asker , bina , ağaç
     public String ObjectTypeName;
+    public bool isThatNewOne { get; set; } = false; // eğer devlet dışına asker spawnlamak istersek;
     public enum hexType
     {
         grass,
