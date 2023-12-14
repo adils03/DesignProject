@@ -50,15 +50,14 @@ public class Shop : MonoBehaviour
     public void buyAnyOfMaterial(ObjectType s, int cost)// 
     {
 
-        Debug.Log("Buysoldier girdi");
         Player currentPlayer = gameManager.GetTurnPlayer();
-        if (currentPlayer.PlayerTotalGold >= -100)//costtan fazla parası var mı yok mu
+        if (currentPlayer.PlayerTotalGold >= -2000)//costtan fazla parası var mı yok mu
         {
 
 
             if (s == ObjectType.SoldierLevel1 || s == ObjectType.SoldierLevel2 || s == ObjectType.SoldierLevel3 || s == ObjectType.SoldierLevel4)
-            {
-
+            {Debug.Log("Buysoldier girdi");
+                Debug.Log("girdi");
                 placeAbleArea = new List<Hex>();
 
                 foreach (Hex hex in currentPlayer.ownedHexes)
@@ -70,6 +69,19 @@ public class Shop : MonoBehaviour
                 }
                 placeAbleArea = startHex.travelContinentByStepForSoldier(50, currentPlayer, s);
 
+            }
+            else if(s==ObjectType.BuildingFarm){
+                Debug.Log("buyfarm girdi");
+                foreach (Hex hex in currentPlayer.ownedHexes)
+                {
+                    if ((hex.HexObjectType == ObjectType.BuildingFarm||hex.HexObjectType == ObjectType.TownHall)&&!placeAbleArea.Contains(hex))//düzeltilecek
+                    {
+                        foreach (Hex hex1 in hex.neighbors)
+                        {
+                            placeAbleArea.Add(hex1);
+                        }
+                    }
+                }
             }
             PlaceAbleAreaSet(true);
             StartCoroutine(WaitForHexSelection(s, cost));// selectedHex gelcek ve ücret
@@ -149,8 +161,8 @@ public class Shop : MonoBehaviour
             {
                 hex.activateIndicator(false);
             }
-
         }
+        placeAbleArea.Clear();
     }
 
 
