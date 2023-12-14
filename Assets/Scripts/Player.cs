@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player
 {
     public string playerName;
-    public int PlayerTotalGold = 10;// player altını burdan da görüyoruz kaynak eManager
+    public int PlayerTotalGold = 10000;// player altını burdan da görüyoruz kaynak eManager
     public List<Hex> ownedHexes = new List<Hex>(); //sahip olduğu hexler
     public List<Soldier> soldiers = new List<Soldier>();
     public EconomyManager economyManager;

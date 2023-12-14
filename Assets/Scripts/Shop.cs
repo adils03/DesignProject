@@ -52,7 +52,7 @@ public class Shop : MonoBehaviour
 
         Debug.Log("Buysoldier girdi");
         Player currentPlayer = gameManager.GetTurnPlayer();
-        if (currentPlayer.PlayerTotalGold >= -100)//costtan fazla parası var mı yok mu
+        if (currentPlayer.PlayerTotalGold >= cost)//costtan fazla parası var mı yok mu
         {
 
 

@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     public int Halil = 0;
     public int Emin = 0;
 
+    public int BurakIncome = 0;
+    public int HalilIncome = 0;
+    public int EminIncome = 0;
+
     public List<Hex> burakhex = new List<Hex>();
     public List<Hex> halilhex = new List<Hex>();
     public List<Hex> eminhex = new List<Hex>();
@@ -40,7 +44,12 @@ public class GameManager : MonoBehaviour
             Burak = players[0].PlayerTotalGold;
             Halil = players[1].PlayerTotalGold;
             Emin = players[2].PlayerTotalGold;
-            burakhex=players[0].ownedHexes;
+
+            BurakIncome = players[0].economyManager.totalIncome;
+            HalilIncome = players[1].economyManager.totalIncome;
+            EminIncome  = players[2].economyManager.totalIncome;
+
+    burakhex=players[0].ownedHexes;
             halilhex=players[1].ownedHexes;
             eminhex=players[2].ownedHexes;
 
