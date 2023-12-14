@@ -132,7 +132,7 @@ public class Shop : MonoBehaviour
                     }
                 }
             }
-            PlaceAbleAreaReset();
+           
             yield return null;
         }
         isWaitingForInput = true;

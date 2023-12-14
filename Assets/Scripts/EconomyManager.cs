@@ -38,12 +38,6 @@ public class EconomyManager
         }
        
     }
-
-    void UpdateGold()
-    {
-       
-
-    }
     public void UpdateOwnedHexagons(List<Hex> newHexagons)
     {
         OwnedHexagons = newHexagons;
