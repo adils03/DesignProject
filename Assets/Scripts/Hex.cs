@@ -48,7 +48,7 @@ public class Hex : MonoBehaviour
         /*if (!GridSystem.travelContinent(this).Any(hex => hex.HexObjectType == ObjectType.TownHall)) {
             //GridSystem.travelContinent(this) townhall'ı olmayan toprakların yok olması için 
        }*/
-
+        ObjectTypeName=HexObjectType.ToString();
     }
 
     public void UpdateAdvantageOrDisadvantageValue()// ağaçlardan biri mevcut ise dezavantaj var 
@@ -65,7 +65,7 @@ public class Hex : MonoBehaviour
             Income = 3;
     }
 
-    public List<Hex> travelContinentByStepForSoldier(int step, Soldier soldier) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
+    public List<Hex> travelContinentByStepForSoldier(int step, Player owner,ObjectType soldierLevel) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
     {
         step++;
         int stepAmount = step;
@@ -154,14 +154,13 @@ public class Hex : MonoBehaviour
         {
             foreach (Hex hex1 in hex.neighbors)
             {
-                if (hex1.HexObjectType >= soldier.soldierLevel && (int)soldier.soldierLevel != 7 && hex1.Owner != soldier.owner && hex1.Owner == hex.Owner)
+                if (hex1.HexObjectType >= soldierLevel && (int)soldierLevel != 7 && hex1.Owner != owner && hex1.Owner == hex.Owner)
                 {
                     toRemove.Add(hex);
                 }
             }
-            if ((int)hex.HexObjectType >= (int)soldier.soldierLevel && (int)soldier.soldierLevel != 7 && hex.Owner != soldier.owner)
+            if ((int)hex.HexObjectType >= (int)soldierLevel && (int)soldierLevel != 7 && hex.Owner != owner)
             {
-                Debug.Log(hex.HexObjectType);
                 toRemove.Add(hex);
             }
 

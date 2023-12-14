@@ -103,7 +103,8 @@ public class SpawnManager : MonoBehaviour
     }
     private void InstantiateHouseOfLands(Hex hex)//AnaBinaları ekler
     {
-        GameObject treeWeak = Instantiate(housePrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
+        GameObject house = Instantiate(housePrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
+        hex.ObjectOnHex = house;
     }
     public List<Hex> travelContinentSpawn(Hex startHex, int count)
     {
@@ -146,7 +147,7 @@ public class SpawnManager : MonoBehaviour
 
 
 
-    public void SpawnObje(Hex uygunHex,ObjectType s)//genel spawn
+    public void SpawnObje(Hex uygunHex,ObjectType s,Player owner)//genel spawn
     {
         if(s == ObjectType.BuildingDefenceLevel1 || s == ObjectType.BuildingDefenceLevel2)
         {
@@ -154,7 +155,7 @@ public class SpawnManager : MonoBehaviour
         }
         else if(s == ObjectType.SoldierLevel1|| s == ObjectType.SoldierLevel2 || s == ObjectType.SoldierLevel3 || s == ObjectType.SoldierLevel4)
         {
-            SpawnSoldier(uygunHex, s);
+            SpawnSoldier(uygunHex, s,owner);
         }
         else if(s == ObjectType.BuildingFarm)
         {
@@ -182,7 +183,7 @@ public class SpawnManager : MonoBehaviour
     }
 
     public GameObject[] soldierPrefabs;
-    public void SpawnSoldier(Hex uygunHex,ObjectType s)// tüm soldierlar için yapılmalı
+    public void SpawnSoldier(Hex uygunHex,ObjectType s,Player owner)// tüm soldierlar için yapılmalı
     {
 
         if (uygunHex != null && uygunHex.HexObjectType == ObjectType.None||uygunHex.HexObjectType==ObjectType.TreeWeak)
@@ -192,12 +193,12 @@ public class SpawnManager : MonoBehaviour
             if(uygunHex.HexObjectType== ObjectType.TreeWeak)
             {
                 uygunHex.destroyObjectOnHex();
+                InstantiateSoldier(uygunHex,s,owner);
                 uygunHex.Owner.PlayerTotalGold += 4;
+            }else{
+                InstantiateSoldier(uygunHex,s,owner);
             }
 
-              
-            InstantiateSoldier(uygunHex,s);
-          
         }
 
     }
@@ -269,7 +270,7 @@ public class SpawnManager : MonoBehaviour
         GameObject farm = Instantiate(FarmPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
         hex.HexObjectType = ObjectType.BuildingFarm;
     }
-    private void InstantiateSoldier(Hex hex,ObjectType s)// soldier type a göre soldier atar yaratır
+    private void InstantiateSoldier(Hex hex,ObjectType s,Player owner)// soldier type a göre soldier atar yaratır
     {
 
 
@@ -284,21 +285,19 @@ public class SpawnManager : MonoBehaviour
 
         if (hex.isThatNewOne)
         {
-            Debug.Log("Bu toprak yeni Kazanıldı");
             hex.Owner.ownedHexes.Add(hex);
             hex.GetComponent<SpriteRenderer>().color = hex.Owner.playerColor;
             soldier.GetComponent<Soldier>().hasMoved = true;
         }
        
         soldier.GetComponent<Soldier>().onHex = hex;
-        Debug.Log("Hex atandı");
-        soldier.GetComponent<Soldier>().owner = hex.Owner;
+        soldier.GetComponent<Soldier>().owner = owner;
         soldier.GetComponent<Soldier>().playerName = hex.playerName;
+        hex.Owner=owner;
         hex.ObjectOnHex = soldier;
-        hex.Owner.soldiers.Add(soldier.GetComponent<Soldier>());
+        owner.soldiers.Add(soldier.GetComponent<Soldier>());
         hex.HexObjectType = s;
-        //hex.HexEmpty = true;
-        hex.HexObjectType = s;
+        hex.gameObject.GetComponent<SpriteRenderer>().color=owner.playerColor;
 
     }
 
