@@ -13,5 +13,8 @@ public class Soldier : MonoBehaviour
     private void OnDestroy() {
         owner.soldiers.Remove(this);
     }
+    private void Start() {
+        playerName=owner.playerName;
+    }
 }
 

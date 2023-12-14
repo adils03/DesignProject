@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -14,7 +15,7 @@ public class GameManager : MonoBehaviour
     private EconomyManager economyManager;
     private GridSystem gridSystem;
     private SpawnManager spawnManager;
-    [SerializeField]private Text text;
+    [SerializeField]private TextMeshProUGUI text;
 
     public int Burak = 0;
     public int Halil = 0;
