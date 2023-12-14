@@ -198,7 +198,6 @@ public class SpawnManager : MonoBehaviour
               
             InstantiateSoldier(uygunHex,s);
           
-
         }
 
     }
@@ -273,6 +272,7 @@ public class SpawnManager : MonoBehaviour
     private void InstantiateSoldier(Hex hex,ObjectType s)// soldier type a göre soldier atar yaratır
     {
 
+
         GameObject gameObject = soldierPrefab;
         if(s == ObjectType.SoldierLevel1) { gameObject = soldierPrefab; }      
         else if (s == ObjectType.SoldierLevel2) { gameObject = soldierPrefab2; }
@@ -280,8 +280,16 @@ public class SpawnManager : MonoBehaviour
         else if (s == ObjectType.SoldierLevel4) { gameObject = soldierPrefab4; }
         
         GameObject soldier = Instantiate(gameObject, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
-        Debug.Log("soldier Yaratıldı");
-        Debug.Log("Gelen Hex"+hex.playerName);
+
+
+        if (hex.isThatNewOne)
+        {
+            Debug.Log("Bu toprak yeni Kazanıldı");
+            hex.Owner.ownedHexes.Add(hex);
+            hex.GetComponent<SpriteRenderer>().color = hex.Owner.playerColor;
+            soldier.GetComponent<Soldier>().hasMoved = true;
+        }
+       
         soldier.GetComponent<Soldier>().onHex = hex;
         Debug.Log("Hex atandı");
         soldier.GetComponent<Soldier>().owner = hex.Owner;
