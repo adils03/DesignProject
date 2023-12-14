@@ -627,7 +627,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 20, y: -20}
-  m_SizeDelta: {x: 250, y: 120}
+  m_SizeDelta: {x: 300, y: 120}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &473728075
 MonoBehaviour:
@@ -1234,6 +1234,9 @@ MonoBehaviour:
   Burak: 0
   Halil: 0
   Emin: 0
+  BurakIncome: 0
+  HalilIncome: 0
+  EminIncome: 0
   burakhex: []
   halilhex: []
   eminhex: []
