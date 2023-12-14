@@ -51,7 +51,7 @@ public class Shop : MonoBehaviour
     {
 
         Player currentPlayer = gameManager.GetTurnPlayer();
-        if (currentPlayer.PlayerTotalGold >= -2000)//costtan fazla parası var mı yok mu
+        if (currentPlayer.PlayerTotalGold >= cost)//costtan fazla parası var mı yok mu
         {
 
 
