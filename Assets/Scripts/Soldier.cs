@@ -16,5 +16,10 @@ public class Soldier : MonoBehaviour
     private void Start() {
         playerName=owner.playerName;
     }
+
+    public void activateIndicator(bool request){
+        Debug.Log("çalıştı " + request);
+        transform.GetChild(0).gameObject.SetActive(request);
+    }
 }
 

@@ -49,6 +49,10 @@ public class Hex : MonoBehaviour
             //GridSystem.travelContinent(this) townhall'ı olmayan toprakların yok olması için 
        }*/
         ObjectTypeName=HexObjectType.ToString();
+        if(Owner!=null){
+            playerName=Owner.playerName;
+
+        }
     }
 
     public void UpdateAdvantageOrDisadvantageValue()// ağaçlardan biri mevcut ise dezavantaj var 

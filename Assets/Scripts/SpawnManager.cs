@@ -186,7 +186,7 @@ public class SpawnManager : MonoBehaviour
     public void SpawnSoldier(Hex uygunHex,ObjectType s,Player owner)// tüm soldierlar için yapılmalı
     {
 
-        if (uygunHex != null && uygunHex.HexObjectType == ObjectType.None||uygunHex.HexObjectType==ObjectType.TreeWeak)
+        if (uygunHex != null)//Birşeyler eklenecek
         {
             Debug.Log("spawnSoldierA girdi ife");
 
@@ -289,7 +289,10 @@ public class SpawnManager : MonoBehaviour
             hex.GetComponent<SpriteRenderer>().color = hex.Owner.playerColor;
             soldier.GetComponent<Soldier>().hasMoved = true;
         }
-       
+        hex.destroyObjectOnHex();
+        if(hex.Owner!=owner&&hex.Owner!=null){
+            hex.Owner.ownedHexes.Remove(hex);
+        }
         soldier.GetComponent<Soldier>().onHex = hex;
         soldier.GetComponent<Soldier>().owner = owner;
         soldier.GetComponent<Soldier>().playerName = hex.playerName;
@@ -298,7 +301,7 @@ public class SpawnManager : MonoBehaviour
         owner.soldiers.Add(soldier.GetComponent<Soldier>());
         hex.HexObjectType = s;
         hex.gameObject.GetComponent<SpriteRenderer>().color=owner.playerColor;
-
+        owner.ownedHexes.Add(hex);
     }
 
     public void TreesSpread()// ağaç yayılması tüm haritayı kapsamaz bir yerde durur.
