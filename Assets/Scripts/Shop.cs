@@ -71,6 +71,8 @@ public class Shop : MonoBehaviour
                 placeAbleArea = startHex.travelContinentByStepForSoldier(50, currentPlayer, s);
 
             }
+            else
+                placeAbleArea = currentPlayer.ownedHexes;
             PlaceAbleAreaSet(true);
             StartCoroutine(WaitForHexSelection(s, cost));// selectedHex gelcek ve ücret
         }
