@@ -5,16 +5,15 @@ using UnityEngine;
 public class Player
 {
     public string playerName;
-    public int PlayerTotalGold = 10000;// player altını burdan da görüyoruz kaynak eManager
+    public int PlayerTotalGold = 10_000;// player altını burdan da görüyoruz kaynak eManager
     public List<Hex> ownedHexes = new List<Hex>(); //sahip olduğu hexler
     public List<Soldier> soldiers = new List<Soldier>();
-    public EconomyManager economyManager;
+    public EconomyManager economyManager = new EconomyManager();
     public  Color playerColor;
     
     public Player(String name)// bu ctor diğerleri patlamasın diye geçici duruyor daha karar verilmedi
     {
         playerName = name;
-        economyManager = new EconomyManager();
 
     }
     public Player(String name, List<Hex> hexes,Color color)// dışardan gelen ilk hexlerle ve oyun boyunca elde edilecek olan hexler için inşa edilecek olan kısım
@@ -31,10 +30,8 @@ public class Player
 
 
         playerName = name;
-        economyManager = new EconomyManager();
-
-        //economyManager.UpdateOwnedHexagons(ownedHexes);
-        UpdateTotalGold();// kasadaki altını  burdan ilkez aldık 
+        economyManager.UpdateOwnedHexagons(ownedHexes);
+     
     }
     public void PlayerUpdate(List<Hex> hexes, Color color)
     {
@@ -47,16 +44,14 @@ public class Player
             hex.Owner = this;
             hex.playerName = playerName;
             hex.gameObject.GetComponent<SpriteRenderer>().color = playerColor;
-        }
-        economyManager = new EconomyManager();
-
-        //economyManager.UpdateOwnedHexagons(ownedHexes);
-        UpdateTotalGold();// kasadaki altını  burdan ilkez aldık 
+        }    
+        economyManager.UpdateOwnedHexagons(ownedHexes);
+      
     }
     void UpdateTotalGold()
     {
         PlayerTotalGold += economyManager.totalIncome;
-        economyManager.totalIncome = 0;
+   
     }
     public void StartTurn()
     {

@@ -94,8 +94,6 @@ public class SpawnManager : MonoBehaviour
                 }
                 a++;
             }
-
-
             player.PlayerUpdate(land, colors.Pop());
         }
 
@@ -301,6 +299,8 @@ public class SpawnManager : MonoBehaviour
         owner.soldiers.Add(soldier.GetComponent<Soldier>());
         hex.HexObjectType = s;
         hex.gameObject.GetComponent<SpriteRenderer>().color=owner.playerColor;
+
+        if(!owner.ownedHexes.Contains(hex))
         owner.ownedHexes.Add(hex);
     }
 

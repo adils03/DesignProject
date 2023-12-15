@@ -7,17 +7,22 @@ public class EconomyManager
 
     public int totalIncome;
 
-    private List<Hex> OwnedHexagons;
+    private List<Hex> OwnedHexagons = new List<Hex>();
 
     public EconomyManager()
     {
-        OwnedHexagons = new List<Hex>(); // İlk değer ataması
+      
+        if( OwnedHexagons != null )
+        {
+            CalculateIncome();
+        }
     }
     void CalculateIncome()
     {     
+        totalIncome = 0;
         foreach (Hex hexagon in OwnedHexagons)
         {
-            totalIncome += hexagon.Income;
+            totalIncome += hexagon.Income;         
         }
     }
 
@@ -27,7 +32,7 @@ public class EconomyManager
         {
             int salarySoldier = 0;
 
-            if(hex.HexObjectType == ObjectType.SoldierLevel1) { salarySoldier = 5; }
+                 if (hex.HexObjectType == ObjectType.SoldierLevel1) { salarySoldier =  5; }
             else if (hex.HexObjectType == ObjectType.SoldierLevel2) { salarySoldier = 15; }
             else if (hex.HexObjectType == ObjectType.SoldierLevel3) { salarySoldier = 30; }
             else if (hex.HexObjectType == ObjectType.SoldierLevel4) { salarySoldier = 50; }
@@ -36,13 +41,14 @@ public class EconomyManager
 
             totalIncome -= salarySoldier;
         }
-       
+
     }
     public void UpdateOwnedHexagons(List<Hex> newHexagons)
     {
         OwnedHexagons = newHexagons;
         CalculateIncome();
         CalculateSalaries();
+        Debug.Log("income " + totalIncome);
            
     }
    

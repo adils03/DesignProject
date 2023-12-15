@@ -49,24 +49,23 @@ public class GameManager : MonoBehaviour
             HalilIncome = players[1].economyManager.totalIncome;
             EminIncome  = players[2].economyManager.totalIncome;
 
-    burakhex=players[0].ownedHexes;
+            burakhex=players[0].ownedHexes;
             halilhex=players[1].ownedHexes;
             eminhex=players[2].ownedHexes;
 
     }
     void StartGame()
     {
+        spawnManager.SpawnTrees();// ağaçlar 
         players.Clear();
         players.Add(new Player("Burak"));
         players.Add(new Player("Halil"));
         players.Add(new Player("Emin"));
 
-
-        turnManager = new TurnManager(players);
-        
+        turnManager = new TurnManager(players);        
         
         spawnManager.SpawnLandOfPlayers(gridSystem.size,players);
-        spawnManager.SpawnTrees();
+      
         text.text="Turn: " + turnManager.players[0].playerName;
     }
     public void endTurn() //Buton ataması için konulmuştur.
