@@ -18,7 +18,7 @@ public enum ObjectType// hex üzerindeki nesneler
     BuildingDefenceLevel2,
     TownHall,
     SoldierLevel4
-    
+
 }
 
 public class Hex : MonoBehaviour
@@ -29,7 +29,6 @@ public class Hex : MonoBehaviour
     public hexType _hexType;
     public int q, r, s;
     public List<Hex> neighbors = new List<Hex>();
-    public List<Hex> areaForStep = new List<Hex>();
     public bool hasVisited = false;
     public int Income = 3;// hex başına gelir default 3 
     public Player Owner;// kimin bu hex ,null ise kimsenin
@@ -48,9 +47,10 @@ public class Hex : MonoBehaviour
         /*if (!GridSystem.travelContinent(this).Any(hex => hex.HexObjectType == ObjectType.TownHall)) {
             //GridSystem.travelContinent(this) townhall'ı olmayan toprakların yok olması için 
        }*/
-        ObjectTypeName=HexObjectType.ToString();
-        if(Owner!=null){
-            playerName=Owner.playerName;
+        ObjectTypeName = HexObjectType.ToString();
+        if (Owner != null)
+        {
+            playerName = Owner.playerName;
 
         }
     }
@@ -69,11 +69,11 @@ public class Hex : MonoBehaviour
             Income = 3;
     }
 
-    public List<Hex> travelContinentByStepForSoldier(int step, Player owner,ObjectType soldierLevel) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
+    public List<Hex> travelContinentByStepForSoldier(int step, Player _owner, ObjectType soldierLevel) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler
     {
         step++;
         int stepAmount = step;
-        areaForStep.Clear();
+        List<Hex> areaForStep = new List<Hex>();
         Player ownedPlayer = Owner;
         Hex startHex = this;
         Queue<Hex> queue = new Queue<Hex>();
@@ -106,6 +106,11 @@ public class Hex : MonoBehaviour
 
             step--;
         }
+        foreach (Hex hex in areaForStep)
+        {
+            hex.hasVisited = false;
+            //hex.transform.localScale = new Vector3(1, 1, 1);
+        }
         List<Hex> toRemove = new List<Hex>();
 
         foreach (Hex hex in areaForStep) //Farklı bir owner varsa o toprakları çıkarır
@@ -131,6 +136,7 @@ public class Hex : MonoBehaviour
         {
             areaForStep.Remove(hex);
         }
+        toRemove.Clear();
         List<Hex> toAdd = new List<Hex>();
         foreach (Hex hex in areaForStep) //Toprak dışına 1 adım ilerleyebilmemiz için toprak ekler
         {
@@ -154,31 +160,35 @@ public class Hex : MonoBehaviour
         {
             areaForStep.Add(hex);
         }
+        toAdd.Clear();
         foreach (Hex hex in areaForStep)//Askerlerin yürüyemeceği toprakları çıkarır
         {
             foreach (Hex hex1 in hex.neighbors)
             {
-                if (hex1.HexObjectType >= soldierLevel && (int)soldierLevel != 7 && hex1.Owner != owner && hex1.Owner == hex.Owner)
+                if (hex1.HexObjectType >= soldierLevel && (int)soldierLevel != (int)ObjectType.SoldierLevel4 && hex1.Owner != _owner && hex1.Owner == hex.Owner)
                 {
                     toRemove.Add(hex);
                 }
             }
-            if ((int)hex.HexObjectType >= (int)soldierLevel && (int)soldierLevel != 7 && hex.Owner != owner)
+            if ((int)hex.HexObjectType >= (int)soldierLevel && (int)soldierLevel != (int)ObjectType.SoldierLevel4 && hex.Owner != _owner)
             {
                 toRemove.Add(hex);
             }
 
         }
+        foreach (Hex hex in areaForStep)
+        {
+            if (hex.Owner == _owner && hex.HexObjectType != ObjectType.None && hex.HexObjectType != ObjectType.Tree && hex.HexObjectType != ObjectType.TreeWeak)
+            {
+                toRemove.Add(hex);
+            }
+        }
+
         foreach (Hex hex in toRemove)
         {
             areaForStep.Remove(hex);
         }
-
-        foreach (Hex hex in areaForStep)
-        {
-            hex.hasVisited = false;
-            //hex.transform.localScale = new Vector3(1, 1, 1);
-        }
+        toRemove.Clear();
         return areaForStep;
     }
 

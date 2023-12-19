@@ -53,37 +53,33 @@ public class Shop : MonoBehaviour
         Player currentPlayer = gameManager.GetTurnPlayer();
         if (currentPlayer.PlayerTotalGold >= cost)//costtan fazla parası var mı yok mu
         {
-
+            placeAbleArea = new List<Hex>();    
 
             if (s == ObjectType.SoldierLevel1 || s == ObjectType.SoldierLevel2 || s == ObjectType.SoldierLevel3 || s == ObjectType.SoldierLevel4)
-            {Debug.Log("Buysoldier girdi");
-                Debug.Log("girdi");
-                placeAbleArea = new List<Hex>();
-
-                foreach (Hex hex in currentPlayer.ownedHexes)
-                {
-                    if (hex.HexObjectType == ObjectType.TownHall)
-                    {
-                        startHex = hex;
-                    }
-                }
+            {
+                placeAbleArea.Clear();
+                startHex=currentPlayer.ownedHexes[1];
                 placeAbleArea = startHex.travelContinentByStepForSoldier(50, currentPlayer, s);
+                Debug.Log(currentPlayer.playerName);
 
             }
             else if(s==ObjectType.BuildingFarm){
-                Debug.Log("buyfarm girdi");
+                placeAbleArea.Clear();
                 foreach (Hex hex in currentPlayer.ownedHexes)
                 {
-                    if ((hex.HexObjectType == ObjectType.BuildingFarm||hex.HexObjectType == ObjectType.TownHall)&&!placeAbleArea.Contains(hex))//düzeltilecek
+                    if (hex.HexObjectType == ObjectType.BuildingFarm||hex.HexObjectType == ObjectType.TownHall)//düzeltilecek
                     {
                         foreach (Hex hex1 in hex.neighbors)
                         {
-                            placeAbleArea.Add(hex1);
+                            if(currentPlayer.ownedHexes.Contains(hex1)&&hex1.HexObjectType==ObjectType.None){
+                            placeAbleArea.Add(hex1);                                
+                            }
                         }
                     }
                 }
             }
             PlaceAbleAreaSet(true);
+            isWaitingForInput = true;
             StartCoroutine(WaitForHexSelection(s, cost));// selectedHex gelcek ve ücret
         }
 
@@ -94,13 +90,6 @@ public class Shop : MonoBehaviour
         Player currentPlayer = gameManager.GetTurnPlayer();
         while (isWaitingForInput)
         {
-            if (currentPlayer != gameManager.GetTurnPlayer())
-            {
-                PlaceAbleAreaReset();
-                isWaitingForInput = true;
-                yield return null;
-            }
-
             if (Input.GetMouseButtonDown(0))
             {
                 Vector2 soldierRay = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -109,26 +98,10 @@ public class Shop : MonoBehaviour
                 if (hexHit.collider != null && hexHit.collider.gameObject.GetComponent<Hex>() != null)
                 {
                     selectedHex = hexHit.collider.gameObject.GetComponent<Hex>();
-
-                    if (selectedHex == null) { Debug.Log("SelectedHex null"); }
-                    if (placeAbleArea == null) { Debug.Log("placeAbleArea null"); }
                     if (placeAbleArea.Contains(selectedHex))
                     {
-                        //spawnManager.SpawnSoldier(selectedHex,spawnObje);
-                        if (selectedHex.isThatNewOne)
-                        {
-                            if (selectedHex.Owner != null)// düşman toprağına asker yerleştirme işlemi;
-                            {
-
-                            }
-
-                            selectedHex.Owner = currentPlayer;
-                        }
-
-
                         spawnManager.SpawnObje(selectedHex, spawnObje, currentPlayer);
                         isWaitingForInput = false; // �stenilen durum ger�ekle�ti�inde d�ng�y� sonland�r
-                        PlaceAbleAreaReset();
                         selectedHex.Owner.PlayerTotalGold -= a;// ücret kesildi
                     }
                     else
@@ -137,11 +110,9 @@ public class Shop : MonoBehaviour
                     }
                 }
             }
-
             yield return null;
         }
-        isWaitingForInput = true;
-
+        PlaceAbleAreaReset();
     }
     void PlaceAbleAreaSet(bool a)
     {
@@ -162,7 +133,7 @@ public class Shop : MonoBehaviour
                 hex.activateIndicator(false);
             }
         }
-        placeAbleArea.Clear();
+        //placeAbleArea.Clear();
     }
 
 

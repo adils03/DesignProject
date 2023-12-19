@@ -18,7 +18,6 @@ public class Soldier : MonoBehaviour
     }
 
     public void activateIndicator(bool request){
-        Debug.Log("çalıştı " + request);
         transform.GetChild(0).gameObject.SetActive(request);
     }
 }

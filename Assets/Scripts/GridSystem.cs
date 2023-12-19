@@ -18,26 +18,11 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private GameObject hexPrefabWater;
     private GameObject _hex;
     public List<Hex> hexes = new List<Hex>();
-    
-
     private void Awake()
     {
         CreateGrid(size);
         
     }
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.A))
-        {
-            for (int i = 0; i < hexes.Count; i++)
-            {
-                Destroy(hexes[i].gameObject);
-            }
-            CreateGrid(size);
-        }
-
-    }
-
     void CreateGrid(int size) //Haritamızı oluşturur
     {
         hexes.Clear();
@@ -109,7 +94,7 @@ public class GridSystem : MonoBehaviour
         return null;
     }
 
-    public Hex GetRandomHex()
+    public Hex GetRandomHex()//Random bir hex döndürür
     {
         if (hexes.Count == 0)
         {
@@ -180,7 +165,7 @@ public class GridSystem : MonoBehaviour
         return continent;
     }
 
-    public static List<Hex> AStar(Hex start, Hex goal,List<Hex> validHexes)
+    public static List<Hex> AStar(Hex start, Hex goal,List<Hex> validHexes)//Yol bulma algoritması
     {
         List<Hex> openList = new List<Hex>();
         List<Hex> closedList = new List<Hex>();

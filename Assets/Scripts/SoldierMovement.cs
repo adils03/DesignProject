@@ -7,6 +7,7 @@ public class SoldierMovement : MonoBehaviour
     public GameObject soldier;
     List<Hex> walkableArea;
     public GameManager gameManager;
+    Soldier soldierSc;
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -37,6 +38,7 @@ public class SoldierMovement : MonoBehaviour
             }
             else
             {
+                resetSoldierIndicators();
                 ResetWalk();
             }
         }
@@ -53,6 +55,7 @@ public class SoldierMovement : MonoBehaviour
                 }
                 else
                 {
+                    resetSoldierIndicators();
                     ResetWalk();
                 }
             }
@@ -61,10 +64,14 @@ public class SoldierMovement : MonoBehaviour
 
     void HandleSoldierHit(GameObject soldierHit)//Askere tıklamak için
     {
+        ResetWalk();
         soldier = soldierHit;
-        if (gameManager.GetTurnPlayer() == soldier.GetComponent<Soldier>().owner && !soldier.GetComponent<Soldier>().hasMoved)
+        soldierSc = soldierHit.GetComponent<Soldier>();
+        resetSoldierIndicators();
+        if (gameManager.GetTurnPlayer() == soldierSc.owner && !soldierSc.hasMoved)
         {
-            walkableArea = soldier.GetComponent<Soldier>().onHex.travelContinentByStepForSoldier(4, soldier.GetComponent<Soldier>().owner, soldier.GetComponent<Soldier>().soldierLevel);
+            walkableArea = soldierSc.onHex.travelContinentByStepForSoldier(4, soldierSc.owner, soldierSc.soldierLevel);
+            soldierSc.activateIndicator(true);
             foreach (Hex hex in walkableArea)
             {
                 hex.activateIndicator(true);
@@ -81,13 +88,14 @@ public class SoldierMovement : MonoBehaviour
         }
         else
         {
+            resetSoldierIndicators();
             ResetWalk();
         }
     }
 
     void ProcessValidHex(Hex hex) //Askerin yürüdüğü toprağın parametrelerini ayarlar 
     {
-        Soldier soldierSc = soldier.GetComponent<Soldier>();
+        soldierSc = soldier.GetComponent<Soldier>();
         if (hex.HexObjectType == ObjectType.Tree || hex.HexObjectType == ObjectType.TreeWeak)
         {
             hex.destroyObjectOnHex();
@@ -113,11 +121,8 @@ public class SoldierMovement : MonoBehaviour
         soldier.transform.position = hex.transform.position;
         soldierSc.hasMoved = true;
         hex.UpdateAdvantageOrDisadvantageValue();
-        foreach (Hex _hex in walkableArea)
-        {
-            _hex.activateIndicator(false);
-        }
-        walkableArea = null;
+        ResetWalk();
+        resetSoldierIndicators();
     }
 
 
@@ -133,4 +138,15 @@ public class SoldierMovement : MonoBehaviour
         }
     }
 
+    void resetSoldierIndicators()
+    {
+        if (soldierSc != null)
+        {
+            foreach (Soldier _soldier in soldierSc.owner.soldiers)
+            {
+                _soldier.activateIndicator(false);
+            }
+        }
+
+    }
 }

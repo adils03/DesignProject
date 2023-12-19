@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
-  m_Color: {r: 0.7176471, g: 0.11802785, b: 0.05098039, a: 0.39215687}
+  m_Color: {r: 0.6886792, g: 0.19984688, b: 0.14553218, a: 0.5882353}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -191,13 +191,11 @@ MonoBehaviour:
   r: 0
   s: 0
   neighbors: []
-  areaForStep: []
   hasVisited: 0
   Income: 3
   ObjectOnHex: {fileID: 0}
   playerName: 
   ObjectTypeName: 
-  SetProtected: 0
 --- !u!60 &6033080481001938898
 PolygonCollider2D:
   m_ObjectHideFlags: 0

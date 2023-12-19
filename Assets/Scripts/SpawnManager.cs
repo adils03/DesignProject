@@ -186,8 +186,6 @@ public class SpawnManager : MonoBehaviour
 
         if (uygunHex != null)//Birşeyler eklenecek
         {
-            Debug.Log("spawnSoldierA girdi ife");
-
             if(uygunHex.HexObjectType== ObjectType.TreeWeak)
             {
                 uygunHex.destroyObjectOnHex();
@@ -267,6 +265,7 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject farm = Instantiate(FarmPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
         hex.HexObjectType = ObjectType.BuildingFarm;
+        hex.ObjectOnHex=farm;
     }
     private void InstantiateSoldier(Hex hex,ObjectType s,Player owner)// soldier type a göre soldier atar yaratır
     {
