@@ -8,7 +8,7 @@ public class TurnManager
 
     public Queue<Player> turnQueue = new Queue<Player>();
 
-    private Player currentPlayer;
+    public Player currentPlayer;
 
 
     public TurnManager(List<Player> players)//Oyuncu listesini alarak turnManager nesnesi oluşturur ve ilk turu başlatır

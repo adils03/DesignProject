@@ -58,6 +58,16 @@ public class GameManager : MonoBehaviour
 
         CheckPlayerTown(players, spawnManager.spawnedHouses);
 
+        Player currPlayer = GetTurnPlayer();
+        if(currPlayer!=null)
+        {
+            string a = "Turn: " + currPlayer.playerName;
+            a += $"\nGold :{currPlayer.PlayerTotalGold}";
+            a += $"\nIncome :{currPlayer.economyManager.totalIncome}";
+            text.text = a;
+        }
+      
+
     }
     void StartGame()
     {
@@ -70,8 +80,8 @@ public class GameManager : MonoBehaviour
         
         spawnManager.SpawnLandOfPlayers(gridSystem.size,players);
         spawnManager.SpawnTrees();// ağaçlar sonra eklenmeli yosam ağaç olan yere ev kuruyor
+      
 
-        text.text="Turn: " + turnManager.players[0].playerName;
     }
     public void endTurn() //Buton ataması için konulmuştur.
     {
@@ -90,7 +100,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        text.text="Turn: " + GetTurnPlayer().playerName;
+        //text.text="Turn: " + GetTurnPlayer().playerName;
         Debug.Log(players[0].playerName);
         if (turnManager.turnQueue.Count == 0) 
         {
