@@ -10,7 +10,8 @@ public class Player
     public List<Soldier> soldiers = new List<Soldier>();
     public EconomyManager economyManager = new EconomyManager();
     public  Color playerColor;
-    
+    private GameManager gameManager;
+    private TurnManager turnManager;
     public Player(String name)// bu ctor diğerleri patlamasın diye geçici duruyor daha karar verilmedi
     {
         playerName = name;
@@ -40,7 +41,6 @@ public class Player
         // Hex'lerin sahibini bu oyuncu olarak ayarla
         foreach (var hex in ownedHexes)
         {
-           
             hex.Owner = this;
             hex.playerName = playerName;
             hex.gameObject.GetComponent<SpriteRenderer>().color = playerColor;
@@ -105,6 +105,7 @@ public class Player
             AddHex(newHex);
         }
     }
+
     public void Death()//Ölen oyuncunun tüm her şeyi sıfırlanıyor
     {
     playerName = null;
@@ -123,8 +124,6 @@ public class Player
        
     }
     ownedHexes.Clear();
-    
-
     foreach (Soldier soldier in soldiers)
     {
         soldier.owner = null;
