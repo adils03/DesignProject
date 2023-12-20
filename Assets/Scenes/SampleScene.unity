@@ -873,6 +873,7 @@ MonoBehaviour:
   soldierPrefab2: {fileID: 6173238419933503443, guid: 87c826568e053654f8099d924d1eda76, type: 3}
   soldierPrefab3: {fileID: 6173238419933503443, guid: 2f84e9b8eaf75c245ab6144e48ed1aa6, type: 3}
   soldierPrefab4: {fileID: 6173238419933503443, guid: 0c7f637e37778d7449c7cd7f4e84a314, type: 3}
+  spawnedHouses: []
   soldierPrefabs: []
 --- !u!4 &714405839
 Transform:
@@ -2037,7 +2038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b5acd916169214e9a2e307f7162911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 15
+  size: 10
   noiseScale: 0.15
   threshold: 0.22
   hexPrefabGrass: {fileID: 4133545700341867623, guid: 7a92b132c0b172b43b1d229a7dfed48a, type: 3}

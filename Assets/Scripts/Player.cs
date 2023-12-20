@@ -79,5 +79,39 @@ public class Player
             AddHex(newHex);
         }
     }
+    public void Death()//Ölen oyuncunun tüm her şeyi sıfırlanıyor
+    {
+    playerName = null;
+    PlayerTotalGold = 0;
+    Color32 playerColor = new Color32(0x2F, 0xBC, 0x0B, 0xFF);
+    
+    foreach (Hex hex in ownedHexes)
+    {   
+        hex.Owner = null;
+        hex.playerName = null;
+        hex.gameObject.GetComponent<SpriteRenderer>().color = playerColor;
+        if (hex.HexObjectType == ObjectType.TownHall||hex.HexObjectType== ObjectType.BuildingFarm||hex.HexObjectType== ObjectType.BuildingDefenceLevel1||hex.HexObjectType== ObjectType.BuildingDefenceLevel2)
+        {
+            hex.destroyObjectOnHex();
+        }
+       
+    }
+    ownedHexes.Clear();
+    
 
+    foreach (Soldier soldier in soldiers)
+    {
+        soldier.owner = null;
+        soldier.playerName = null;
+        if (soldier.gameObject != null)
+        {
+            SpriteRenderer spriteRenderer = soldier.gameObject.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.sprite = null; 
+            }
+        }
+    }
+    soldiers.Clear();
+    }
 }

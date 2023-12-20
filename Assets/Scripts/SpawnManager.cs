@@ -29,10 +29,11 @@ public class SpawnManager : MonoBehaviour
     private void Update()
     {
     }
+    public List<Hex> spawnedHouses = new List<Hex>();
     public List<Hex> SpawnLandOfPlayers(int size, List<Player> players)//Devletleri atar gösterir
     {
         List<Hex> grassHexes = gridSystem.hexes.Where(hex => hex._hexType == Hex.hexType.grass).ToList();
-        List<Hex> spawnedHouses = new List<Hex>();
+        
         int numberOfHouses = players.Count;
         for (int i = 0; i < numberOfHouses; i++)
         {

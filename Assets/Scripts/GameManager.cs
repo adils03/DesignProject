@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
             halilhex=players[1].ownedHexes;
             eminhex=players[2].ownedHexes;
 
+            CheckPlayerHexes(players, spawnManager.spawnedHouses);
+
     }
     void StartGame()
     {
@@ -71,6 +73,16 @@ public class GameManager : MonoBehaviour
     public void endTurn() //Buton ataması için konulmuştur.
     {
         turnManager.StartTurn();
+        Player currentPlayer = GetTurnPlayer();
+        if(currentPlayer.PlayerTotalGold <= 0 || currentPlayer.ownedHexes.Count == 1 || currentPlayer.economyManager.totalIncome < 0 )// Parası 0 ve altına düşerse oyuncu ölüyor
+        {
+            currentPlayer.Death();
+            if (turnManager.turnQueue.Count > 0) 
+            {
+                turnManager.turnQueue.Dequeue();
+            }
+        }
+
         foreach(Player player in players)
         {
             foreach (Soldier soldier in player.soldiers)
@@ -102,4 +114,19 @@ public class GameManager : MonoBehaviour
         return turnManager.turnQueue.Peek();
     }
     
+
+    public void CheckPlayerHexes(List<Player> players, List<Hex> spawnedHouses)//Oyuncumuzun evi yıkıldı mı yıkılmadı mı onu kontrol ediyo sürekli kontrol etmeyi update yazdım 
+    {
+    for (int i = 0; i < players.Count; i++)
+    {
+        Player player = players[i];
+        Hex playerHex = spawnedHouses[i];
+
+        if (playerHex.HexObjectType != ObjectType.TownHall)
+        {
+            player.Death();
+        }
+    }
+    }
+
 }
