@@ -78,16 +78,6 @@ public class GameManager : MonoBehaviour
     public void endTurn() //Buton ataması için konulmuştur.
     {
         turnManager.StartTurn();
-        Player currentPlayer = GetTurnPlayer();
-        if(currentPlayer.PlayerTotalGold <= 0 && currentPlayer.ownedHexes.Count == 1 && currentPlayer.economyManager.totalIncome < 0 )// Parası 0 ve altına düşerse oyuncu ölüyor
-        {
-            currentPlayer.Death();
-            if (turnManager.turnQueue.Count > 0) 
-            {
-                turnManager.turnQueue.Dequeue();
-            }
-        }
-
         foreach(Player player in players)
         {
             foreach (Soldier soldier in player.soldiers)
