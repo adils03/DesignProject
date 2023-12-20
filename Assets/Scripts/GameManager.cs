@@ -34,10 +34,13 @@ public class GameManager : MonoBehaviour
         gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         this.hexes = gridSystem.hexes;
+        
+        
     }
     private void Start()
     {
         StartGame();
+       
     }
     private void Update()
     {
@@ -45,18 +48,19 @@ public class GameManager : MonoBehaviour
             Halil = players[1].PlayerTotalGold;
             Emin = players[2].PlayerTotalGold;
 
-            BurakIncome = players[0].economyManager.totalIncome;
-            HalilIncome = players[1].economyManager.totalIncome;
-            EminIncome  = players[2].economyManager.totalIncome;
+          BurakIncome = players[0].economyManager.CalculateIncome();
+          HalilIncome = players[1].economyManager.CalculateIncome();
+          EminIncome = players[2].economyManager.CalculateIncome();
 
-            burakhex=players[0].ownedHexes;
+            burakhex = players[0].ownedHexes;
             halilhex=players[1].ownedHexes;
             eminhex=players[2].ownedHexes;
 
     }
     void StartGame()
     {
-        spawnManager.SpawnTrees();// ağaçlar 
+        
+      
         players.Clear();
         players.Add(new Player("Burak"));
         players.Add(new Player("Halil"));
@@ -65,7 +69,8 @@ public class GameManager : MonoBehaviour
         turnManager = new TurnManager(players);        
         
         spawnManager.SpawnLandOfPlayers(gridSystem.size,players);
-      
+        spawnManager.SpawnTrees();// ağaçlar sonra eklenmeli yosam ağaç olan yere ev kuruyor
+
         text.text="Turn: " + turnManager.players[0].playerName;
     }
     public void endTurn() //Buton ataması için konulmuştur.

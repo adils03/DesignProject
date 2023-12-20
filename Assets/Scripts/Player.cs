@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player
 {
     public string playerName;
-    public int PlayerTotalGold = 10_000;// player altını burdan da görüyoruz kaynak eManager
+    public int PlayerTotalGold = 50;// player altını burdan da görüyoruz kaynak eManager
     public List<Hex> ownedHexes = new List<Hex>(); //sahip olduğu hexler
     public List<Soldier> soldiers = new List<Soldier>();
     public EconomyManager economyManager = new EconomyManager();
@@ -48,10 +48,36 @@ public class Player
         economyManager.UpdateOwnedHexagons(ownedHexes);
       
     }
+    void EconomyDeath()// ekonomi çöktü askerler imha edildi
+    {
+        Debug.Log("Ekonomi çöktü");
+       
+        foreach (var hex in ownedHexes)
+        {
+            ObjectType s = hex.HexObjectType;
+            if(s == ObjectType.SoldierLevel1|| s == ObjectType.SoldierLevel2 || s == ObjectType.SoldierLevel3 || s == ObjectType.SoldierLevel4)
+            {
+                hex.HexObjectType = ObjectType.None;
+                //hex.ObjectOnHex = null; // bundan emin değilim sahibi baksun (ben ibo)
+
+                hex.destroyObjectOnHex();
+                //Burdurda birde askerlerin yerine mezar gelmesi mantıklı olur 1 tur için 
+            }
+        }
+        this.soldiers.Clear();
+        
+    }
+
+
     void UpdateTotalGold()
     {
         PlayerTotalGold += economyManager.totalIncome;
-   
+        if(PlayerTotalGold<0)
+        {
+            EconomyDeath();
+            PlayerTotalGold = 0;
+            economyManager.UpdateOwnedHexagons(ownedHexes);// income tekrar hesaplansın
+        }         
     }
     public void StartTurn()
     {
