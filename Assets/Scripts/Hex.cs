@@ -8,6 +8,7 @@ using UnityEngine;
 public enum ObjectType// hex üzerindeki nesneler 
 {
     None,   // Hiçbir nesne yok
+    Grave,
     Tree,
     TreeWeak,
     BuildingFarm,

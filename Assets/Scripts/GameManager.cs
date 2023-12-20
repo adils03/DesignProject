@@ -15,16 +15,10 @@ public class GameManager : MonoBehaviour
     private GridSystem gridSystem;
     private Player player;
     private SpawnManager spawnManager;
-    [SerializeField]private TextMeshProUGUI text;
-
-    public int Burak = 0;
-    public int Halil = 0;
-    public int Emin = 0;
-
-    public int BurakIncome = 0;
-    public int HalilIncome = 0;
-    public int EminIncome = 0;
-
+    [SerializeField]private TextMeshProUGUI turnText;
+    [SerializeField]private TextMeshProUGUI player1Gold;
+    [SerializeField]private TextMeshProUGUI player2Gold;
+    [SerializeField]private TextMeshProUGUI player3Gold;
     public List<Hex> burakhex = new List<Hex>();
     public List<Hex> halilhex = new List<Hex>();
     public List<Hex> eminhex = new List<Hex>();
@@ -44,18 +38,11 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        Burak = players[0].PlayerTotalGold;
-        Halil = players[1].PlayerTotalGold;
-        Emin = players[2].PlayerTotalGold;
-
-        BurakIncome = players[0].economyManager.CalculateIncome();
-        HalilIncome = players[1].economyManager.CalculateIncome();
-        EminIncome = players[2].economyManager.CalculateIncome();
-
+        
+        updatePlayerGoldAndIncome();
         burakhex = players[0].ownedHexes;
         halilhex=players[1].ownedHexes;
         eminhex=players[2].ownedHexes;
-
         CheckPlayerTown(players, spawnManager.spawnedHouses);
 
     }
@@ -71,35 +58,22 @@ public class GameManager : MonoBehaviour
         spawnManager.SpawnLandOfPlayers(gridSystem.size,players);
         spawnManager.SpawnTrees();// ağaçlar sonra eklenmeli yosam ağaç olan yere ev kuruyor
 
-        text.text="Turn: " + turnManager.players[0].playerName;
+        turnText.text="Turn: " + turnManager.players[0].playerName;
     }
     public void endTurn() //Buton ataması için konulmuştur.
     {
         turnManager.StartTurn();
         DeathCheck();
-        foreach(Player player in players)
-        {
-            foreach (Soldier soldier in player.soldiers)
-            {
-                soldier.hasMoved = false;
-                if(GetTurnPlayer()!=player){
-                    soldier.GetComponent<CircleCollider2D>().enabled=false;
-                }
-                else{
-                    soldier.GetComponent<CircleCollider2D>().enabled=true;
-                }
-            }
-        }
-        text.text="Turn: " + GetTurnPlayer().playerName;
+        resetSoldierMoves();
+        turnText.text="Turn: " + GetTurnPlayer().playerName;
         Debug.Log(players[0].playerName);
         if (turnManager.turnQueue.Count == 0) 
         {
             spawnManager.TreesSpread();
         }
-    
     }
 
-    public Player GetTurnPlayer()
+    public Player GetTurnPlayer()//Sıra hangi oyuncudaysa onu döndürür
     {
         if(turnManager.turnQueue.Count==0)
         {
@@ -134,5 +108,25 @@ public class GameManager : MonoBehaviour
                 turnManager.turnQueue.Dequeue();
             }
         }
+    }
+    void resetSoldierMoves(){//Tur bitince askerlerin yürümülerini sıfırlamak için
+        foreach(Player player in players)
+        {
+            foreach (Soldier soldier in player.soldiers)
+            {
+                soldier.hasMoved = false;
+                if(GetTurnPlayer()!=player){
+                    soldier.GetComponent<CircleCollider2D>().enabled=false;
+                }
+                else{
+                    soldier.GetComponent<CircleCollider2D>().enabled=true;
+                }
+            }
+        }
+    }
+    void updatePlayerGoldAndIncome(){//Ekranda oyuncuların toplam paralarını ve gelirlerinin atamasını yapar
+        player1Gold.text= players[0].playerName +": "+ players[0].PlayerTotalGold +"(+" +players[0].economyManager.CalculateIncome()+")";
+        player2Gold.text= players[1].playerName +": "+ players[1].PlayerTotalGold +"(+" +players[1].economyManager.CalculateIncome()+")";
+        player3Gold.text= players[2].playerName +": "+ players[2].PlayerTotalGold +"(+" +players[2].economyManager.CalculateIncome()+")";
     }
 }

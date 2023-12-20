@@ -183,10 +183,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4823122e98017498b1679305300b49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soldierLevel: 4
+  soldierLevel: 5
   onHex: {fileID: 0}
   playerName: 
   hasMoved: 0
+  grave: {fileID: 4987243018542352327, guid: 1dda72fdfe4cf844cac61377f566eb61, type: 3}
 --- !u!58 &7316362676339015885
 CircleCollider2D:
   m_ObjectHideFlags: 0

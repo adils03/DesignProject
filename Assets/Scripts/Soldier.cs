@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Soldier : MonoBehaviour
@@ -10,18 +11,24 @@ public class Soldier : MonoBehaviour
     public Player owner;
     public String playerName;
     public bool hasMoved = false;//Asker tur içinde yürüdü mü
-    private void OnDestroy() {
+    [SerializeField] GameObject grave;
+    private void OnDestroy()
+    {
         owner.soldiers.Remove(this);
     }
-    private void Start() {
-        playerName=owner.playerName;
+    private void Start()
+    {
+        playerName = owner.playerName;
+        owner.OnDead += spawnGrave;
     }
 
-    public void activateIndicator(bool request){
+    public void activateIndicator(bool request)
+    {
         transform.GetChild(0).gameObject.SetActive(request);
     }
 
-    public void walkToHex(Hex hex){
+    public void walkToHex(Hex hex)
+    {
         if (hex.HexObjectType == ObjectType.Tree || hex.HexObjectType == ObjectType.TreeWeak)
         {
             hex.destroyObjectOnHex();
@@ -40,13 +47,26 @@ public class Soldier : MonoBehaviour
             hex.Owner.ownedHexes.Remove(hex);
         }
         hex.Owner = owner;
-        hex.Owner.ownedHexes.Add(hex);
+        if (!hex.Owner.ownedHexes.Contains(hex))
+        {
+            hex.Owner.ownedHexes.Add(hex);
+        }
         hex.playerName = playerName;
         hex.GetComponent<SpriteRenderer>().color = owner.playerColor;
         onHex = hex;
         transform.position = hex.transform.position;
         hasMoved = true;
         hex.UpdateAdvantageOrDisadvantageValue();
+    }
+
+    void spawnGrave()
+    {
+        GameObject _grave = Instantiate(grave, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+        Grave _graveSc = _grave.GetComponent<Grave>();
+        _graveSc.owner = owner;
+        _graveSc.onHex = onHex;
+        onHex.ObjectOnHex = _grave;
+        onHex.HexObjectType = ObjectType.TreeWeak;
     }
 }
 
