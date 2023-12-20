@@ -45,6 +45,16 @@ public class GameManager : MonoBehaviour
         eminhex=players[2].ownedHexes;
         CheckPlayerTown(players, spawnManager.spawnedHouses);
 
+        Player currPlayer = GetTurnPlayer();
+        if(currPlayer!=null)
+        {
+            string a = "Turn: " + currPlayer.playerName;
+            a += $"\nGold :{currPlayer.PlayerTotalGold}";
+            a += $"\nIncome :{currPlayer.economyManager.totalIncome}";
+            text.text = a;
+        }
+      
+
     }
     void StartGame()
     {
