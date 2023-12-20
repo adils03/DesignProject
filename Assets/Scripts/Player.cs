@@ -62,10 +62,10 @@ public class Player
                 //hex.ObjectOnHex = null; // bundan emin değilim sahibi baksun (ben ibo)
                 hex.destroyObjectOnHex();
                 //Burdurda birde askerlerin yerine mezar gelmesi mantıklı olur 1 tur için 
+                OnDead.Invoke();
             }
         }
         this.soldiers.Clear();
-        OnDead.Invoke();
     }
 
 
