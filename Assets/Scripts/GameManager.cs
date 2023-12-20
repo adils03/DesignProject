@@ -44,17 +44,6 @@ public class GameManager : MonoBehaviour
         halilhex=players[1].ownedHexes;
         eminhex=players[2].ownedHexes;
         CheckPlayerTown(players, spawnManager.spawnedHouses);
-
-        Player currPlayer = GetTurnPlayer();
-        if(currPlayer!=null)
-        {
-            string a = "Turn: " + currPlayer.playerName;
-            a += $"\nGold :{currPlayer.PlayerTotalGold}";
-            a += $"\nIncome :{currPlayer.economyManager.totalIncome}";
-            text.text = a;
-        }
-      
-
     }
     void StartGame()
     {
@@ -135,8 +124,8 @@ public class GameManager : MonoBehaviour
         }
     }
     void updatePlayerGoldAndIncome(){//Ekranda oyuncuların toplam paralarını ve gelirlerinin atamasını yapar
-        player1Gold.text= players[0].playerName +": "+ players[0].PlayerTotalGold +"(+" +players[0].economyManager.CalculateIncome()+")";
-        player2Gold.text= players[1].playerName +": "+ players[1].PlayerTotalGold +"(+" +players[1].economyManager.CalculateIncome()+")";
-        player3Gold.text= players[2].playerName +": "+ players[2].PlayerTotalGold +"(+" +players[2].economyManager.CalculateIncome()+")";
+        player1Gold.text= players[0].playerName +": "+ players[0].PlayerTotalGold +"(" +players[0].economyManager.CalculateIncome()+")";
+        player2Gold.text= players[1].playerName +": "+ players[1].PlayerTotalGold +"(" +players[1].economyManager.CalculateIncome()+")";
+        player3Gold.text= players[2].playerName +": "+ players[2].PlayerTotalGold +"(" +players[2].economyManager.CalculateIncome()+")";
     }
 }
