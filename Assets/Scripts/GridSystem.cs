@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class GridSystem : MonoBehaviour
@@ -52,7 +50,7 @@ public class GridSystem : MonoBehaviour
                 float perlinNoise = Mathf.PerlinNoise(j * noiseScale + offsetX, i * noiseScale + offsetY);
                 if (perlinNoise > threshold)
                 {
-                    _hex = Instantiate(hexPrefabGrass, new Vector3(originPositionX + xSpacin - (hexSpacinValue / 2) * size, -(i * 1.5f)), quaternion.identity);
+                    _hex = Instantiate(hexPrefabGrass, new Vector3(originPositionX + xSpacin - (hexSpacinValue / 2) * size, -(i * 1.5f)), quaternion.identity, transform);
                     hexes.Add(_hex.GetComponent<Hex>());
                     _hex.GetComponent<Hex>()._hexType = Hex.hexType.grass;
                     _hex.GetComponent<Hex>().q = j;
@@ -61,7 +59,7 @@ public class GridSystem : MonoBehaviour
                 }
                 else
                 {
-                    _hex = Instantiate(hexPrefabWater, new Vector3(originPositionX + xSpacin - (hexSpacinValue / 2) * size, -(i * 1.5f)), quaternion.identity);
+                    _hex = Instantiate(hexPrefabWater, new Vector3(originPositionX + xSpacin - (hexSpacinValue / 2) * size, -(i * 1.5f)), quaternion.identity, transform);
                     hexes.Add(_hex.GetComponent<Hex>());
                     _hex.GetComponent<Hex>()._hexType = Hex.hexType.water;
                     _hex.GetComponent<Hex>().q = j;

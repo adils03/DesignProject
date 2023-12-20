@@ -96,31 +96,7 @@ public class SoldierMovement : MonoBehaviour
     void ProcessValidHex(Hex hex) //Askerin yürüdüğü toprağın parametrelerini ayarlar 
     {
         soldierSc = soldier.GetComponent<Soldier>();
-        if (hex.HexObjectType == ObjectType.Tree || hex.HexObjectType == ObjectType.TreeWeak)
-        {
-            hex.destroyObjectOnHex();
-            soldierSc.owner.PlayerTotalGold += 4;
-        }
-        else if (hex.ObjectOnHex != null)
-        {
-            hex.destroyObjectOnHex();
-        }
-        soldierSc.onHex.HexObjectType = ObjectType.None;
-        soldierSc.onHex.ObjectOnHex = null;
-        hex.ObjectOnHex = soldier;
-        hex.HexObjectType = soldierSc.soldierLevel;
-        if (hex.Owner != null && soldierSc.owner != hex.Owner)
-        {
-            hex.Owner.ownedHexes.Remove(hex);
-        }
-        hex.Owner = soldierSc.owner;
-        hex.Owner.ownedHexes.Add(hex);
-        hex.playerName = soldierSc.playerName;
-        hex.GetComponent<SpriteRenderer>().color = soldierSc.owner.playerColor;
-        soldierSc.onHex = hex;
-        soldier.transform.position = hex.transform.position;
-        soldierSc.hasMoved = true;
-        hex.UpdateAdvantageOrDisadvantageValue();
+        soldierSc.walkToHex(hex);
         ResetWalk();
         resetSoldierIndicators();
     }

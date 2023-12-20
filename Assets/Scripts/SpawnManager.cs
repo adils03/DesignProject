@@ -2,9 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.ShortcutManagement;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 
 public class SpawnManager : MonoBehaviour
@@ -20,6 +18,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]private GameObject soldierPrefab2;
     [SerializeField]private GameObject soldierPrefab3;
     [SerializeField]private GameObject soldierPrefab4;
+    [SerializeField]private GameObject trees;
+    [SerializeField]private GameObject townHalls;
+    [SerializeField]private GameObject soldiers;
+    [SerializeField]private GameObject farms;
+    [SerializeField]private GameObject towers;
     private void Awake()
     {
         gridSystem = GameObject.Find("GridSystem").GetComponent<GridSystem>();
@@ -102,7 +105,7 @@ public class SpawnManager : MonoBehaviour
     }
     private void InstantiateHouseOfLands(Hex hex)//AnaBinaları ekler
     {
-        GameObject house = Instantiate(housePrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
+        GameObject house = Instantiate(housePrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity, townHalls.transform);
         hex.ObjectOnHex = house;
         hex.HexObjectType = ObjectType.TownHall;
     }
@@ -256,19 +259,19 @@ public class SpawnManager : MonoBehaviour
     }
     private void InstantiateTree(Hex hex)//ağaçları haritaya ekler
     {
-        GameObject treeWeak = Instantiate(TreeWeakPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
+        GameObject treeWeak = Instantiate(TreeWeakPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity, trees.transform);
         hex.ObjectOnHex = treeWeak;
         hex.HexObjectType = ObjectType.TreeWeak;
         // ağaçyerleştrimek için;
     }
     private void InstantiateTower(Hex hex)
     {
-        GameObject tower = Instantiate(towerPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
+        GameObject tower = Instantiate(towerPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity, towers.transform);
      
     }
     private void InstantiateFarmBuilding(Hex hex)
     {
-        GameObject farm = Instantiate(FarmPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
+        GameObject farm = Instantiate(FarmPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity, farms.transform);
         hex.HexObjectType = ObjectType.BuildingFarm;
         hex.ObjectOnHex=farm;
     }
@@ -282,25 +285,19 @@ public class SpawnManager : MonoBehaviour
         else if (s == ObjectType.SoldierLevel3) { gameObject = soldierPrefab3; }
         else if (s == ObjectType.SoldierLevel4) { gameObject = soldierPrefab4; }
         
-        GameObject soldier = Instantiate(gameObject, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
-
-
-        if (hex.isThatNewOne)
-        {
-            hex.Owner.ownedHexes.Add(hex);
-            hex.GetComponent<SpriteRenderer>().color = hex.Owner.playerColor;
-            soldier.GetComponent<Soldier>().hasMoved = true;
-        }
+        GameObject soldier = Instantiate(gameObject, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity, soldiers.transform);
+        Soldier soldierSc = soldier.GetComponent<Soldier>();
         hex.destroyObjectOnHex();
-        if(hex.Owner!=owner&&hex.Owner!=null){
-            hex.Owner.ownedHexes.Remove(hex);
+        if(hex.Owner!=owner){
+            hex.Owner?.ownedHexes.Remove(hex);
+            soldierSc.hasMoved=true;
         }
-        soldier.GetComponent<Soldier>().onHex = hex;
-        soldier.GetComponent<Soldier>().owner = owner;
-        soldier.GetComponent<Soldier>().playerName = hex.playerName;
+        soldierSc.onHex = hex;
+        soldierSc.owner = owner;
+        soldierSc.playerName = hex.playerName;
         hex.Owner=owner;
         hex.ObjectOnHex = soldier;
-        owner.soldiers.Add(soldier.GetComponent<Soldier>());
+        owner.soldiers.Add(soldierSc);
         hex.HexObjectType = s;
         hex.gameObject.GetComponent<SpriteRenderer>().color=owner.playerColor;
 
