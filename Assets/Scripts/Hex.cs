@@ -30,7 +30,8 @@ public class Hex : MonoBehaviour
     public int q, r, s;
     public List<Hex> neighbors = new List<Hex>();
     public bool hasVisited = false;
-    public int Income = 3;// hex başına gelir default 3 
+    public int Income = 1;// hex başına gelir default 1
+
     public Player Owner;// kimin bu hex ,null ise kimsenin
     public GameObject ObjectOnHex = null;
     public String playerName;
@@ -60,13 +61,9 @@ public class Hex : MonoBehaviour
         if (this.HexObjectType == ObjectType.Tree || this.HexObjectType == ObjectType.TreeWeak)
             Income = 0;
         else if (this.HexObjectType == ObjectType.BuildingFarm)
-            Income = 10;// bu da farmbinası başına verilen değer   
-        else if (this.HexObjectType == ObjectType.SoldierLevel1 ||
-        this.HexObjectType == ObjectType.SoldierLevel2 ||
-        this.HexObjectType == ObjectType.SoldierLevel3 ||
-        this.HexObjectType == ObjectType.SoldierLevel4 ||
-        this.HexObjectType == ObjectType.TownHall)
-            Income = 3;
+            Income = 5;// bu da farm binası başına verilen değer   
+        else
+            Income = 1;
     }
 
     public List<Hex> travelContinentByStepForSoldier(int step, Player _owner, ObjectType soldierLevel) //Hex'in bulunduğu konumdan istenilen adım büyüklüğü kadar alanı areaForStep'e eşitler

@@ -21,7 +21,15 @@ public class GridSystem : MonoBehaviour
     private void Awake()
     {
         CreateGrid(size);
-        
+        IncomeLaneti();
+    }
+
+    void IncomeLaneti()// ne yaptıysam değerini değiştiremedim
+    {
+        foreach (var item in hexes)
+        {
+            item.Income = 1;
+        }
     }
     void CreateGrid(int size) //Haritamızı oluşturur
     {

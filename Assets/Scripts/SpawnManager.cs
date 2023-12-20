@@ -104,6 +104,7 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject house = Instantiate(housePrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
         hex.ObjectOnHex = house;
+        hex.HexObjectType = ObjectType.TownHall;
     }
     public List<Hex> travelContinentSpawn(Hex startHex, int count)
     {
@@ -181,7 +182,7 @@ public class SpawnManager : MonoBehaviour
         uygunHex.UpdateAdvantageOrDisadvantageValue();
     }
 
-    public GameObject[] soldierPrefabs;
+    public GameObject[] soldierPrefabs;// bu niçin burda (not ben ibo)
     public void SpawnSoldier(Hex uygunHex,ObjectType s,Player owner)// tüm soldierlar için yapılmalı
     {
 
@@ -225,27 +226,28 @@ public class SpawnManager : MonoBehaviour
             int neighbor2Index = rand.Next(hex.neighbors.Count);
 
             if (hex._hexType == Hex.hexType.grass && hex.HexObjectType == ObjectType.None)
-            {
-                hex.HexObjectType = ObjectType.TreeWeak;
-                hex.UpdateAdvantageOrDisadvantageValue();
+            {     
+               
                 InstantiateTree(hex);
+                hex.UpdateAdvantageOrDisadvantageValue();
                 treeCounter++;
             }
 
             Hex neighborHex = hex.neighbors[neighborIndex];
             if (neighborHex.HexObjectType == ObjectType.None && neighborHex._hexType == Hex.hexType.grass)
-            {
-                neighborHex.HexObjectType = ObjectType.TreeWeak;
-                neighborHex.UpdateAdvantageOrDisadvantageValue();
+            {             
+               
                 InstantiateTree(neighborHex);
+                neighborHex.UpdateAdvantageOrDisadvantageValue();
                 treeCounter++;
             }
             Hex neighbor2Hex = hex.neighbors[neighbor2Index];
             if (neighbor2Hex.HexObjectType == ObjectType.None && neighbor2Hex._hexType == Hex.hexType.grass && treeCounter % 2 == 0)//rastgele 3.ağaç
             {
-                neighbor2Hex.HexObjectType = ObjectType.TreeWeak;
-                neighbor2Hex.UpdateAdvantageOrDisadvantageValue();
+             
+               
                 InstantiateTree(neighbor2Hex);
+                neighbor2Hex.UpdateAdvantageOrDisadvantageValue();
                 treeCounter++;
             }
 
@@ -256,11 +258,13 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject treeWeak = Instantiate(TreeWeakPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
         hex.ObjectOnHex = treeWeak;
+        hex.HexObjectType = ObjectType.TreeWeak;
         // ağaçyerleştrimek için;
     }
     private void InstantiateTower(Hex hex)
     {
         GameObject tower = Instantiate(towerPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity);
+     
     }
     private void InstantiateFarmBuilding(Hex hex)
     {

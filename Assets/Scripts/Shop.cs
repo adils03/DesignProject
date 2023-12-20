@@ -11,6 +11,7 @@ public class Shop : MonoBehaviour
     Hex startHex;
     private bool isWaitingForInput = true;
 
+    // defence buldingevel1 için cost 15 , level2 için cost 35
 
 
     List<Hex> placeAbleArea = new List<Hex>();
@@ -33,7 +34,7 @@ public class Shop : MonoBehaviour
     }
     public void buySoldier4()// level 4 asker
     {
-        buyAnyOfMaterial(ObjectType.SoldierLevel4, 50);
+        buyAnyOfMaterial(ObjectType.SoldierLevel4, 40);
     }
     public void buyFarm()// her binadan sonra coastı artar
     {

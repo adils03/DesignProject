@@ -6,7 +6,6 @@ public class EconomyManager
 {
 
     public int totalIncome;
-
     private List<Hex> OwnedHexagons = new List<Hex>();
 
     public EconomyManager()
@@ -17,13 +16,21 @@ public class EconomyManager
             CalculateIncome();
         }
     }
-    void CalculateIncome()
+    /// <summary>
+    /// Devlet gelirini hesaplar maaşları çıkarır ve geriye net geliri döndürür
+    /// Yapay Zeka yazarkene bunu çokça yapalım
+    /// </summary>
+    /// <returns>Oyuncu Geliri(int)</returns>
+    public int CalculateIncome()
     {     
         totalIncome = 0;
         foreach (Hex hexagon in OwnedHexagons)
         {
-            totalIncome += hexagon.Income;         
+            totalIncome += hexagon.Income;
+            
         }
+        CalculateSalaries();
+        return totalIncome;
     }
 
     void CalculateSalaries()// maaş bilgilerini totalIncomedan yaniii gelirden düştük
@@ -32,12 +39,12 @@ public class EconomyManager
         {
             int salarySoldier = 0;
 
-                 if (hex.HexObjectType == ObjectType.SoldierLevel1) { salarySoldier =  5; }
-            else if (hex.HexObjectType == ObjectType.SoldierLevel2) { salarySoldier = 15; }
-            else if (hex.HexObjectType == ObjectType.SoldierLevel3) { salarySoldier = 30; }
-            else if (hex.HexObjectType == ObjectType.SoldierLevel4) { salarySoldier = 50; }
-            else if (hex.HexObjectType == ObjectType.BuildingDefenceLevel1) { salarySoldier = 10; }// 20den 10'a çektim
-            else if (hex.HexObjectType == ObjectType.BuildingDefenceLevel2) { salarySoldier = 30; }
+                 if (hex.HexObjectType == ObjectType.SoldierLevel1) { salarySoldier =  2; }
+            else if (hex.HexObjectType == ObjectType.SoldierLevel2) { salarySoldier = 6; }
+            else if (hex.HexObjectType == ObjectType.SoldierLevel3) { salarySoldier = 18; }
+            else if (hex.HexObjectType == ObjectType.SoldierLevel4) { salarySoldier = 36; }
+            else if (hex.HexObjectType == ObjectType.BuildingDefenceLevel1) { salarySoldier = 1; }// çokta abartmayalım hard oluyor
+            else if (hex.HexObjectType == ObjectType.BuildingDefenceLevel2) { salarySoldier = 6; }// yeterli
 
             totalIncome -= salarySoldier;
         }
@@ -47,8 +54,7 @@ public class EconomyManager
     {
         OwnedHexagons = newHexagons;
         CalculateIncome();
-        CalculateSalaries();
-        Debug.Log("income " + totalIncome);
+       
            
     }
    
