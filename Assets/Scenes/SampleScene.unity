@@ -2038,7 +2038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b5acd916169214e9a2e307f7162911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 10
+  size: 15
   noiseScale: 0.15
   threshold: 0.22
   hexPrefabGrass: {fileID: 4133545700341867623, guid: 7a92b132c0b172b43b1d229a7dfed48a, type: 3}

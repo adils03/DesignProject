@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     public List<Player> players = new List<Player>();
     public List<Hex> hexes;
     private TurnManager turnManager;
-    private EconomyManager economyManager;
     private GridSystem gridSystem;
+    private Player player;
     private SpawnManager spawnManager;
     [SerializeField]private TextMeshProUGUI text;
 
@@ -44,25 +44,23 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-            Burak = players[0].PlayerTotalGold;
-            Halil = players[1].PlayerTotalGold;
-            Emin = players[2].PlayerTotalGold;
+        Burak = players[0].PlayerTotalGold;
+        Halil = players[1].PlayerTotalGold;
+        Emin = players[2].PlayerTotalGold;
 
-          BurakIncome = players[0].economyManager.CalculateIncome();
-          HalilIncome = players[1].economyManager.CalculateIncome();
-          EminIncome = players[2].economyManager.CalculateIncome();
+        BurakIncome = players[0].economyManager.CalculateIncome();
+        HalilIncome = players[1].economyManager.CalculateIncome();
+        EminIncome = players[2].economyManager.CalculateIncome();
 
-            burakhex = players[0].ownedHexes;
-            halilhex=players[1].ownedHexes;
-            eminhex=players[2].ownedHexes;
+        burakhex = players[0].ownedHexes;
+        halilhex=players[1].ownedHexes;
+        eminhex=players[2].ownedHexes;
 
-            CheckPlayerHexes(players, spawnManager.spawnedHouses);
+        CheckPlayerTown(players, spawnManager.spawnedHouses);
 
     }
     void StartGame()
     {
-        
-      
         players.Clear();
         players.Add(new Player("Burak"));
         players.Add(new Player("Halil"));
@@ -78,6 +76,7 @@ public class GameManager : MonoBehaviour
     public void endTurn() //Buton ataması için konulmuştur.
     {
         turnManager.StartTurn();
+        DeathCheck();
         foreach(Player player in players)
         {
             foreach (Soldier soldier in player.soldiers)
@@ -108,9 +107,8 @@ public class GameManager : MonoBehaviour
         }
         return turnManager.turnQueue.Peek();
     }
-    
 
-    public void CheckPlayerHexes(List<Player> players, List<Hex> spawnedHouses)//Oyuncumuzun evi yıkıldı mı yıkılmadı mı onu kontrol ediyo sürekli kontrol etmeyi update yazdım 
+    void CheckPlayerTown(List<Player> players, List<Hex> spawnedHouses)//playerın evi yıkıldı mı yıkılmadı mı onu kontrol ediyo sürekli kontrol etmeyi update yazdım 
     {
     for (int i = 0; i < players.Count; i++)
     {
@@ -124,4 +122,17 @@ public class GameManager : MonoBehaviour
     }
     }
 
+    void DeathCheck()// Parası 0, income 0 ve hiç askeri olmadığında ölmesini sağlıyor
+    {
+        Player currentPlayer = GetTurnPlayer();
+
+        if(currentPlayer.PlayerTotalGold == 0 && currentPlayer.soldiers.Count == 0 && currentPlayer.economyManager.totalIncome == 0 )
+        {
+            currentPlayer.Death();
+            if (turnManager.turnQueue.Count > 0) 
+            {
+                turnManager.turnQueue.Dequeue();
+            }
+        }
+    }
 }
