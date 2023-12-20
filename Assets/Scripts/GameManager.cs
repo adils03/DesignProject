@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     {
         turnManager.StartTurn();
         Player currentPlayer = GetTurnPlayer();
-        if(currentPlayer.PlayerTotalGold <= 0 || currentPlayer.ownedHexes.Count == 1 || currentPlayer.economyManager.totalIncome < 0 )// Parası 0 ve altına düşerse oyuncu ölüyor
+        if(currentPlayer.PlayerTotalGold <= 0 && currentPlayer.ownedHexes.Count == 1 && currentPlayer.economyManager.totalIncome < 0 )// Parası 0 ve altına düşerse oyuncu ölüyor
         {
             currentPlayer.Death();
             if (turnManager.turnQueue.Count > 0) 
