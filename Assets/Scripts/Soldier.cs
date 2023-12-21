@@ -11,15 +11,18 @@ public class Soldier : MonoBehaviour
     public Player owner;
     public String playerName;
     public bool hasMoved = false;//Asker tur içinde yürüdü mü
+    public bool isEconomyDeath = false;
     [SerializeField] GameObject grave;
     private void OnDestroy()
     {
         owner.soldiers.Remove(this);
+        if(isEconomyDeath){
+            spawnGrave();
+        }
     }
     private void Start()
     {
         playerName = owner.playerName;
-        owner.OnDead += spawnGrave;
     }
 
     public void activateIndicator(bool request)

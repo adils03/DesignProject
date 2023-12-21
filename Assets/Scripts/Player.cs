@@ -12,8 +12,6 @@ public class Player
     public Color playerColor;
     private GameManager gameManager;
     private TurnManager turnManager;
-    public delegate void EconomyDead();
-    public event EconomyDead OnDead;
     public Player(String name)// bu ctor diğerleri patlamasın diye geçici duruyor daha karar verilmedi
     {
         playerName = name;
@@ -60,9 +58,9 @@ public class Player
             {
                 hex.HexObjectType = ObjectType.None;
                 //hex.ObjectOnHex = null; // bundan emin değilim sahibi baksun (ben ibo)
+                hex.ObjectOnHex.GetComponent<Soldier>().isEconomyDeath = true;
                 hex.destroyObjectOnHex();
                 //Burdurda birde askerlerin yerine mezar gelmesi mantıklı olur 1 tur için 
-                OnDead.Invoke();
             }
         }
         this.soldiers.Clear();
