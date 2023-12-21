@@ -71,5 +71,6 @@ public class Soldier : MonoBehaviour
         onHex.ObjectOnHex = _grave;
         onHex.HexObjectType = ObjectType.TreeWeak;
     }
+
 }
 

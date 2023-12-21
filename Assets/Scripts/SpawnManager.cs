@@ -303,6 +303,7 @@ public class SpawnManager : MonoBehaviour
 
         if(!owner.ownedHexes.Contains(hex))
         owner.ownedHexes.Add(hex);
+        hex.UpdateAdvantageOrDisadvantageValue();
     }
 
     public void TreesSpread()// ağaç yayılması tüm haritayı kapsamaz bir yerde durur.

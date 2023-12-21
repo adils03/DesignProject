@@ -10,8 +10,7 @@ public class Player
     public List<Soldier> soldiers = new List<Soldier>();
     public EconomyManager economyManager = new EconomyManager();
     public Color playerColor;
-    private GameManager gameManager;
-    private TurnManager turnManager;
+    public bool isAI = false;
     public Player(String name)// bu ctor diğerleri patlamasın diye geçici duruyor daha karar verilmedi
     {
         playerName = name;
