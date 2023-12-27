@@ -53,7 +53,7 @@ public class DragCamera : MonoBehaviour
             Camera.main.transform.position = Origin - Diference;
         }
         //RESET CAMERA TO STARTING POSITION WITH RIGHT CLICK
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             Camera.main.transform.position = ResetCamera;
         }

@@ -59,7 +59,7 @@ public class Shop : MonoBehaviour
             if (s == ObjectType.SoldierLevel1 || s == ObjectType.SoldierLevel2 || s == ObjectType.SoldierLevel3 || s == ObjectType.SoldierLevel4)
             {
                 placeAbleArea.Clear();
-                startHex=currentPlayer.ownedHexes[1];
+                startHex=currentPlayer.ownedHexes[0];
                 placeAbleArea = startHex.travelContinentByStepForSoldier(50, currentPlayer, s);
                 Debug.Log(currentPlayer.playerName);
 

@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Space)){
+            endTurn();
+        }
         updatePlayerGoldAndIncome();
         burakhex = players[0].ownedHexes;
         halilhex=players[1].ownedHexes;
@@ -106,6 +108,7 @@ public class GameManager : MonoBehaviour
             {
                 turnManager.turnQueue.Dequeue();
             }
+            Debug.Log(turnManager.turnQueue.Count);
         }
     }
     void resetSoldierMoves(){//Tur bitince askerlerin yürümülerini sıfırlamak için
