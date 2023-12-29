@@ -12,7 +12,8 @@ public class SpawnManager : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField]private GameObject housePrefab;
     [SerializeField]private GameObject TreeWeakPrefab;
-    [SerializeField]private GameObject towerPrefab;
+    [SerializeField]private GameObject BuildingDefenceLevel1Prefab;
+    [SerializeField]private GameObject BuildingDefenceLevel2Prefab;
     [SerializeField]private GameObject FarmPrefab;
     [SerializeField]private GameObject soldierPrefab;
     [SerializeField]private GameObject soldierPrefab2;
@@ -168,16 +169,9 @@ public class SpawnManager : MonoBehaviour
     }
     public void SpawnDefenceBuilding(Hex uygunHex, ObjectType s)
     {
-        if(s == ObjectType.BuildingDefenceLevel1)
-        {
-            BuildTower(uygunHex,1);
-          
-
-        }else if(s == ObjectType.BuildingDefenceLevel2)
-        {
-            BuildTower(uygunHex, 2);
-      
-        }
+            InstantiateTower(uygunHex, s);
+            uygunHex.UpdateAdvantageOrDisadvantageValue();
+   
     }
     public void SpawnFarmBuildng(Hex uygunHex)
     {
@@ -185,7 +179,7 @@ public class SpawnManager : MonoBehaviour
         uygunHex.UpdateAdvantageOrDisadvantageValue();
     }
 
-    public GameObject[] soldierPrefabs;// bu niçin burda (not ben ibo)
+
     public void SpawnSoldier(Hex uygunHex,ObjectType s,Player owner)// tüm soldierlar için yapılmalı
     {
 
@@ -264,10 +258,26 @@ public class SpawnManager : MonoBehaviour
         hex.HexObjectType = ObjectType.TreeWeak;
         // ağaçyerleştrimek için;
     }
-    private void InstantiateTower(Hex hex)
+    private void InstantiateTower(Hex hex, ObjectType s)
     {
-        GameObject tower = Instantiate(towerPrefab, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity, towers.transform);
-     
+        GameObject gameObject=null;
+
+        if (s == ObjectType.BuildingDefenceLevel1)
+        {
+            gameObject = BuildingDefenceLevel1Prefab;
+            hex.HexObjectType = ObjectType.BuildingDefenceLevel1;
+        }
+        else if (s == ObjectType.BuildingDefenceLevel2)
+        {
+            gameObject = BuildingDefenceLevel2Prefab;
+            hex.HexObjectType = ObjectType.BuildingDefenceLevel2;
+        }
+        if (gameObject != null)
+        {
+            GameObject tower = Instantiate(gameObject, new Vector3(hex.transform.position.x, hex.transform.position.y), Quaternion.identity, towers.transform);
+            hex.ObjectOnHex = tower;
+        }
+
     }
     private void InstantiateFarmBuilding(Hex hex)
     {
@@ -277,8 +287,6 @@ public class SpawnManager : MonoBehaviour
     }
     private void InstantiateSoldier(Hex hex,ObjectType s,Player owner)// soldier type a göre soldier atar yaratır
     {
-
-
         GameObject gameObject = soldierPrefab;
         if(s == ObjectType.SoldierLevel1) { gameObject = soldierPrefab; }      
         else if (s == ObjectType.SoldierLevel2) { gameObject = soldierPrefab2; }
@@ -352,18 +360,5 @@ public class SpawnManager : MonoBehaviour
 
 
     }
-    public void BuildTower(Hex hex, int x)//Towerımız burada oluşturuluyor.
-    {
-        List<Hex> neighboringHexes = hex.neighbors;
-        if (x == 1)
-        {
-            hex.HexObjectType = ObjectType.BuildingDefenceLevel1;
-            InstantiateTower(hex);
-        }
-        else if (x == 2)
-        {
-            hex.HexObjectType = ObjectType.BuildingDefenceLevel2;
-            InstantiateTower(hex);
-        }
-    }
+    
 }

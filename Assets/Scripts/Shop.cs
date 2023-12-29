@@ -36,6 +36,14 @@ public class Shop : MonoBehaviour
     {
         buyAnyOfMaterial(ObjectType.SoldierLevel4, 40);
     }
+    public void buyBuildingDefenceLevel1()
+    {
+        buyAnyOfMaterial(ObjectType.BuildingDefenceLevel1, 5);
+    }
+    public void buyBuildingDefenceLevel2()
+    {
+        buyAnyOfMaterial(ObjectType.BuildingDefenceLevel2, 10);
+    }
     public void buyFarm()// her binadan sonra coastı artar
     {
         int cost = 12;
@@ -54,26 +62,42 @@ public class Shop : MonoBehaviour
         Player currentPlayer = gameManager.GetTurnPlayer();
         if (currentPlayer.PlayerTotalGold >= cost)//costtan fazla parası var mı yok mu
         {
-            placeAbleArea = new List<Hex>();    
+            placeAbleArea = new List<Hex>();
 
             if (s == ObjectType.SoldierLevel1 || s == ObjectType.SoldierLevel2 || s == ObjectType.SoldierLevel3 || s == ObjectType.SoldierLevel4)
             {
                 placeAbleArea.Clear();
-                startHex=currentPlayer.ownedHexes[0];
+                startHex = currentPlayer.ownedHexes[0];
                 placeAbleArea = startHex.travelContinentByStepForSoldier(50, currentPlayer, s);
                 Debug.Log(currentPlayer.playerName);
 
             }
-            else if(s==ObjectType.BuildingFarm){
+            else if (s == ObjectType.BuildingDefenceLevel1 || s == ObjectType.BuildingDefenceLevel2)
+            {
+                foreach (Hex hex in currentPlayer.ownedHexes)
+                {
+           
+                        foreach (Hex hex1 in hex.neighbors)
+                        {
+                            if (currentPlayer.ownedHexes.Contains(hex1) && hex1.HexObjectType == ObjectType.None)
+                            {
+                                placeAbleArea.Add(hex1);
+                            }
+                        }
+                    
+                }
+
+            }
+            else if (s == ObjectType.BuildingFarm) {
                 placeAbleArea.Clear();
                 foreach (Hex hex in currentPlayer.ownedHexes)
                 {
-                    if (hex.HexObjectType == ObjectType.BuildingFarm||hex.HexObjectType == ObjectType.TownHall)//düzeltilecek
+                    if (hex.HexObjectType == ObjectType.BuildingFarm || hex.HexObjectType == ObjectType.TownHall)//düzeltilecek
                     {
                         foreach (Hex hex1 in hex.neighbors)
                         {
-                            if(currentPlayer.ownedHexes.Contains(hex1)&&hex1.HexObjectType==ObjectType.None){
-                            placeAbleArea.Add(hex1);                                
+                            if (currentPlayer.ownedHexes.Contains(hex1) && hex1.HexObjectType == ObjectType.None) {
+                                placeAbleArea.Add(hex1);
                             }
                         }
                     }
