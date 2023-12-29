@@ -22,7 +22,14 @@ public class Soldier : MonoBehaviour
     }
     private void Start()
     {
-        playerName = owner.playerName;
+        playerName = owner.playerName; 
+    }
+
+    private void Update() {
+        if (transform.position != onHex.transform.position)
+        {
+            transform.position = Vector3.Lerp(transform.position, onHex.transform.position, 5 * Time.deltaTime);
+        }
     }
 
     public void activateIndicator(bool request)
@@ -57,7 +64,6 @@ public class Soldier : MonoBehaviour
         hex.playerName = playerName;
         hex.GetComponent<SpriteRenderer>().color = owner.playerColor;
         onHex = hex;
-        transform.position = hex.transform.position;
         hasMoved = true;
         hex.UpdateAdvantageOrDisadvantageValue();
     }
