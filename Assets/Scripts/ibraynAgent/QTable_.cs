@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QTableH
+public class QTable_
 {
-    private Dictionary<(GameStateH, ActionH), double> table;
+    private Dictionary<(GameStateH, Action), double> table;
 
-    public QTableH()
+    public QTable_()
     {
-        table = new Dictionary<(GameStateH, ActionH), double>();
+        table = new Dictionary<(GameStateH, Action), double>();
     }
 
-    public double GetQValue(GameStateH state, ActionH action)
+    public double GetQValue(GameStateH state, Action action)
     {
         if (table.TryGetValue((state, action), out double qValue))
         {
@@ -21,7 +21,7 @@ public class QTableH
         // Varsa döndür, yoksa varsayýlan bir deðer (örneðin, 0.0) döndürülebilir.
         return 0.0;
     }
-    public double GetMaxQValue(GameStateH state, ActionH action)
+    public double GetMaxQValue(GameStateH state, Action action)
     {
         // Belirli bir durum ve aksiyon için en yüksek Q deðerini bulma
         double maxQValue = double.MinValue;
@@ -41,7 +41,7 @@ public class QTableH
         return maxQValue;
     }
 
-    public void UpdateQValue(GameStateH state, ActionH action, double newValue)
+    public void UpdateQValue(GameStateH state, Action action, double newValue)
     {
 
         var key = (state, action);

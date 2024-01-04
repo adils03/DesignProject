@@ -8,26 +8,26 @@ namespace Assets.Scripts.ibraynAgent
 {
     public class PriceDictionary
     {
-        private Dictionary<GameItem, int> Prices;
+        private Dictionary<ObjectType, int> Prices;
 
         public PriceDictionary()
         {
-            Prices = new Dictionary<GameItem, int>();
+            Prices = new Dictionary<ObjectType, int>();
             InitializePrices();
         }
 
         private void InitializePrices()
         {
-            Prices.Add(GameItem.SoldierLevel1, 10);
-            Prices.Add(GameItem.SoldierLevel2, 20);
-            Prices.Add(GameItem.SoldierLevel3, 30);
-            Prices.Add(GameItem.SoldierLevel4, 40);
-            Prices.Add(GameItem.TowerLevel1,15);
-            Prices.Add(GameItem.TowerLevel2,35);
+            Prices.Add(ObjectType.SoldierLevel1, 10);
+            Prices.Add(ObjectType.SoldierLevel2, 20);
+            Prices.Add(ObjectType.SoldierLevel3, 30);
+            Prices.Add(ObjectType.SoldierLevel4, 40);
+            Prices.Add(ObjectType.BuildingDefenceLevel1,15);
+            Prices.Add(ObjectType.BuildingDefenceLevel2,35);
             // Diğer seviyeleri ekleyin
         }
 
-        public int GetItemPrice(GameItem item)
+        public int GetItemPrice(ObjectType item)
         {
             if (Prices.TryGetValue(item, out int price))
             {
@@ -38,16 +38,21 @@ namespace Assets.Scripts.ibraynAgent
         }
     }
 
-    public enum GameItem
-    {
-        SoldierLevel1,
-        SoldierLevel2,
-        SoldierLevel3,
-        SoldierLevel4,
-        TowerLevel1,
-        TowerLevel2,
-        Farm
-       
-    }
+    //public enum ObjectType// hex üzerindeki nesneler (isimler için kullanıldı açılmaz)
+    //{
+    //    None,   // Hiçbir nesne yok
+    //    Grave,
+    //    Tree,
+    //    TreeWeak,
+    //    BuildingFarm,
+    //    SoldierLevel1,
+    //    SoldierLevel2,
+    //    BuildingDefenceLevel1,
+    //    SoldierLevel3,
+    //    BuildingDefenceLevel2,
+    //    TownHall,
+    //    SoldierLevel4
+
+    //}
 
 }

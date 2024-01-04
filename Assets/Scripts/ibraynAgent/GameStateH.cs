@@ -9,6 +9,8 @@ public class GameStateH
     public List<Hex> Hexes { get; set; }
     public List<Hex> ProtectedHex {  get; set; }
 
+    public List<Soldier> soldiers { get; set; }// sahip olunan asker
+
     /// <summary>
     /// Oyun için bir oyun durumu üretilecek olan sınıf
     /// </summary>

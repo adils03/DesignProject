@@ -38,11 +38,11 @@ public class Shop : MonoBehaviour
     }
     public void buyBuildingDefenceLevel1()
     {
-        buyAnyOfMaterial(ObjectType.BuildingDefenceLevel1, 5);
+        buyAnyOfMaterial(ObjectType.BuildingDefenceLevel1, 15);
     }
     public void buyBuildingDefenceLevel2()
     {
-        buyAnyOfMaterial(ObjectType.BuildingDefenceLevel2, 10);
+        buyAnyOfMaterial(ObjectType.BuildingDefenceLevel2, 35);
     }
     public void buyFarm()// her binadan sonra coastı artar
     {
